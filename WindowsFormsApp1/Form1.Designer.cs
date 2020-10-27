@@ -29,61 +29,33 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.fastTimer = new System.Windows.Forms.Timer(this.components);
-            this.refreshBtn = new System.Windows.Forms.Button();
-            this.currentWallpaper = new System.Windows.Forms.PictureBox();
             this.wallpaperRefreshTimer = new System.Windows.Forms.Timer(this.components);
             this.titleLabel = new System.Windows.Forms.LinkLabel();
             this.authorLabel = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.currentWallpaper)).BeginInit();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.設定ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.重新整理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.titlePanel = new System.Windows.Forms.Panel();
+            this.menuStrip1.SuspendLayout();
+            this.titlePanel.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // fastTimer
-            // 
-            this.fastTimer.Enabled = true;
-            this.fastTimer.Tick += new System.EventHandler(this.fastTimer_Tick);
-            // 
-            // refreshBtn
-            // 
-            this.refreshBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.refreshBtn.BackColor = System.Drawing.Color.Transparent;
-            this.refreshBtn.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.refreshBtn.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.refreshBtn.Location = new System.Drawing.Point(630, 341);
-            this.refreshBtn.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.refreshBtn.Name = "refreshBtn";
-            this.refreshBtn.Size = new System.Drawing.Size(97, 62);
-            this.refreshBtn.TabIndex = 1;
-            this.refreshBtn.Text = "重新整理";
-            this.refreshBtn.UseVisualStyleBackColor = false;
-            this.refreshBtn.Click += new System.EventHandler(this.refreshBtn_Click);
-            // 
-            // currentWallpaper
-            // 
-            this.currentWallpaper.Location = new System.Drawing.Point(0, 0);
-            this.currentWallpaper.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.currentWallpaper.Name = "currentWallpaper";
-            this.currentWallpaper.Size = new System.Drawing.Size(728, 403);
-            this.currentWallpaper.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.currentWallpaper.TabIndex = 2;
-            this.currentWallpaper.TabStop = false;
             // 
             // wallpaperRefreshTimer
             // 
             this.wallpaperRefreshTimer.Enabled = true;
-            this.wallpaperRefreshTimer.Interval = 5000;
+            this.wallpaperRefreshTimer.Interval = 1000;
             this.wallpaperRefreshTimer.Tick += new System.EventHandler(this.wallpaperRefreshTimer_Tick);
             // 
             // titleLabel
             // 
             this.titleLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.titleLabel.AutoSize = true;
-            this.titleLabel.BackColor = System.Drawing.Color.Black;
+            this.titleLabel.BackColor = System.Drawing.Color.Transparent;
             this.titleLabel.Font = new System.Drawing.Font("Segoe UI", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.titleLabel.ForeColor = System.Drawing.Color.White;
             this.titleLabel.LinkBehavior = System.Windows.Forms.LinkBehavior.NeverUnderline;
             this.titleLabel.LinkColor = System.Drawing.Color.White;
-            this.titleLabel.Location = new System.Drawing.Point(12, 341);
+            this.titleLabel.Location = new System.Drawing.Point(12, 14);
             this.titleLabel.Name = "titleLabel";
             this.titleLabel.Size = new System.Drawing.Size(143, 30);
             this.titleLabel.TabIndex = 3;
@@ -95,43 +67,91 @@
             // 
             this.authorLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.authorLabel.AutoSize = true;
-            this.authorLabel.BackColor = System.Drawing.Color.Black;
+            this.authorLabel.BackColor = System.Drawing.Color.Transparent;
             this.authorLabel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.authorLabel.ForeColor = System.Drawing.Color.White;
-            this.authorLabel.Location = new System.Drawing.Point(12, 375);
+            this.authorLabel.Location = new System.Drawing.Point(23, 44);
             this.authorLabel.Name = "authorLabel";
             this.authorLabel.Size = new System.Drawing.Size(105, 17);
             this.authorLabel.TabIndex = 4;
             this.authorLabel.Text = "Sample Author 1";
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.BackColor = System.Drawing.Color.Transparent;
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.設定ToolStripMenuItem,
+            this.重新整理ToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
+            this.menuStrip1.Size = new System.Drawing.Size(728, 24);
+            this.menuStrip1.TabIndex = 6;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // 設定ToolStripMenuItem
+            // 
+            this.設定ToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.設定ToolStripMenuItem.Image = global::WindowsFormsApp1.Properties.Resources.齒輪;
+            this.設定ToolStripMenuItem.Name = "設定ToolStripMenuItem";
+            this.設定ToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
+            this.設定ToolStripMenuItem.Text = "設定";
+            this.設定ToolStripMenuItem.Click += new System.EventHandler(this.設定ToolStripMenuItem_Click);
+            // 
+            // 重新整理ToolStripMenuItem
+            // 
+            this.重新整理ToolStripMenuItem.ForeColor = System.Drawing.Color.White;
+            this.重新整理ToolStripMenuItem.Image = global::WindowsFormsApp1.Properties.Resources.重新整理;
+            this.重新整理ToolStripMenuItem.Name = "重新整理ToolStripMenuItem";
+            this.重新整理ToolStripMenuItem.Size = new System.Drawing.Size(83, 20);
+            this.重新整理ToolStripMenuItem.Text = "重新整理";
+            this.重新整理ToolStripMenuItem.Click += new System.EventHandler(this.重新整理ToolStripMenuItem_Click);
+            // 
+            // titlePanel
+            // 
+            this.titlePanel.BackColor = System.Drawing.Color.Transparent;
+            this.titlePanel.Controls.Add(this.authorLabel);
+            this.titlePanel.Controls.Add(this.titleLabel);
+            this.titlePanel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.titlePanel.Location = new System.Drawing.Point(0, 329);
+            this.titlePanel.Name = "titlePanel";
+            this.titlePanel.Size = new System.Drawing.Size(728, 72);
+            this.titlePanel.TabIndex = 7;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(728, 401);
-            this.Controls.Add(this.authorLabel);
-            this.Controls.Add(this.titleLabel);
-            this.Controls.Add(this.refreshBtn);
-            this.Controls.Add(this.currentWallpaper);
+            this.Controls.Add(this.titlePanel);
+            this.Controls.Add(this.menuStrip1);
+            this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Pixiv Wallpaper Helper";
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.currentWallpaper)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
+            this.titlePanel.ResumeLayout(false);
+            this.titlePanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.Timer fastTimer;
-        private System.Windows.Forms.Button refreshBtn;
-        private System.Windows.Forms.PictureBox currentWallpaper;
         private System.Windows.Forms.Timer wallpaperRefreshTimer;
         private System.Windows.Forms.LinkLabel titleLabel;
         private System.Windows.Forms.Label authorLabel;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem 設定ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 重新整理ToolStripMenuItem;
+        private System.Windows.Forms.Panel titlePanel;
     }
 }
 
