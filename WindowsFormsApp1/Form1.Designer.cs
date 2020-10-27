@@ -33,9 +33,9 @@
             this.titleLabel = new System.Windows.Forms.LinkLabel();
             this.authorLabel = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.titlePanel = new System.Windows.Forms.Panel();
             this.設定ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.重新整理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.titlePanel = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             this.titlePanel.SuspendLayout();
             this.SuspendLayout();
@@ -89,6 +89,17 @@
             this.menuStrip1.TabIndex = 6;
             this.menuStrip1.Text = "menuStrip1";
             // 
+            // titlePanel
+            // 
+            this.titlePanel.BackColor = System.Drawing.Color.Transparent;
+            this.titlePanel.Controls.Add(this.authorLabel);
+            this.titlePanel.Controls.Add(this.titleLabel);
+            this.titlePanel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.titlePanel.Location = new System.Drawing.Point(0, 329);
+            this.titlePanel.Name = "titlePanel";
+            this.titlePanel.Size = new System.Drawing.Size(728, 72);
+            this.titlePanel.TabIndex = 7;
+            // 
             // 設定ToolStripMenuItem
             // 
             this.設定ToolStripMenuItem.ForeColor = System.Drawing.Color.White;
@@ -106,17 +117,6 @@
             this.重新整理ToolStripMenuItem.Size = new System.Drawing.Size(83, 20);
             this.重新整理ToolStripMenuItem.Text = "重新整理";
             this.重新整理ToolStripMenuItem.Click += new System.EventHandler(this.重新整理ToolStripMenuItem_Click);
-            // 
-            // titlePanel
-            // 
-            this.titlePanel.BackColor = System.Drawing.Color.Transparent;
-            this.titlePanel.Controls.Add(this.authorLabel);
-            this.titlePanel.Controls.Add(this.titleLabel);
-            this.titlePanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.titlePanel.Location = new System.Drawing.Point(0, 329);
-            this.titlePanel.Name = "titlePanel";
-            this.titlePanel.Size = new System.Drawing.Size(728, 72);
-            this.titlePanel.TabIndex = 7;
             // 
             // Form1
             // 

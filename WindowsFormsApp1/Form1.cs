@@ -26,13 +26,54 @@ namespace WindowsFormsApp1
         }
 
         private void changeThumbnail() {
-            string newPath = this.getCurrentWallpaperPath();
-            if (!newPath.Equals(this.currentImagePath))
+            if (this.isWallpaperColorOnly()) {
+                if (this.BackgroundImage != null) {
+                    this.BackgroundImage.Dispose();
+                    this.BackgroundImage = null;
+                    this.currentImagePath = "";
+                };
+                this.BackColor = this.getWallpaperColor();
+            }else
             {
-                this.currentImagePath = newPath;
-                Image image = Image.FromFile(newPath);
-                this.BackgroundImage.Dispose();
-                this.BackgroundImage = image;
+                string newPath = this.getCurrentWallpaperPath();
+                if (!newPath.Equals(this.currentImagePath))
+                {
+                    this.currentImagePath = newPath;
+                    Image image = Image.FromFile(newPath);
+                    if (this.BackgroundImage != null) this.BackgroundImage.Dispose();
+                    this.BackgroundImage = image;
+                }
+            }
+        }
+
+        private Boolean isWallpaperColorOnly()
+        {
+            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Desktop");
+            if (key != null)
+            {
+                string path = (string)key.GetValue("WallPaper");
+                return path.Equals("");
+            }
+            else {
+                return false;
+            }
+        }
+
+        private Color getWallpaperColor() {
+            RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Colors");
+            if (key != null)
+            {
+                string colorRaw = (string)key.GetValue("Background");
+                string[] color = colorRaw.Split(' ');
+                return Color.FromArgb(
+                    Convert.ToInt32(color[0]),
+                    Convert.ToInt32(color[1]),
+                    Convert.ToInt32(color[2])
+                );
+            }
+            else
+            {
+                return Color.FromArgb(0,0,0);
             }
         }
 
@@ -59,9 +100,7 @@ namespace WindowsFormsApp1
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            this.currentImagePath = this.getCurrentWallpaperPath();
-            Image image = Image.FromFile(this.currentImagePath);
-            this.BackgroundImage = image;
+            this.changeThumbnail();
             this.menuStrip1.Paint += new PaintEventHandler(this.menuStrip1_Paint);
             this.titlePanel.Paint += new PaintEventHandler(this.titlePanel_Paint);
         }
