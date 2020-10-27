@@ -19,6 +19,12 @@ namespace WindowsFormsApp1
             this.changeThumbnail();
             this.menuStrip1.Paint += new PaintEventHandler(this.menuStrip1_Paint);
             this.titlePanel.Paint += new PaintEventHandler(this.titlePanel_Paint);
+            this.Click += new EventHandler(this.Form1_Click);
+        }
+
+        private void Form1_Click(object sender, EventArgs e) {
+            this.menuStrip1.Visible = !this.menuStrip1.Visible;
+            this.titlePanel.Visible = !this.titlePanel.Visible;
         }
 
         private void wallpaperRefreshTimer_Tick(object sender, EventArgs e)
