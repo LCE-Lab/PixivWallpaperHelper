@@ -125,6 +125,7 @@
             this.loginButton.TabIndex = 4;
             this.loginButton.Text = "登入";
             this.loginButton.UseVisualStyleBackColor = true;
+            this.loginButton.Click += new System.EventHandler(this.loginButton_Click);
             // 
             // accountGroup
             // 
@@ -195,6 +196,7 @@
             this.logoutButton.TabIndex = 2;
             this.logoutButton.Text = "登出";
             this.logoutButton.UseVisualStyleBackColor = true;
+            this.logoutButton.Click += new System.EventHandler(this.logoutButton_Click);
             // 
             // accoutLabel
             // 

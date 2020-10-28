@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Threading;
 using System.Windows.Forms;
+using WindowsFormsApp1.Pixiv.OAuth;
 
 namespace WindowsFormsApp1
 {
@@ -14,7 +15,18 @@ namespace WindowsFormsApp1
         {
             InitializeComponent();
         }
+
+        private Tokens tokens;
+        public Tokens LoginTokens
+        {
+            set
+            {
+                tokens = value;
+            }
+        }
         private static string appGuid = "7bcbe405-0325-4f8d-8527-afd151d13ff4";
+        private static string path = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\PixivWallpapers";
+
         private void MainForm_Load(object sender, EventArgs e)
         {
             Mutex mutex = new Mutex(false, appGuid);
