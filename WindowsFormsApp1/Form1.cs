@@ -1,7 +1,8 @@
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace WindowsFormsApp1
@@ -13,9 +14,15 @@ namespace WindowsFormsApp1
         {
             InitializeComponent();
         }
-
+        private static string appGuid = "7bcbe405-0325-4f8d-8527-afd151d13ff4";
         private void Form1_Load(object sender, EventArgs e)
         {
+            Mutex mutex = new Mutex(false, appGuid);
+            if (!mutex.WaitOne(0, false))
+            {
+                MessageBox.Show("Instance already running");
+                this.Close();
+            }
             this.changeThumbnail();
             this.menuStrip1.Paint += new PaintEventHandler(this.menuStrip1_Paint);
             this.titlePanel.Paint += new PaintEventHandler(this.titlePanel_Paint);
