@@ -88,7 +88,7 @@ namespace WindowsFormsApp1.Pixiv.OAuth
             var json = await response.Content.ReadAsStringAsync();
             var authorize = JToken.Parse(json).SelectToken("response").ToObject<Authorize>();
 
-            //SaveUserData.SaveAuthData(authorize);
+            SaveUserData.SaveAuthData(authorize);
 
             return new Tokens(authorize.AccessToken);
         }

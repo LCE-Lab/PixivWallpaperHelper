@@ -18,6 +18,13 @@ namespace WindowsFormsApp1.Properties
     {
 
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
+        internal string KEY_PIXIV_ACCESS_TOKEN;
+        internal string KEY_PIXIV_REFRESH_TOKEN;
+        internal string KEY_PIXIV_DEVICE_TOKEN;
+        internal long? KEY_PIXIV_USER_ID;
+        internal string KEY_PIXIV_USER_USERNAME;
+        internal string KEY_PIXIV_USER_NAME;
+        internal string KEY_PIXIV_USER_IMG;
 
         public static Settings Default
         {
