@@ -33,9 +33,9 @@
             this.titleLabel = new System.Windows.Forms.LinkLabel();
             this.authorLabel = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.titlePanel = new System.Windows.Forms.Panel();
             this.設定ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.重新整理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.titlePanel = new System.Windows.Forms.Panel();
             this.menuStrip1.SuspendLayout();
             this.titlePanel.SuspendLayout();
             this.SuspendLayout();
@@ -70,7 +70,7 @@
             this.authorLabel.BackColor = System.Drawing.Color.Transparent;
             this.authorLabel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.authorLabel.ForeColor = System.Drawing.Color.White;
-            this.authorLabel.Location = new System.Drawing.Point(23, 44);
+            this.authorLabel.Location = new System.Drawing.Point(14, 44);
             this.authorLabel.Name = "authorLabel";
             this.authorLabel.Size = new System.Drawing.Size(105, 17);
             this.authorLabel.TabIndex = 4;
@@ -85,20 +85,9 @@
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.menuStrip1.Size = new System.Drawing.Size(728, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(752, 24);
             this.menuStrip1.TabIndex = 6;
             this.menuStrip1.Text = "menuStrip1";
-            // 
-            // titlePanel
-            // 
-            this.titlePanel.BackColor = System.Drawing.Color.Transparent;
-            this.titlePanel.Controls.Add(this.authorLabel);
-            this.titlePanel.Controls.Add(this.titleLabel);
-            this.titlePanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.titlePanel.Location = new System.Drawing.Point(0, 329);
-            this.titlePanel.Name = "titlePanel";
-            this.titlePanel.Size = new System.Drawing.Size(728, 72);
-            this.titlePanel.TabIndex = 7;
             // 
             // 設定ToolStripMenuItem
             // 
@@ -118,20 +107,29 @@
             this.重新整理ToolStripMenuItem.Text = "重新整理";
             this.重新整理ToolStripMenuItem.Click += new System.EventHandler(this.重新整理ToolStripMenuItem_Click);
             // 
+            // titlePanel
+            // 
+            this.titlePanel.BackColor = System.Drawing.Color.Transparent;
+            this.titlePanel.Controls.Add(this.authorLabel);
+            this.titlePanel.Controls.Add(this.titleLabel);
+            this.titlePanel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.titlePanel.Location = new System.Drawing.Point(0, 321);
+            this.titlePanel.Name = "titlePanel";
+            this.titlePanel.Size = new System.Drawing.Size(752, 72);
+            this.titlePanel.TabIndex = 7;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(728, 401);
+            this.ClientSize = new System.Drawing.Size(752, 393);
             this.Controls.Add(this.titlePanel);
             this.Controls.Add(this.menuStrip1);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Pixiv Wallpaper Helper";
             this.Load += new System.EventHandler(this.Form1_Load);
