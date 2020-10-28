@@ -7,15 +7,15 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApp1
 {
-    public partial class Form1 : Form
+    public partial class MainForm : Form
     {
         private string currentImagePath = "";
-        public Form1()
+        public MainForm()
         {
             InitializeComponent();
         }
         private static string appGuid = "7bcbe405-0325-4f8d-8527-afd151d13ff4";
-        private void Form1_Load(object sender, EventArgs e)
+        private void MainForm_Load(object sender, EventArgs e)
         {
             Mutex mutex = new Mutex(false, appGuid);
             if (!mutex.WaitOne(0, false))
