@@ -1,4 +1,4 @@
-﻿using Microsoft.Win32;
+using Microsoft.Win32;
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -47,7 +47,7 @@ namespace WindowsFormsApp1
         {
             LinearGradientBrush brush = new LinearGradientBrush(
                 this.menuStrip1.ClientRectangle,
-                Color.Black,
+                Color.FromArgb(204, 0, 0, 0),
                 Color.FromArgb(0, 0, 0, 0),
                 90F
             );
@@ -58,7 +58,7 @@ namespace WindowsFormsApp1
             LinearGradientBrush brush = new LinearGradientBrush(
                 this.titlePanel.ClientRectangle,
                 Color.FromArgb(0, 0, 0, 0),
-                Color.Black,
+                Color.FromArgb(204, 0, 0, 0),
                 90F
             );
             e.Graphics.FillRectangle(brush, this.titlePanel.ClientRectangle);
@@ -77,6 +77,7 @@ namespace WindowsFormsApp1
                 string newPath = this.getCurrentWallpaperPath();
                 if (!newPath.Equals(this.currentImagePath))
                 {
+                    this.BackColor = Color.Black;
                     this.currentImagePath = newPath;
                     Image image = Image.FromFile(newPath);
                     if (this.BackgroundImage != null) this.BackgroundImage.Dispose();
