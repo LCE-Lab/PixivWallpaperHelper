@@ -17,9 +17,28 @@ namespace WindowsFormsApp1
             InitializeComponent();
         }
 
-        private void loginBtn_Click(object sender, EventArgs e)
+        private void modeCombo_SelectedIndexChanged(object sender, EventArgs e)
         {
+            switch (this.modeCombo.SelectedItem) {
+                case "排行榜":
+                    this.grabModeControl.SelectedIndex = 0;
+                    break;
+                case "推薦":
+                    this.grabModeControl.SelectedIndex = 2;
+                    break;
+                case "收藏":
+                    this.grabModeControl.SelectedIndex = 1;
+                    break;
+                default:
+                    this.grabModeControl.SelectedIndex = 2;
+                    break;
+            }
+        }
 
+        private void SettingForm_Load(object sender, EventArgs e)
+        {
+            this.modeCombo.SelectedItem = "排行榜";
+            this.rankModeCombo.SelectedItem = "每週";
         }
     }
 }
