@@ -25,7 +25,7 @@ namespace PixivWallpaperHelper.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("30")]
         public decimal countNum {
             get {
                 return ((decimal)(this["countNum"]));
@@ -37,7 +37,7 @@ namespace PixivWallpaperHelper.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool originPictureCheck {
             get {
                 return ((bool)(this["originPictureCheck"]));
@@ -49,7 +49,7 @@ namespace PixivWallpaperHelper.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool deleteCheck {
             get {
                 return ((bool)(this["deleteCheck"]));
@@ -61,7 +61,7 @@ namespace PixivWallpaperHelper.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("排行榜")]
         public string modeCombo {
             get {
                 return ((string)(this["modeCombo"]));
@@ -73,7 +73,7 @@ namespace PixivWallpaperHelper.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("每週")]
         public string rankModeCombo {
             get {
                 return ((string)(this["rankModeCombo"]));
@@ -109,7 +109,7 @@ namespace PixivWallpaperHelper.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
         public bool paintingCheck {
             get {
                 return ((bool)(this["paintingCheck"]));
@@ -121,7 +121,7 @@ namespace PixivWallpaperHelper.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        [global::System.Configuration.DefaultSettingValueAttribute("1000")]
         public decimal resolutionNum {
             get {
                 return ((decimal)(this["resolutionNum"]));
