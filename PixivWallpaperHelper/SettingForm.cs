@@ -7,10 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WindowsFormsApp1.Pixiv.OAuth;
-using WindowsFormsApp1.Pixiv.Utils;
+using PixivWallpaperHelper.Pixiv.OAuth;
+using PixivWallpaperHelper.Pixiv.Utils;
 
-namespace WindowsFormsApp1
+namespace PixivWallpaperHelper
 {
     public partial class SettingForm : Form
     {
@@ -79,14 +79,14 @@ namespace WindowsFormsApp1
 
         private void checkLogin()
         {
-            if (Properties.Settings.Default.KEY_PIXIV_USER_NAME != null)
+            if (Properties.Auth.Default.KEY_PIXIV_USER_NAME != "")
             {
 
-                accoutLabel.Text = Properties.Settings.Default.KEY_PIXIV_USER_NAME;
-                usernameLabel.Text = Properties.Settings.Default.KEY_PIXIV_USER_USERNAME;
+                accoutLabel.Text = Properties.Auth.Default.KEY_PIXIV_USER_NAME;
+                usernameLabel.Text = Properties.Auth.Default.KEY_PIXIV_USER_USERNAME;
                 UsernameBox.Text = "";
                 PasswordBox.Text = "";
-                profileImg.Load(Properties.Settings.Default.KEY_PIXIV_USER_IMG);
+                profileImg.Load(Properties.Auth.Default.KEY_PIXIV_USER_IMG);
                 accountControl.SelectedIndex = 1;
             }
             else
