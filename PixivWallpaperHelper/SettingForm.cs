@@ -99,7 +99,7 @@ namespace PixivWallpaperHelper
 
         private void logoutButton_Click(object sender, EventArgs e)
         {
-            SaveUserData.ClearAuthData();
+            SaveData.ClearAuthData();
             checkLogin();
         }
     }

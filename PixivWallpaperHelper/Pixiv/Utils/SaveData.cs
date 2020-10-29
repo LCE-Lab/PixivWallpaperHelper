@@ -8,7 +8,7 @@ using PixivWallpaperHelper.Pixiv.Objects;
 
 namespace PixivWallpaperHelper.Pixiv.Utils
 {
-    public class SaveUserData
+    public class SaveData
     {
         public static void SaveAuthData(Authorize authorize = null)
         {
@@ -25,6 +25,11 @@ namespace PixivWallpaperHelper.Pixiv.Utils
         public static void ClearAuthData()
         {
             SaveAuthData();
+        }
+
+        public static void SaveSettingsData()
+        {
+
         }
     }
 }
