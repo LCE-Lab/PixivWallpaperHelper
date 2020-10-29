@@ -15,9 +15,11 @@ namespace PixivWallpaperHelper
 {
     public partial class SettingForm : Form
     {
+        private MainForm mainForm;
         public SettingForm()
         {
             InitializeComponent();
+            mainForm = (MainForm)Owner;
         }
 
         private void modeCombo_SelectedIndexChanged(object sender, EventArgs e)
@@ -69,7 +71,6 @@ namespace PixivWallpaperHelper
         {
             if (UsernameBox.Text != "" && PasswordBox.Text != "")
             {
-                MainForm mainForm = (MainForm)Owner;
                 try
                 {
                     mainForm.LoginTokens = await Auth.AuthorizeAsync(UsernameBox.Text, PasswordBox.Text);
@@ -100,7 +101,6 @@ namespace PixivWallpaperHelper
         {
             if (Properties.Auth.Default.KEY_PIXIV_USER_LOGIN)
             {
-
                 accoutLabel.Text = Properties.Auth.Default.KEY_PIXIV_USER_NAME;
                 usernameLabel.Text = Properties.Auth.Default.KEY_PIXIV_USER_USERNAME;
                 UsernameBox.Text = "";
