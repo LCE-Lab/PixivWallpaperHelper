@@ -98,7 +98,7 @@ namespace PixivWallpaperHelper
 
         private void CheckLogin()
         {
-            if (Properties.Auth.Default.KEY_PIXIV_USER_NAME != "")
+            if (Properties.Auth.Default.KEY_PIXIV_USER_LOGIN)
             {
 
                 accoutLabel.Text = Properties.Auth.Default.KEY_PIXIV_USER_NAME;

@@ -106,5 +106,17 @@ namespace PixivWallpaperHelper.Properties {
                 this["KEY_PIXIV_USER_IMG"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool KEY_PIXIV_USER_LOGIN {
+            get {
+                return ((bool)(this["KEY_PIXIV_USER_LOGIN"]));
+            }
+            set {
+                this["KEY_PIXIV_USER_LOGIN"] = value;
+            }
+        }
     }
 }

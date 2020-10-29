@@ -1,5 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="WindowsFormsApp1.Properties" GeneratedClassName="Auth">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="PixivWallpaperHelper.Properties" GeneratedClassName="Auth">
   <Profiles />
   <Settings>
     <Setting Name="KEY_PIXIV_ACCESS_TOKEN" Type="System.String" Scope="User">
@@ -22,6 +22,9 @@
     </Setting>
     <Setting Name="KEY_PIXIV_USER_IMG" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="KEY_PIXIV_USER_LOGIN" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>

@@ -20,6 +20,7 @@ namespace PixivWallpaperHelper.Pixiv.Utils
             Properties.Auth.Default.KEY_PIXIV_USER_USERNAME = authorize == null ? "" : authorize.User.Account;
             Properties.Auth.Default.KEY_PIXIV_USER_NAME = authorize == null ? "" : authorize.User.Name;
             Properties.Auth.Default.KEY_PIXIV_USER_IMG = authorize == null ? "" : authorize.User.ProfileImageUrls.Px170x170;
+            Properties.Auth.Default.KEY_PIXIV_USER_LOGIN = authorize != null;
             Properties.Auth.Default.Save();
         }
 
