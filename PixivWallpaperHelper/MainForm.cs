@@ -5,6 +5,7 @@ using System.Drawing.Drawing2D;
 using System.Threading;
 using System.Windows.Forms;
 using PixivWallpaperHelper.Pixiv.OAuth;
+using System.IO;
 
 namespace PixivWallpaperHelper
 {
@@ -29,6 +30,7 @@ namespace PixivWallpaperHelper
 
         private void MainForm_Load(object sender, EventArgs e)
         {
+            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
             Mutex mutex = new Mutex(false, appGuid);
             if (!mutex.WaitOne(0, false))
             {
