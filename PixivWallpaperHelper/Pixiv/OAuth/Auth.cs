@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Authentication;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
@@ -83,7 +84,7 @@ namespace PixivWallpaperHelper.Pixiv.OAuth
             });
             var response = await httpClient.PostAsync("https://oauth.secure.pixiv.net/auth/token", param);
             if (!response.IsSuccessStatusCode)
-                throw new InvalidOperationException();
+                throw new AuthenticationException();
 
             var json = await response.Content.ReadAsStringAsync();
             var authorize = JToken.Parse(json).SelectToken("response").ToObject<Authorize>();

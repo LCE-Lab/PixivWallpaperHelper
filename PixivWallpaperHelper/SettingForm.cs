@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security.Authentication;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -15,11 +16,9 @@ namespace PixivWallpaperHelper
 {
     public partial class SettingForm : Form
     {
-        private MainForm mainForm;
         public SettingForm()
         {
             InitializeComponent();
-            mainForm = (MainForm)Owner;
         }
 
         private void modeCombo_SelectedIndexChanged(object sender, EventArgs e)
@@ -73,10 +72,10 @@ namespace PixivWallpaperHelper
             {
                 try
                 {
-                    mainForm.LoginTokens = await Auth.AuthorizeAsync(UsernameBox.Text, PasswordBox.Text);
+                    var tokens = await Auth.AuthorizeAsync(UsernameBox.Text, PasswordBox.Text);
                     CheckLogin();
                 }
-                catch
+                catch (AuthenticationException)
                 {
                     MessageBox.Show("使用者名稱或密碼錯誤", "登入失敗", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -105,7 +104,7 @@ namespace PixivWallpaperHelper
                 usernameLabel.Text = Properties.Auth.Default.KEY_PIXIV_USER_USERNAME;
                 UsernameBox.Text = "";
                 PasswordBox.Text = "";
-                profileImg.Load(Properties.Auth.Default.KEY_PIXIV_USER_IMG);
+                profileImg.Image = Pixiv.Utils.Image.SaveImage(Properties.Auth.Default.KEY_PIXIV_USER_IMG);
                 accountControl.SelectedIndex = 1;
             }
             else

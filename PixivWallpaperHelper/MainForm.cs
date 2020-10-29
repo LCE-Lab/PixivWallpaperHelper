@@ -12,25 +12,17 @@ namespace PixivWallpaperHelper
     public partial class MainForm : Form
     {
         private string currentImagePath = "";
+        private SettingForm settingForm;
         public MainForm()
         {
             InitializeComponent();
+            this.settingForm = new SettingForm();
         }
 
-        private Tokens tokens;
-        public Tokens LoginTokens
-        {
-            set
-            {
-                tokens = value;
-            }
-        }
         private static string appGuid = "7bcbe405-0325-4f8d-8527-afd151d13ff4";
-        private static string path = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\PixivWallpapers";
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
             Mutex mutex = new Mutex(false, appGuid);
             if (!mutex.WaitOne(0, false))
             {
@@ -61,7 +53,6 @@ namespace PixivWallpaperHelper
 
         private void 設定ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SettingForm settingForm = new SettingForm();
             settingForm.ShowDialog(this);
         }
 
