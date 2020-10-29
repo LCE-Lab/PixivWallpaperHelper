@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -37,13 +38,31 @@ namespace PixivWallpaperHelper
             }
         }
 
+        private void ValueChangedEvent(Object sender, EventArgs e)
+        {
+            var settings = new Dictionary<string, dynamic>
+            {
+                { "countNum", countNum.Value } ,
+                { "originPictureCheck", originalPictureCheck.Checked } ,
+                { "deleteCheck", deleteCheck.Checked } ,
+                { "modeCombo", modeCombo.SelectedItem.ToString() } ,
+                { "rankModeCombo", rankModeCombo.SelectedItem.ToString() } ,
+                { "privateColletcion", privateCollection.Checked } ,
+                { "R18Check", R18Check.Checked } ,
+                { "paintingCheck", paintingCheck.Checked } ,
+                { "resolutionNum", resolutionNum.Value } ,
+                { "viewCountNum", viewCountNum.Value } ,
+                { "collectionNum", collectionNum.Value }
+            };
+
+            SaveData.SaveSettingsData(settings);
+        }
+
         private void SettingForm_Load(object sender, EventArgs e)
         {
-            this.modeCombo.SelectedItem = "排行榜";
-            this.rankModeCombo.SelectedItem = "每週";
-            UsernameBox.KeyPress += new KeyPressEventHandler(CheckEnter);
-            PasswordBox.KeyPress += new KeyPressEventHandler(CheckEnter);
-            checkLogin();
+            SetSetting();
+            RegisterEvent();
+            CheckLogin();
         }
 
         private async void loginButton_Click(object sender, EventArgs e)
@@ -54,7 +73,7 @@ namespace PixivWallpaperHelper
                 try
                 {
                     mainForm.LoginTokens = await Auth.AuthorizeAsync(UsernameBox.Text, PasswordBox.Text);
-                    checkLogin();
+                    CheckLogin();
                 }
                 catch
                 {
@@ -77,7 +96,7 @@ namespace PixivWallpaperHelper
             }
         }
 
-        private void checkLogin()
+        private void CheckLogin()
         {
             if (Properties.Auth.Default.KEY_PIXIV_USER_NAME != "")
             {
@@ -100,7 +119,72 @@ namespace PixivWallpaperHelper
         private void logoutButton_Click(object sender, EventArgs e)
         {
             SaveData.ClearAuthData();
-            checkLogin();
+            CheckLogin();
+        }
+
+        private void RegisterEvent()
+        {
+            // 登入 Enter Event
+            UsernameBox.KeyPress += new KeyPressEventHandler(CheckEnter);
+            PasswordBox.KeyPress += new KeyPressEventHandler(CheckEnter);
+
+            // 選項 Event
+            countNum.ValueChanged += new EventHandler(ValueChangedEvent);
+            originalPictureCheck.CheckedChanged += new EventHandler(ValueChangedEvent);
+            deleteCheck.CheckedChanged += new EventHandler(ValueChangedEvent);
+            modeCombo.SelectedValueChanged += new EventHandler(ValueChangedEvent);
+            rankModeCombo.SelectedValueChanged += new EventHandler(ValueChangedEvent);
+            privateCollection.CheckedChanged += new EventHandler(ValueChangedEvent);
+            R18Check.CheckedChanged += new EventHandler(ValueChangedEvent);
+            paintingCheck.CheckedChanged += new EventHandler(ValueChangedEvent);
+            resolutionNum.ValueChanged += new EventHandler(ValueChangedEvent);
+            viewCountNum.ValueChanged += new EventHandler(ValueChangedEvent);
+            collectionNum.ValueChanged += new EventHandler(ValueChangedEvent);
+        }
+
+        private void SetSetting()
+        {
+            var settingsData = SaveData.GetSettingsData();
+
+            foreach (var results in settingsData)
+            {
+                switch (results.Key)
+                {
+                    case "countNum":
+                        countNum.Value = results.Value;
+                        break;
+                    case "originPictureCheck":
+                        originalPictureCheck.Checked = results.Value;
+                        break;
+                    case "deleteCheck":
+                        deleteCheck.Checked = results.Value;
+                        break;
+                    case "modeCombo":
+                        modeCombo.SelectedItem = results.Value;
+                        break;
+                    case "rankModeCombo":
+                        rankModeCombo.SelectedItem = results.Value;
+                        break;
+                    case "privateColletcion":
+                        privateCollection.Checked = results.Value;
+                        break;
+                    case "R18Check":
+                        R18Check.Checked = results.Value;
+                        break;
+                    case "paintingCheck":
+                        paintingCheck.Checked = results.Value;
+                        break;
+                    case "resolutionNum":
+                        resolutionNum.Value = results.Value;
+                        break;
+                    case "viewCountNum":
+                        viewCountNum.Value = results.Value;
+                        break;
+                    case "collectionNum":
+                        collectionNum.Value = results.Value;
+                        break;
+                }
+            }
         }
     }
 }

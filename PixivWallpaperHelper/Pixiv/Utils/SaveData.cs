@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net.Security;
 using System.Text;
@@ -27,9 +28,25 @@ namespace PixivWallpaperHelper.Pixiv.Utils
             SaveAuthData();
         }
 
-        public static void SaveSettingsData()
+        public static void SaveSettingsData(Dictionary<string, dynamic> settingValue)
         {
+            foreach (var results in settingValue)
+            {
+                Properties.Settings.Default[results.Key] = results.Value;
+            }
+            Properties.Settings.Default.Save();
+        }
 
+        public static Dictionary<string, dynamic> GetSettingsData()
+        {
+            Dictionary<string, dynamic> settings = new Dictionary<string, dynamic>();
+
+            foreach (SettingsProperty results in Properties.Settings.Default.Properties)
+            {
+                settings.Add(results.Name, Properties.Settings.Default[results.Name]);
+            }
+
+            return settings;
         }
     }
 }
