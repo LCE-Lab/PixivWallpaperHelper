@@ -2,7 +2,7 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="PixivWallpaperHelper.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="countNum" Type="System.Int32" Scope="User">
+    <Setting Name="countNum" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
     <Setting Name="originPictureCheck" Type="System.Boolean" Scope="User">
@@ -26,13 +26,13 @@
     <Setting Name="paintingCheck" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
-    <Setting Name="resolutionNum" Type="System.Int32" Scope="User">
+    <Setting Name="resolutionNum" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="viewCountNum" Type="System.Int32" Scope="User">
+    <Setting Name="viewCountNum" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
-    <Setting Name="collectionNum" Type="System.Int32" Scope="User">
+    <Setting Name="collectionNum" Type="System.Decimal" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>
   </Settings>

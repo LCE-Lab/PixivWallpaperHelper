@@ -26,9 +26,9 @@ namespace PixivWallpaperHelper.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int countNum {
+        public decimal countNum {
             get {
-                return ((int)(this["countNum"]));
+                return ((decimal)(this["countNum"]));
             }
             set {
                 this["countNum"] = value;
@@ -122,9 +122,9 @@ namespace PixivWallpaperHelper.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int resolutionNum {
+        public decimal resolutionNum {
             get {
-                return ((int)(this["resolutionNum"]));
+                return ((decimal)(this["resolutionNum"]));
             }
             set {
                 this["resolutionNum"] = value;
@@ -134,9 +134,9 @@ namespace PixivWallpaperHelper.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int viewCountNum {
+        public decimal viewCountNum {
             get {
-                return ((int)(this["viewCountNum"]));
+                return ((decimal)(this["viewCountNum"]));
             }
             set {
                 this["viewCountNum"] = value;
@@ -146,9 +146,9 @@ namespace PixivWallpaperHelper.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int collectionNum {
+        public decimal collectionNum {
             get {
-                return ((int)(this["collectionNum"]));
+                return ((decimal)(this["collectionNum"]));
             }
             set {
                 this["collectionNum"] = value;
