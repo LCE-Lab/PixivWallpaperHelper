@@ -55,7 +55,7 @@ namespace PixivWallpaperHelper
                 { "collectionNum", collectionNum.Value }
             };
 
-            SaveData.SaveSettingsData(settings);
+            Data.SaveSettingsData(settings);
         }
 
         private void SettingForm_Load(object sender, EventArgs e)
@@ -118,7 +118,7 @@ namespace PixivWallpaperHelper
 
         private void logoutButton_Click(object sender, EventArgs e)
         {
-            SaveData.ClearAuthData();
+            Data.ClearAuthData();
             CheckLogin();
         }
 
@@ -144,7 +144,7 @@ namespace PixivWallpaperHelper
 
         private void SetSetting()
         {
-            var settingsData = SaveData.GetSettingsData();
+            var settingsData = Data.GetSettingsData();
 
             foreach (var results in settingsData)
             {

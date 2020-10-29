@@ -64,7 +64,7 @@
     <Compile Include="Pixiv\Objects\UserFeed.cs" />
     <Compile Include="Pixiv\Objects\Work.cs" />
     <Compile Include="Pixiv\Utils\MD5.cs" />
-    <Compile Include="Pixiv\Utils\SaveData.cs" />
+    <Compile Include="Pixiv\Utils\Data.cs" />
     <Compile Include="Properties\Auth.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>

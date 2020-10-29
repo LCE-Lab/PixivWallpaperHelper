@@ -88,7 +88,7 @@ namespace PixivWallpaperHelper.Pixiv.OAuth
             var json = await response.Content.ReadAsStringAsync();
             var authorize = JToken.Parse(json).SelectToken("response").ToObject<Authorize>();
 
-            SaveData.SaveAuthData(authorize);
+            Data.SaveAuthData(authorize);
 
             return new Tokens(authorize.AccessToken);
         }

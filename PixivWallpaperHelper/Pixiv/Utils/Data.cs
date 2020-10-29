@@ -9,7 +9,7 @@ using PixivWallpaperHelper.Pixiv.Objects;
 
 namespace PixivWallpaperHelper.Pixiv.Utils
 {
-    public class SaveData
+    public class Data
     {
         public static void SaveAuthData(Authorize authorize = null)
         {
