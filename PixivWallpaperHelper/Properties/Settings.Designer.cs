@@ -22,5 +22,137 @@ namespace PixivWallpaperHelper.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int countNum {
+            get {
+                return ((int)(this["countNum"]));
+            }
+            set {
+                this["countNum"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool originPictureCheck {
+            get {
+                return ((bool)(this["originPictureCheck"]));
+            }
+            set {
+                this["originPictureCheck"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool deleteCheck {
+            get {
+                return ((bool)(this["deleteCheck"]));
+            }
+            set {
+                this["deleteCheck"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string modeCombo {
+            get {
+                return ((string)(this["modeCombo"]));
+            }
+            set {
+                this["modeCombo"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string rankModeCombo {
+            get {
+                return ((string)(this["rankModeCombo"]));
+            }
+            set {
+                this["rankModeCombo"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool privateColletcion {
+            get {
+                return ((bool)(this["privateColletcion"]));
+            }
+            set {
+                this["privateColletcion"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool R18Check {
+            get {
+                return ((bool)(this["R18Check"]));
+            }
+            set {
+                this["R18Check"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool paintingCheck {
+            get {
+                return ((bool)(this["paintingCheck"]));
+            }
+            set {
+                this["paintingCheck"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int resolutionNum {
+            get {
+                return ((int)(this["resolutionNum"]));
+            }
+            set {
+                this["resolutionNum"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int viewCountNum {
+            get {
+                return ((int)(this["viewCountNum"]));
+            }
+            set {
+                this["viewCountNum"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int collectionNum {
+            get {
+                return ((int)(this["collectionNum"]));
+            }
+            set {
+                this["collectionNum"] = value;
+            }
+        }
     }
 }
