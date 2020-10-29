@@ -7,10 +7,10 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-using WindowsFormsApp1.Pixiv.Objects;
-using WindowsFormsApp1.Pixiv.Utils;
+using PixivWallpaperHelper.Pixiv.Objects;
+using PixivWallpaperHelper.Pixiv.Utils;
 
-namespace WindowsFormsApp1.Pixiv.OAuth
+namespace PixivWallpaperHelper.Pixiv.OAuth
 {
     public enum MethodType
     {

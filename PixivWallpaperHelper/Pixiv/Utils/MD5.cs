@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WindowsFormsApp1.Pixiv.Utils
+namespace PixivWallpaperHelper.Pixiv.Utils
 {
     public static class MD5
     {

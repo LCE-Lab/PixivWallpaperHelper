@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WindowsFormsApp1.Pixiv.Objects
+namespace PixivWallpaperHelper.Pixiv.Objects
 {
     public class ProfileImageUrls
     {

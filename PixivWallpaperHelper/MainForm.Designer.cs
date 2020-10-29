@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApp1
+﻿namespace PixivWallpaperHelper
 {
     partial class MainForm
     {
@@ -92,7 +92,7 @@
             // 設定ToolStripMenuItem
             // 
             this.設定ToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.設定ToolStripMenuItem.Image = global::WindowsFormsApp1.Properties.Resources.齒輪;
+            this.設定ToolStripMenuItem.Image = global::PixivWallpaperHelper.Properties.Resources.齒輪;
             this.設定ToolStripMenuItem.Name = "設定ToolStripMenuItem";
             this.設定ToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
             this.設定ToolStripMenuItem.Text = "設定";
@@ -101,7 +101,7 @@
             // 重新整理ToolStripMenuItem
             // 
             this.重新整理ToolStripMenuItem.ForeColor = System.Drawing.Color.White;
-            this.重新整理ToolStripMenuItem.Image = global::WindowsFormsApp1.Properties.Resources.重新整理;
+            this.重新整理ToolStripMenuItem.Image = global::PixivWallpaperHelper.Properties.Resources.重新整理;
             this.重新整理ToolStripMenuItem.Name = "重新整理ToolStripMenuItem";
             this.重新整理ToolStripMenuItem.Size = new System.Drawing.Size(83, 20);
             this.重新整理ToolStripMenuItem.Text = "重新整理";
