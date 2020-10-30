@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PixivWallpaperHelper.Pixiv.Objects;
 
-namespace PixivWallpaperHelper.Pixiv.Utils
+namespace PixivWallpaperHelper.Utils
 {
     public class Data
     {

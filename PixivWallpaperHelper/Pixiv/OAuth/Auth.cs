@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using PixivWallpaperHelper.Pixiv.Objects;
 using PixivWallpaperHelper.Pixiv.Utils;
+using PixivWallpaperHelper.Utils;
 
 namespace PixivWallpaperHelper.Pixiv.OAuth
 {
@@ -251,6 +252,38 @@ namespace PixivWallpaperHelper.Pixiv.OAuth
                 param.Add("date", date);
 
             return await this.AccessApiAsync<Paginated<Rank>>(MethodType.GET, url, param);
+        }
+    }
+
+    public class PublicAPI
+    {
+        public static async Task<AsyncResponse> SendRequestAsync(string url)
+        {
+            var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Add("Referer", "https://www.pixiv.net");
+            httpClient.DefaultRequestHeaders.Add("User-Agent", "PixivAndroidApp/5.0.64 (Android 6.0)");
+
+            var uri = url;
+
+            var response = await httpClient.GetAsync(uri);
+            AsyncResponse asyncResponse = new AsyncResponse(response);
+
+            return asyncResponse;
+        }
+        private static async Task AccessApiAsync(string url)
+        {
+            using (var response = await SendRequestAsync(url))
+            {
+                var json = await response.GetResponseStringAsync();
+                Console.WriteLine(json);
+            }
+        }
+
+        public static async Task Fallback()
+        {
+            var url = "https://public-api.secure.pixiv.net/v1/ranking/all";
+
+            await AccessApiAsync(url);
         }
     }
 }

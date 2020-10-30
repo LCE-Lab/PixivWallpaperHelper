@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using PixivWallpaperHelper.Pixiv.OAuth;
-using PixivWallpaperHelper.Pixiv.Utils;
+using PixivWallpaperHelper.Utils;
 
 namespace PixivWallpaperHelper
 {
@@ -104,7 +104,7 @@ namespace PixivWallpaperHelper
                 usernameLabel.Text = Properties.Auth.Default.KEY_PIXIV_USER_USERNAME;
                 UsernameBox.Text = "";
                 PasswordBox.Text = "";
-                profileImg.Image = Pixiv.Utils.Image.SaveImage(Properties.Auth.Default.KEY_PIXIV_USER_IMG);
+                profileImg.Image = Utils.Image.SaveImage(Properties.Auth.Default.KEY_PIXIV_USER_IMG);
                 accountControl.SelectedIndex = 1;
             }
             else

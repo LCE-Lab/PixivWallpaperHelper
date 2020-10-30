@@ -7,7 +7,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PixivWallpaperHelper.Pixiv.Utils
+namespace PixivWallpaperHelper.Utils
 {
     public class Image
     {

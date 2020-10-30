@@ -13,10 +13,12 @@ namespace PixivWallpaperHelper
     {
         private string currentImagePath = "";
         private SettingForm settingForm;
+        private WallpaperFetcher wallpaper;
         public MainForm()
         {
             InitializeComponent();
             this.settingForm = new SettingForm();
+            this.wallpaper = new WallpaperFetcher();
         }
 
         private static string appGuid = "7bcbe405-0325-4f8d-8527-afd151d13ff4";
