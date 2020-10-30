@@ -32,10 +32,7 @@ namespace PixivWallpaperHelper
                 this.Close();
             }
             this.changeThumbnail();
-            this.menuStrip1.Paint += new PaintEventHandler(this.menuStrip1_Paint);
-            this.titlePanel.Paint += new PaintEventHandler(this.titlePanel_Paint);
-            this.Click += new EventHandler(this.Form1_Click);
-            this.ResizeEnd += new EventHandler(this.Form1_ResizeEnd);
+            this.RegisterEvent();
         }
 
         private void Form1_Click(object sender, EventArgs e) {
@@ -151,6 +148,14 @@ namespace PixivWallpaperHelper
             {
                 return "";
             }
+        }
+
+        private void RegisterEvent()
+        {
+            this.menuStrip1.Paint += new PaintEventHandler(this.menuStrip1_Paint);
+            this.titlePanel.Paint += new PaintEventHandler(this.titlePanel_Paint);
+            this.Click += new EventHandler(this.Form1_Click);
+            this.ResizeEnd += new EventHandler(this.Form1_ResizeEnd);
         }
     }
 }
