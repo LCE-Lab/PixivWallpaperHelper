@@ -1,16 +1,13 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PixivWallpaperHelper.Pixiv.Objects
 {
     public class ImageUrls
     {
         [JsonProperty("px_128x128")]
-        public string Px128x128 { get; set; }
+        public string Px128X128 { get; set; }
 
         [JsonProperty("small")]
         public string Small { get; set; }
@@ -22,8 +19,9 @@ namespace PixivWallpaperHelper.Pixiv.Objects
         public string Large { get; set; }
 
         [JsonProperty("px_480mw")]
-        public string Px480mw { get; set; }
+        public string Px480Mw { get; set; }
     }
+
     public class FavoritedCount
     {
         [JsonProperty("public")]

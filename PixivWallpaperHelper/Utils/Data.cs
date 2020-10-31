@@ -16,10 +16,11 @@ namespace PixivWallpaperHelper.Utils
             Properties.Auth.Default.KEY_PIXIV_ACCESS_TOKEN = authorize == null ? "" : authorize.AccessToken;
             Properties.Auth.Default.KEY_PIXIV_REFRESH_TOKEN = authorize == null ? "" : authorize.RefreshToken;
             Properties.Auth.Default.KEY_PIXIV_DEVICE_TOKEN = "pixiv";
-            Properties.Auth.Default.KEY_PIXIV_USER_ID = (long)(authorize == null ? 0 : authorize.User.Id);
+            // ReSharper disable once PossibleInvalidOperationException
+            Properties.Auth.Default.KEY_PIXIV_USER_ID = (long) (authorize == null ? 0 : authorize.User.Id);
             Properties.Auth.Default.KEY_PIXIV_USER_USERNAME = authorize == null ? "" : authorize.User.Account;
             Properties.Auth.Default.KEY_PIXIV_USER_NAME = authorize == null ? "" : authorize.User.Name;
-            Properties.Auth.Default.KEY_PIXIV_USER_IMG = authorize == null ? "" : authorize.User.ProfileImageUrls.Px170x170;
+            Properties.Auth.Default.KEY_PIXIV_USER_IMG = authorize == null ? "" : authorize.User.ProfileImageUrls.Px170X170;
             Properties.Auth.Default.KEY_PIXIV_USER_LOGIN = authorize != null;
             Properties.Auth.Default.Save();
         }
@@ -40,7 +41,7 @@ namespace PixivWallpaperHelper.Utils
 
         public static Dictionary<string, dynamic> GetSettingsData()
         {
-            Dictionary<string, dynamic> settings = new Dictionary<string, dynamic>();
+            var settings = new Dictionary<string, dynamic>();
 
             foreach (SettingsProperty results in Properties.Settings.Default.Properties)
             {

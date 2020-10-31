@@ -1,25 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
+﻿using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PixivWallpaperHelper.Utils
-{    public class Image
+{    public static class Image
     {
         public static Bitmap SaveImage(string url, string path = null)
         {
-            WebClient client = new WebClient();
+            var client = new WebClient();
             client.Headers["Referer"] = "https://www.pixiv.net";
-            Stream stream = client.OpenRead(url);
-            Bitmap bitmap = new Bitmap(stream);
+            var stream = client.OpenRead(url);
+            var bitmap = new Bitmap(stream);
 
             if (path != null)
             {
-                FileStream fileStream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write);
+                var fileStream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write);
                 stream.CopyTo(fileStream);
             }
 

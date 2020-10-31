@@ -1,13 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
 using System.Security.Authentication;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using PixivWallpaperHelper.Pixiv.OAuth;
 using PixivWallpaperHelper.Utils;
@@ -23,37 +16,38 @@ namespace PixivWallpaperHelper
 
         private void modeCombo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch (this.modeCombo.SelectedItem) {
+            switch (modeCombo.SelectedItem)
+            {
                 case "排行榜":
-                    this.grabModeControl.SelectedIndex = 0;
+                    grabModeControl.SelectedIndex = 0;
                     break;
                 case "推薦":
-                    this.grabModeControl.SelectedIndex = 2;
+                    grabModeControl.SelectedIndex = 2;
                     break;
                 case "收藏":
-                    this.grabModeControl.SelectedIndex = 1;
+                    grabModeControl.SelectedIndex = 1;
                     break;
                 default:
-                    this.grabModeControl.SelectedIndex = 2;
+                    grabModeControl.SelectedIndex = 2;
                     break;
             }
         }
 
-        private void ValueChangedEvent(Object sender, EventArgs e)
+        private void ValueChangedEvent(object sender, EventArgs e)
         {
             var settings = new Dictionary<string, dynamic>
             {
-                { "countNum", countNum.Value } ,
-                { "originPictureCheck", originalPictureCheck.Checked } ,
-                { "deleteCheck", deleteCheck.Checked } ,
-                { "modeCombo", modeCombo.SelectedItem.ToString() } ,
-                { "rankModeCombo", rankModeCombo.SelectedItem.ToString() } ,
-                { "privateColletcion", privateCollection.Checked } ,
-                { "R18Check", R18Check.Checked } ,
-                { "paintingCheck", paintingCheck.Checked } ,
-                { "resolutionNum", resolutionNum.Value } ,
-                { "viewCountNum", viewCountNum.Value } ,
-                { "collectionNum", collectionNum.Value }
+                {"countNum", countNum.Value},
+                {"originPictureCheck", originalPictureCheck.Checked},
+                {"deleteCheck", deleteCheck.Checked},
+                {"modeCombo", modeCombo.SelectedItem.ToString()},
+                {"rankModeCombo", rankModeCombo.SelectedItem.ToString()},
+                {"privateColletcion", privateCollection.Checked},
+                {"R18Check", R18Check.Checked},
+                {"paintingCheck", paintingCheck.Checked},
+                {"resolutionNum", resolutionNum.Value},
+                {"viewCountNum", viewCountNum.Value},
+                {"collectionNum", collectionNum.Value}
             };
 
             Data.SaveSettingsData(settings);
@@ -72,7 +66,7 @@ namespace PixivWallpaperHelper
             {
                 try
                 {
-                    var tokens = await Auth.AuthorizeAsync(UsernameBox.Text, PasswordBox.Text);
+                    await Auth.AuthorizeAsync(UsernameBox.Text, PasswordBox.Text);
                     CheckLogin();
                 }
                 catch (AuthenticationException)
@@ -88,12 +82,10 @@ namespace PixivWallpaperHelper
 
         private void CheckEnter(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == (char)13)
-            {
-                loginButton.Focus();
-                loginButton_Click(sender, e);
-                PasswordBox.Focus();
-            }
+            if (e.KeyChar != (char) 13) return;
+            loginButton.Focus();
+            loginButton_Click(sender, e);
+            PasswordBox.Focus();
         }
 
         private void CheckLogin()
@@ -104,7 +96,7 @@ namespace PixivWallpaperHelper
                 usernameLabel.Text = Properties.Auth.Default.KEY_PIXIV_USER_USERNAME;
                 UsernameBox.Text = "";
                 PasswordBox.Text = "";
-                profileImg.Image = Utils.Image.SaveImage(Properties.Auth.Default.KEY_PIXIV_USER_IMG);
+                profileImg.Image = Image.SaveImage(Properties.Auth.Default.KEY_PIXIV_USER_IMG);
                 accountControl.SelectedIndex = 1;
             }
             else
@@ -124,21 +116,21 @@ namespace PixivWallpaperHelper
         private void RegisterEvent()
         {
             // 登入 Enter Event
-            UsernameBox.KeyPress += new KeyPressEventHandler(CheckEnter);
-            PasswordBox.KeyPress += new KeyPressEventHandler(CheckEnter);
+            UsernameBox.KeyPress += CheckEnter;
+            PasswordBox.KeyPress += CheckEnter;
 
             // 選項 Event
-            countNum.ValueChanged += new EventHandler(ValueChangedEvent);
-            originalPictureCheck.CheckedChanged += new EventHandler(ValueChangedEvent);
-            deleteCheck.CheckedChanged += new EventHandler(ValueChangedEvent);
-            modeCombo.SelectedValueChanged += new EventHandler(ValueChangedEvent);
-            rankModeCombo.SelectedValueChanged += new EventHandler(ValueChangedEvent);
-            privateCollection.CheckedChanged += new EventHandler(ValueChangedEvent);
-            R18Check.CheckedChanged += new EventHandler(ValueChangedEvent);
-            paintingCheck.CheckedChanged += new EventHandler(ValueChangedEvent);
-            resolutionNum.ValueChanged += new EventHandler(ValueChangedEvent);
-            viewCountNum.ValueChanged += new EventHandler(ValueChangedEvent);
-            collectionNum.ValueChanged += new EventHandler(ValueChangedEvent);
+            countNum.ValueChanged += ValueChangedEvent;
+            originalPictureCheck.CheckedChanged += ValueChangedEvent;
+            deleteCheck.CheckedChanged += ValueChangedEvent;
+            modeCombo.SelectedValueChanged += ValueChangedEvent;
+            rankModeCombo.SelectedValueChanged += ValueChangedEvent;
+            privateCollection.CheckedChanged += ValueChangedEvent;
+            R18Check.CheckedChanged += ValueChangedEvent;
+            paintingCheck.CheckedChanged += ValueChangedEvent;
+            resolutionNum.ValueChanged += ValueChangedEvent;
+            viewCountNum.ValueChanged += ValueChangedEvent;
+            collectionNum.ValueChanged += ValueChangedEvent;
         }
 
         private void SetSetting()

@@ -1,18 +1,14 @@
 ﻿using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PixivWallpaperHelper.Pixiv.Objects
 {
-    interface IPagenated
+    internal interface IPagenated
     {
         Pagination Pagination { get; set; }
     }
 
-    public class Paginated<T> : List<T>, IPagenated
+    public abstract class Paginated<T> : List<T>, IPagenated
         where T : class, new()
     {
         public Pagination Pagination { get; set; }

@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Security.Authentication;
-using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using PixivWallpaperHelper.Pixiv.Objects;
-using PixivWallpaperHelper.Pixiv.Utils;
+using PixivWallpaperHelper.Pixiv.Util;
 using PixivWallpaperHelper.Utils;
 
 namespace PixivWallpaperHelper.Pixiv.OAuth
@@ -26,37 +24,38 @@ namespace PixivWallpaperHelper.Pixiv.OAuth
     {
         public AsyncResponse(HttpResponseMessage source)
         {
-            this.Source = source;
+            Source = source;
         }
 
         public HttpResponseMessage Source { get; }
 
         public Task<Stream> GetResponseStreamAsync()
         {
-            return this.Source.Content.ReadAsStreamAsync();
+            return Source.Content.ReadAsStreamAsync();
         }
 
         public Task<string> GetResponseStringAsync()
         {
-            return this.Source.Content.ReadAsStringAsync();
+            return Source.Content.ReadAsStringAsync();
         }
 
         public Task<byte[]> GetResponseByteArrayAsync()
         {
-            return this.Source.Content.ReadAsByteArrayAsync();
+            return Source.Content.ReadAsByteArrayAsync();
         }
 
         public void Dispose()
         {
-            this.Source?.Dispose();
+            Source?.Dispose();
         }
     }
 
     public class Auth
     {
-        private static readonly string clientID = "MOBrBDS8blbauoSck0ZfDbtuzpyT";
-        private static readonly string clientSecret = "lsACyCD94FhDUtGTXi3QzcFE2uU1hqtDaKeqrdwj";
-        private static readonly string hashSecret = "28c1fdd170a5204386cb1313c7077b34f83e4aaf4aa829ce78c231e05b0bae2c";
+        private const string clientId = "MOBrBDS8blbauoSck0ZfDbtuzpyT";
+        private const string clientSecret = "lsACyCD94FhDUtGTXi3QzcFE2uU1hqtDaKeqrdwj";
+        private const string hashSecret = "28c1fdd170a5204386cb1313c7077b34f83e4aaf4aa829ce78c231e05b0bae2c";
+
         /// <summary>
         /// <para>Available parameters:</para>
         /// <para>- <c>string</c> username (required)</para>
@@ -65,35 +64,36 @@ namespace PixivWallpaperHelper.Pixiv.OAuth
         /// <returns>Tokens.</returns>
         public static async Task<Tokens> AuthorizeAsync(string username, string password)
         {
-            var LocalTime = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Local).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'sszzz");
-            var hash = MD5.MD5code(LocalTime + hashSecret);
+            var localTime = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Local)
+                .ToString("yyyy'-'MM'-'dd'T'HH':'mm':'sszzz");
+            var hash = Md5.Md5Code(localTime + hashSecret);
 
             var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Add("User-Agent", "PixivAndroidApp/5.0.64 (Android 6.0)");
             httpClient.DefaultRequestHeaders.Add("Accept-Language", "en_US");
-            httpClient.DefaultRequestHeaders.Add("X-Client-Time", LocalTime);
+            httpClient.DefaultRequestHeaders.Add("X-Client-Time", localTime);
             httpClient.DefaultRequestHeaders.Add("X-Client-Hash", hash);
 
             var param = new FormUrlEncodedContent(new Dictionary<string, string>
             {
-                { "username", username },
-                { "password", password },
-                { "grant_type", "password" },
-                { "device_token", "pixiv" },
-                { "get_secure_url", "true" },
-                { "client_id", clientID },
-                { "client_secret", clientSecret },
+                {"username", username},
+                {"password", password},
+                {"grant_type", "password"},
+                {"device_token", "pixiv"},
+                {"get_secure_url", "true"},
+                {"client_id", clientId},
+                {"client_secret", clientSecret},
             });
             var response = await httpClient.PostAsync("https://oauth.secure.pixiv.net/auth/token", param);
             if (!response.IsSuccessStatusCode)
                 throw new AuthenticationException();
 
             var json = await response.Content.ReadAsStringAsync();
-            var authorize = JToken.Parse(json).SelectToken("response").ToObject<Authorize>();
+            var authorize = JToken.Parse(json).SelectToken("response")?.ToObject<Authorize>();
 
             Data.SaveAuthData(authorize);
 
-            return new Tokens(authorize.AccessToken);
+            return new Tokens(authorize?.AccessToken);
         }
 
         public static Tokens AuthorizeWithAccessToken(string accessToken)
@@ -108,7 +108,7 @@ namespace PixivWallpaperHelper.Pixiv.OAuth
 
         internal Tokens(string accessToken)
         {
-            this.AccessToken = accessToken;
+            AccessToken = accessToken;
         }
 
         /// <summary>
@@ -119,12 +119,13 @@ namespace PixivWallpaperHelper.Pixiv.OAuth
         /// <para>- <c>IDictionary</c> header (optional)</para>
         /// </summary>
         /// <returns>AsyncResponse.</returns>
-        public async Task<AsyncResponse> SendRequestAsync(MethodType type, string url, IDictionary<string, string> param, IDictionary<string, string> headers = null)
+        public async Task<AsyncResponse> SendRequestAsync(MethodType type, string url,
+            IDictionary<string, string> param, IDictionary<string, string> headers = null)
         {
             var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Add("Referer", "https://www.pixiv.net");
             httpClient.DefaultRequestHeaders.Add("User-Agent", "PixivAndroidApp/5.0.64 (Android 6.0)");
-            httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + this.AccessToken);
+            httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + AccessToken);
 
             if (headers != null)
             {
@@ -146,17 +147,18 @@ namespace PixivWallpaperHelper.Pixiv.OAuth
 
                 if (param != null)
                 {
-                    var query_string = "";
+                    var queryString = "";
                     foreach (KeyValuePair<string, string> kvp in param)
                     {
-                        if (query_string == "")
-                            query_string += "?";
+                        if (queryString == "")
+                            queryString += "?";
                         else
-                            query_string += "&";
+                            queryString += "&";
 
-                        query_string += kvp.Key + "=" + WebUtility.UrlEncode(kvp.Value);
+                        queryString += kvp.Key + "=" + WebUtility.UrlEncode(kvp.Value);
                     }
-                    uri += query_string;
+
+                    uri += queryString;
                 }
 
                 var response = await httpClient.DeleteAsync(uri);
@@ -168,17 +170,18 @@ namespace PixivWallpaperHelper.Pixiv.OAuth
 
                 if (param != null)
                 {
-                    var query_string = "";
+                    var queryString = "";
                     foreach (KeyValuePair<string, string> kvp in param)
                     {
-                        if (query_string == "")
-                            query_string += "?";
+                        if (queryString == "")
+                            queryString += "?";
                         else
-                            query_string += "&";
+                            queryString += "&";
 
-                        query_string += kvp.Key + "=" + WebUtility.UrlEncode(kvp.Value);
+                        queryString += kvp.Key + "=" + WebUtility.UrlEncode(kvp.Value);
                     }
-                    uri += query_string;
+
+                    uri += queryString;
                 }
 
                 var response = await httpClient.GetAsync(uri);
@@ -188,15 +191,17 @@ namespace PixivWallpaperHelper.Pixiv.OAuth
             return asyncResponse;
         }
 
-        private async Task<T> AccessApiAsync<T>(MethodType type, string url, IDictionary<string, string> param, IDictionary<string, string> headers = null) where T : class
+        private async Task<T> AccessApiAsync<T>(MethodType type, string url, IDictionary<string, string> param,
+            IDictionary<string, string> headers = null) where T : class
         {
-            using (var response = await this.SendRequestAsync(type, url, param, headers))
+            using (var response = await SendRequestAsync(type, url, param, headers))
             {
                 var json = await response.GetResponseStringAsync();
-                var obj = JToken.Parse(json).SelectToken("response").ToObject<T>();
+                var obj = JToken.Parse(json).SelectToken("response")?.ToObject<T>();
 
                 if (obj is IPagenated)
-                    ((IPagenated)obj).Pagination = JToken.Parse(json).SelectToken("pagination").ToObject<Pagination>();
+                    ((IPagenated) obj).Pagination =
+                        JToken.Parse(json).SelectToken("pagination")?.ToObject<Pagination>();
 
                 return obj;
             }
@@ -214,15 +219,15 @@ namespace PixivWallpaperHelper.Pixiv.OAuth
 
             var param = new Dictionary<string, string>
             {
-                { "relation", "all" } ,
-                { "type", "touch_nottext" } ,
-                { "show_r18", Convert.ToInt32(showR18).ToString() } ,
+                {"relation", "all"},
+                {"type", "touch_nottext"},
+                {"show_r18", Convert.ToInt32(showR18).ToString()},
             };
 
             if (maxId != 0)
                 param.Add("max_id", maxId.ToString());
 
-            return await this.AccessApiAsync<List<Feed>>(MethodType.GET, url, param);
+            return await AccessApiAsync<List<Feed>>(MethodType.GET, url, param);
         }
 
         /// <summary>
@@ -234,29 +239,30 @@ namespace PixivWallpaperHelper.Pixiv.OAuth
         /// <para>- <c>bool</c> includeSanityLevel (optional)</para>
         /// </summary>
         /// <returns>RankingAll. (Pagenated)</returns>
-        public async Task<Paginated<Rank>> GetRankingAllAsync(string mode = "daily", int page = 1, int perPage = 30, string date = "", bool includeSanityLevel = true)
+        public async Task<Paginated<Rank>> GetRankingAllAsync(string mode = "daily", int page = 1, int perPage = 30,
+            string date = "", bool includeSanityLevel = true)
         {
             var url = "https://public-api.secure.pixiv.net/v1/ranking/all";
 
             var param = new Dictionary<string, string>
             {
-                { "mode", mode } ,
-                { "page", page.ToString() } ,
-                { "per_page", perPage.ToString() } ,
-                { "include_stats", "1" } ,
-                { "include_sanity_level", Convert.ToInt32(includeSanityLevel).ToString() } ,
-                { "image_sizes", "px_128x128,small,medium,large,px_480mw" } ,
-                { "profile_image_sizes", "px_170x170,px_50x50" } ,
+                {"mode", mode},
+                {"page", page.ToString()},
+                {"per_page", perPage.ToString()},
+                {"include_stats", "1"},
+                {"include_sanity_level", Convert.ToInt32(includeSanityLevel).ToString()},
+                {"image_sizes", "px_128x128,small,medium,large,px_480mw"},
+                {"profile_image_sizes", "px_170x170,px_50x50"},
             };
 
             if (!string.IsNullOrWhiteSpace(date))
                 param.Add("date", date);
 
-            return await this.AccessApiAsync<Paginated<Rank>>(MethodType.GET, url, param);
+            return await AccessApiAsync<Paginated<Rank>>(MethodType.GET, url, param);
         }
     }
 
-    public class PublicAPI
+    public static class PublicApi
     {
         public static async Task<IllustList> Fallback()
         {
@@ -265,7 +271,7 @@ namespace PixivWallpaperHelper.Pixiv.OAuth
             httpClient.DefaultRequestHeaders.Add("User-Agent", "PixivAndroidApp/5.0.64 (Android 6.0)");
 
             var response = await httpClient.GetAsync("https://app-api.pixiv.net/v1/walkthrough/illusts");
-            AsyncResponse asyncResponse = new AsyncResponse(response);
+            var asyncResponse = new AsyncResponse(response);
 
             var json = await asyncResponse.GetResponseStringAsync();
             var obj = JsonConvert.DeserializeObject<IllustList>(json, Converter.Settings);

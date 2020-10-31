@@ -1,15 +1,11 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PixivWallpaperHelper.Pixiv.Objects
 {
-    public partial class Illust
+    public class Illust
     {
         [JsonProperty("id")]
         public long Id { get; set; }
@@ -81,7 +77,7 @@ namespace PixivWallpaperHelper.Pixiv.Objects
         public bool IsMuted { get; set; }
     }
 
-    public partial class Tag
+    public class Tag
     {
         [JsonProperty("name")]
         public string Name { get; set; }
@@ -90,15 +86,19 @@ namespace PixivWallpaperHelper.Pixiv.Objects
         public string TranslatedName { get; set; }
     }
 
-    public enum TypeEnum { Illust, Manga };
+    public enum TypeEnum
+    {
+        ILLUST,
+        MANGA
+    };
 
-    public partial class SinglePage
+    public class SinglePage
     {
         [JsonProperty("original_image_url")]
         public string OriginalImageUrl { get; set; }
     }
 
-    public partial class ListUser
+    public class ListUser
     {
         [JsonProperty("id")]
         public long Id { get; set; }
@@ -116,7 +116,7 @@ namespace PixivWallpaperHelper.Pixiv.Objects
         public bool IsFollowed { get; set; }
     }
 
-    public partial class ListProfileImageUrls
+    public class ListProfileImageUrls
     {
         [JsonProperty("medium")]
         public Uri Medium { get; set; }
@@ -131,7 +131,7 @@ namespace PixivWallpaperHelper.Pixiv.Objects
             Converters =
             {
                 TypeEnumConverter.Singleton,
-                new IsoDateTimeConverter { DateTimeStyles = DateTimeStyles.AssumeUniversal }
+                new IsoDateTimeConverter {DateTimeStyles = DateTimeStyles.AssumeUniversal}
             },
         };
     }
@@ -147,10 +147,11 @@ namespace PixivWallpaperHelper.Pixiv.Objects
             switch (value)
             {
                 case "illust":
-                    return TypeEnum.Illust;
+                    return TypeEnum.ILLUST;
                 case "manga":
-                    return TypeEnum.Manga;
+                    return TypeEnum.MANGA;
             }
+
             throw new Exception("Cannot unmarshal type TypeEnum");
         }
 
@@ -161,16 +162,18 @@ namespace PixivWallpaperHelper.Pixiv.Objects
                 serializer.Serialize(writer, null);
                 return;
             }
-            var value = (TypeEnum)untypedValue;
+
+            var value = (TypeEnum) untypedValue;
             switch (value)
             {
-                case TypeEnum.Illust:
+                case TypeEnum.ILLUST:
                     serializer.Serialize(writer, "illust");
                     return;
-                case TypeEnum.Manga:
+                case TypeEnum.MANGA:
                     serializer.Serialize(writer, "manga");
                     return;
             }
+
             throw new Exception("Cannot marshal type TypeEnum");
         }
 

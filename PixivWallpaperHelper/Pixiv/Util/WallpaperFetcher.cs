@@ -1,33 +1,31 @@
 ﻿using System;
 using System.IO;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using PixivWallpaperHelper.Pixiv.OAuth;
 
-namespace PixivWallpaperHelper.Pixiv.OAuth
+namespace PixivWallpaperHelper.Pixiv.Util
 {
-    class WallpaperFetcher
+    internal class WallpaperFetcher
     {
-        private static string path = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\PixivWallpapers";
+        private static readonly string path = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) +
+                                              "\\PixivWallpapers";
+
         public WallpaperFetcher()
         {
             if (!Directory.Exists(path)) Directory.CreateDirectory(path);
         }
 
-        public async void fetchWallpaper() {
-            if (!Properties.Auth.Default.KEY_PIXIV_USER_LOGIN) {
-                var fallbackResult = await PublicAPI.Fallback();
-                decimal count = Properties.Settings.Default.countNum;
-                int step = 0;
-                
-                foreach (var result in fallbackResult.Illusts)
-                {
-                    if (step == count) break;
-                    Console.WriteLine(result.Id);
-                    step++;
-                }
+        public static async void FetchWallpaper()
+        {
+            if (Properties.Auth.Default.KEY_PIXIV_USER_LOGIN) return;
+            var fallbackResult = await PublicApi.Fallback();
+            var count = Properties.Settings.Default.countNum;
+            var step = 0;
+
+            foreach (var result in fallbackResult.Illusts)
+            {
+                if (step == count) break;
+                Console.WriteLine(result.Id);
+                step++;
             }
         }
     }
