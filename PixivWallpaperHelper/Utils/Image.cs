@@ -19,8 +19,7 @@ namespace PixivWallpaperHelper.Utils
 
             if (path != null)
             {
-                FileStream fileStream = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write);
-                stream.CopyTo(fileStream);
+                bitmap.Save(path);
             }
 
             stream.Flush();
