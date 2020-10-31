@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Security.Authentication;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using PixivWallpaperHelper.Pixiv.Objects;
 using PixivWallpaperHelper.Pixiv.Utils;
@@ -257,33 +258,19 @@ namespace PixivWallpaperHelper.Pixiv.OAuth
 
     public class PublicAPI
     {
-        public static async Task<AsyncResponse> SendRequestAsync(string url)
+        public static async Task<IllustList> Fallback()
         {
             var httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Add("Referer", "https://www.pixiv.net");
             httpClient.DefaultRequestHeaders.Add("User-Agent", "PixivAndroidApp/5.0.64 (Android 6.0)");
 
-            var uri = url;
-
-            var response = await httpClient.GetAsync(uri);
+            var response = await httpClient.GetAsync("https://app-api.pixiv.net/v1/walkthrough/illusts");
             AsyncResponse asyncResponse = new AsyncResponse(response);
 
-            return asyncResponse;
-        }
-        private static async Task AccessApiAsync(string url)
-        {
-            using (var response = await SendRequestAsync(url))
-            {
-                var json = await response.GetResponseStringAsync();
-                Console.WriteLine(json);
-            }
-        }
+            var json = await asyncResponse.GetResponseStringAsync();
+            var obj = JsonConvert.DeserializeObject<IllustList>(json, Converter.Settings);
 
-        public static async Task Fallback()
-        {
-            var url = "https://public-api.secure.pixiv.net/v1/ranking/all";
-
-            await AccessApiAsync(url);
+            return obj;
         }
     }
 }

@@ -57,6 +57,8 @@
     </Compile>
     <Compile Include="Pixiv\OAuth\Auth.cs" />
     <Compile Include="Pixiv\Objects\Authorize.cs" />
+    <Compile Include="Pixiv\Objects\Illust.cs" />
+    <Compile Include="Pixiv\Objects\IllustList.cs" />
     <Compile Include="Pixiv\Objects\Paginated.cs" />
     <Compile Include="Pixiv\Objects\ProfileImageUrls.cs" />
     <Compile Include="Pixiv\Objects\Rank.cs" />
