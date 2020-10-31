@@ -33,6 +33,7 @@ namespace PixivWallpaperHelper
             }
             this.changeThumbnail();
             this.RegisterEvent();
+            this.wallpaper.fetchWallpaper();
         }
 
         private void Form1_Click(object sender, EventArgs e) {
