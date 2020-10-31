@@ -63,7 +63,7 @@ namespace PixivWallpaperHelper.Pixiv.Objects
         public SinglePage MetaSinglePage { get; set; }
 
         [JsonProperty("meta_pages")]
-        public object[] MetaPages { get; set; }
+        public Page[] MetaPages { get; set; }
 
         [JsonProperty("total_view")]
         public long TotalView { get; set; }

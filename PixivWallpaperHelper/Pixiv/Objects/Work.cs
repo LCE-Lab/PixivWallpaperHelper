@@ -9,8 +9,8 @@ namespace PixivWallpaperHelper.Pixiv.Objects
 {
     public class ImageUrls
     {
-        [JsonProperty("px_128x128")]
-        public string Px128x128 { get; set; }
+        [JsonProperty("square_medium")]
+        public string SquareMedium { get; set; }
 
         [JsonProperty("small")]
         public string Small { get; set; }
@@ -21,8 +21,8 @@ namespace PixivWallpaperHelper.Pixiv.Objects
         [JsonProperty("large")]
         public string Large { get; set; }
 
-        [JsonProperty("px_480mw")]
-        public string Px480mw { get; set; }
+        [JsonProperty("original")]
+        public string Original { get; set; }
     }
     public class FavoritedCount
     {
