@@ -49,13 +49,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Pixiv\Mode\Fallback.cs" />
+    <Compile Include="Pixiv\OAuth\Auth.cs" />
+    <Compile Include="Utils\LocalArtworks.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Pixiv\OAuth\Auth.cs" />
+    <Compile Include="Pixiv\OAuth\Auth_Old.cs" />
     <Compile Include="Pixiv\Objects\Authorize.cs" />
     <Compile Include="Pixiv\Objects\Illust.cs" />
     <Compile Include="Pixiv\Objects\IllustList.cs" />
@@ -65,6 +68,7 @@
     <Compile Include="Pixiv\Objects\User.cs" />
     <Compile Include="Pixiv\Objects\UserFeed.cs" />
     <Compile Include="Pixiv\Objects\Work.cs" />
+    <Compile Include="Pixiv\Util\Request.cs" />
     <Compile Include="Utils\Image.cs" />
     <Compile Include="Pixiv\Util\MD5.cs" />
     <Compile Include="Utils\Data.cs" />
@@ -135,5 +139,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
