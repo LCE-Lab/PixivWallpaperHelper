@@ -6,12 +6,15 @@ using System.Threading;
 using System.Windows.Forms;
 using PixivWallpaperHelper.Pixiv.OAuth;
 using System.IO;
+using PixivWallpaperHelper.Utils;
+using System.Diagnostics;
 
 namespace PixivWallpaperHelper
 {
     public partial class MainForm : Form
     {
         private string currentImagePath = "";
+        private string _url = "";
         private SettingForm settingForm;
         private WallpaperFetcher wallpaper;
         public MainForm()
@@ -90,6 +93,9 @@ namespace PixivWallpaperHelper
                     this.currentImagePath = "";
                 };
                 this.BackColor = this.getWallpaperColor();
+                _url = "";
+                titleLabel.Text = "純色桌布";
+                authorLabel.Text = "這似乎不是由本程式自動下載的相片輪播圖庫，請檢查桌布設定";
             }else
             {
                 string newPath = this.getCurrentWallpaperPath();
@@ -97,9 +103,35 @@ namespace PixivWallpaperHelper
                 {
                     this.BackColor = Color.Black;
                     this.currentImagePath = newPath;
-                    Image image = Image.FromFile(newPath);
+                    if (!File.Exists(newPath))
+                    {
+                        titleLabel.Text = "無法載入預覽";
+                        authorLabel.Text = "桌布原始圖片似乎被刪除了";
+                        _url = "";
+                        return;
+                    }
+                    System.Drawing.Image image = System.Drawing.Image.FromFile(newPath);
                     if (this.BackgroundImage != null) this.BackgroundImage.Dispose();
                     this.BackgroundImage = image;
+                    LocalArtwork localArtwork;
+                    switch (wallpaper.getWallpaperInfo(newPath, out localArtwork))
+                    {
+                        case WallPaperInfoStatus.SUCCESS:
+                            titleLabel.Text = localArtwork.Title;
+                            authorLabel.Text = localArtwork.Author;
+                            _url = localArtwork.WebUrl;
+                            break;
+                        case WallPaperInfoStatus.NOTFOUND:
+                            titleLabel.Text = "未命名的桌布";
+                            authorLabel.Text = "找不到此桌布的資訊";
+                            _url = "";
+                            break;
+                        case WallPaperInfoStatus.PATHINVALID:
+                            titleLabel.Text = "未命名的桌布";
+                            authorLabel.Text = "這似乎不是由本程式自動下載的相片輪播圖庫，請檢查桌布設定";
+                            _url = "";
+                            break;
+                    }
                 }
             }
         }
@@ -157,6 +189,13 @@ namespace PixivWallpaperHelper
             this.titlePanel.Paint += new PaintEventHandler(this.titlePanel_Paint);
             this.Click += new EventHandler(this.Form1_Click);
             this.ResizeEnd += new EventHandler(this.Form1_ResizeEnd);
+        }
+
+        private void titleLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            if (_url != "") {
+                Process.Start(_url);
+            }
         }
     }
 }

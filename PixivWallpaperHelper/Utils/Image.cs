@@ -10,17 +10,12 @@ using System.Threading.Tasks;
 namespace PixivWallpaperHelper.Utils
 {    public class Image
     {
-        public static Bitmap SaveImage(string url, string path = null)
+        public static Bitmap SaveImage(string url)
         {
             WebClient client = new WebClient();
             client.Headers["Referer"] = "https://www.pixiv.net";
             Stream stream = client.OpenRead(url);
             Bitmap bitmap = new Bitmap(stream);
-
-            if (path != null)
-            {
-                bitmap.Save(path);
-            }
 
             stream.Flush();
             stream.Close();

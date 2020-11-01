@@ -62,6 +62,7 @@
             this.titleLabel.TabStop = true;
             this.titleLabel.Text = "Sample Title 1";
             this.titleLabel.VisitedLinkColor = System.Drawing.Color.White;
+            this.titleLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.titleLabel_LinkClicked);
             // 
             // authorLabel
             // 

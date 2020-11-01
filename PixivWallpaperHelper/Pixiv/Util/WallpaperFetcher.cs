@@ -7,21 +7,41 @@ using System.Threading.Tasks;
 using PixivWallpaperHelper.Pixiv.OAuth;
 using PixivWallpaperHelper.Utils;
 using PixivWallpaperHelper.Pixiv.Objects;
+using PixivWallpaperHelper.Pixiv.Mode;
 
 namespace PixivWallpaperHelper.Pixiv.OAuth
 {
+    public enum WallPaperInfoStatus { SUCCESS, NOTFOUND, PATHINVALID }
+
     class WallpaperFetcher
     {
         private static string path = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\PixivWallpapers";
+        private static LocalArtworksHelper localArtworksHelper;
         public WallpaperFetcher()
         {
             if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+            localArtworksHelper = new LocalArtworksHelper();
+        }
+
+        public WallPaperInfoStatus getWallpaperInfo(string wallpaperPath, out LocalArtwork value)
+        {
+            if (Path.GetDirectoryName(wallpaperPath).Equals(path))
+            {
+                return localArtworksHelper.getArtworkInfo(Path.GetFileNameWithoutExtension(wallpaperPath), out value)
+                    ? WallPaperInfoStatus.SUCCESS
+                    : WallPaperInfoStatus.NOTFOUND;
+            }
+            else
+            {
+                value = new LocalArtwork();
+                return WallPaperInfoStatus.PATHINVALID;
+            }
         }
 
         public async void fetchWallpaper() {
             IllustList illustList;
             if (!Properties.Auth.Default.KEY_PIXIV_USER_LOGIN) {
-                illustList = await PublicAPI.Fallback();
+                illustList = await Fallback.GetFallback();
 
                 // TODO Move out of if
                 decimal count = Properties.Settings.Default.countNum;
@@ -47,21 +67,36 @@ namespace PixivWallpaperHelper.Pixiv.OAuth
                             Page page = result.MetaPages[i];
                             var url = (originalImage) ? page.ImageUrls.Original : page.ImageUrls.Large;
                             var finalPath = $"{path}\\{result.Id}_{i}{Path.GetExtension(url)}";
-                            Image.SaveImage(url, finalPath);
-                            // TODO Save artwork infomation (title author url etc)
+                            var success = localArtworksHelper.AddAndSaveArtwork(
+                                    Image.SaveImage(url),
+                                    finalPath,
+                                    result.Title,
+                                    result.User.Name,
+                                    $"{result.Id}_{i}",
+                                    url
+                                );
+                            if (success) { step++; }
                         }
                     }
                     else
                     {
                         var url = (originalImage) ? result.MetaSinglePage.OriginalImageUrl : result.ImageUrls.Large;
                         var finalPath = $"{path}\\{result.Id}{Path.GetExtension(url)}";
-                        Image.SaveImage(url, finalPath);
-                        // TODO Save artwork infomation (title author url etc)
+                        var success = localArtworksHelper.AddAndSaveArtwork(
+                                Image.SaveImage(url),
+                                finalPath,
+                                result.Title,
+                                result.User.Name,
+                                result.Id.ToString(),
+                                url
+                            );
+                        if (success) { step++; }
                     }
-                    step++;
+                    
                 }
                 // End TODO
             }
+            localArtworksHelper.Save();
         }
     }
 }
