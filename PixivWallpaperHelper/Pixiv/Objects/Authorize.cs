@@ -26,5 +26,8 @@ namespace PixivWallpaperHelper.Pixiv.Objects
 
         [JsonProperty("user")]
         public User User { get; set; }
+
+        [JsonProperty("device_token")]
+        public string DeviceToken { get; set; }
     }
 }

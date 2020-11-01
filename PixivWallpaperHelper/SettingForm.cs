@@ -72,7 +72,7 @@ namespace PixivWallpaperHelper
             {
                 try
                 {
-                    var tokens = await Auth.AuthorizeAsync(UsernameBox.Text, PasswordBox.Text);
+                    var tokens = await Auth.login(UsernameBox.Text, PasswordBox.Text);
                     CheckLogin();
                 }
                 catch (AuthenticationException)

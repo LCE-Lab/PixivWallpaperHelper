@@ -15,7 +15,7 @@ namespace PixivWallpaperHelper.Utils
         {
             Properties.Auth.Default.KEY_PIXIV_ACCESS_TOKEN = authorize == null ? "" : authorize.AccessToken;
             Properties.Auth.Default.KEY_PIXIV_REFRESH_TOKEN = authorize == null ? "" : authorize.RefreshToken;
-            Properties.Auth.Default.KEY_PIXIV_DEVICE_TOKEN = "pixiv";
+            Properties.Auth.Default.KEY_PIXIV_DEVICE_TOKEN = authorize == null ? "" : authorize.DeviceToken;
             Properties.Auth.Default.KEY_PIXIV_USER_ID = (long)(authorize == null ? 0 : authorize.User.Id);
             Properties.Auth.Default.KEY_PIXIV_USER_USERNAME = authorize == null ? "" : authorize.User.Account;
             Properties.Auth.Default.KEY_PIXIV_USER_NAME = authorize == null ? "" : authorize.User.Name;
