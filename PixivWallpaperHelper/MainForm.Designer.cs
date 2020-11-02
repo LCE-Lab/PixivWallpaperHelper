@@ -1,4 +1,4 @@
-namespace PixivWallpaperHelper
+﻿namespace PixivWallpaperHelper
 {
     partial class MainForm
     {
@@ -45,7 +45,7 @@ namespace PixivWallpaperHelper
             // 
             this.wallpaperRefreshTimer.Enabled = true;
             this.wallpaperRefreshTimer.Interval = 1000;
-            this.wallpaperRefreshTimer.Tick += new System.EventHandler(this.wallpaperRefreshTimer_Tick);
+            this.wallpaperRefreshTimer.Tick += new System.EventHandler(this.WallpaperRefreshTimer_Tick);
             // 
             // titleLabel
             // 
@@ -63,7 +63,7 @@ namespace PixivWallpaperHelper
             this.titleLabel.TabStop = true;
             this.titleLabel.Text = "Sample Title 1";
             this.titleLabel.VisitedLinkColor = System.Drawing.Color.White;
-            this.titleLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.titleLabel_LinkClicked);
+            this.titleLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.TitleLabel_LinkClicked);
             // 
             // authorLabel
             // 
@@ -98,7 +98,7 @@ namespace PixivWallpaperHelper
             this.設定ToolStripMenuItem.Name = "設定ToolStripMenuItem";
             this.設定ToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
             this.設定ToolStripMenuItem.Text = "設定";
-            this.設定ToolStripMenuItem.Click += new System.EventHandler(this.設定ToolStripMenuItem_Click);
+            this.設定ToolStripMenuItem.Click += new System.EventHandler(this.SettingToolStripMenuItem_Click);
             // 
             // 重新整理ToolStripMenuItem
             // 
@@ -107,7 +107,7 @@ namespace PixivWallpaperHelper
             this.重新整理ToolStripMenuItem.Name = "重新整理ToolStripMenuItem";
             this.重新整理ToolStripMenuItem.Size = new System.Drawing.Size(83, 20);
             this.重新整理ToolStripMenuItem.Text = "重新整理";
-            this.重新整理ToolStripMenuItem.Click += new System.EventHandler(this.重新整理ToolStripMenuItem_Click);
+            this.重新整理ToolStripMenuItem.Click += new System.EventHandler(this.RefreshToolStripMenuItem_Click);
             // 
             // titlePanel
             // 

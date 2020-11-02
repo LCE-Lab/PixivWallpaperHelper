@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace PixivWallpaperHelper.Pixiv.Util
@@ -19,29 +17,29 @@ namespace PixivWallpaperHelper.Pixiv.Util
     {
         public AsyncResponse(HttpResponseMessage source)
         {
-            this.Source = source;
+            Source = source;
         }
 
         public HttpResponseMessage Source { get; }
 
         public Task<Stream> GetResponseStreamAsync()
         {
-            return this.Source.Content.ReadAsStreamAsync();
+            return Source.Content.ReadAsStreamAsync();
         }
 
         public Task<string> GetResponseStringAsync()
         {
-            return this.Source.Content.ReadAsStringAsync();
+            return Source.Content.ReadAsStringAsync();
         }
 
         public Task<byte[]> GetResponseByteArrayAsync()
         {
-            return this.Source.Content.ReadAsByteArrayAsync();
+            return Source.Content.ReadAsByteArrayAsync();
         }
 
         public void Dispose()
         {
-            this.Source?.Dispose();
+            Source?.Dispose();
         }
     }
     public class Request
@@ -54,8 +52,10 @@ namespace PixivWallpaperHelper.Pixiv.Util
 
             if (headers != null)
             {
-                foreach (var header in headers)
+                foreach (KeyValuePair<string, string> header in headers)
+                {
                     httpClient.DefaultRequestHeaders.Add(header.Key, header.Value);
+                }
             }
 
             AsyncResponse asyncResponse = null;
@@ -64,8 +64,8 @@ namespace PixivWallpaperHelper.Pixiv.Util
             {
                 if (param != null)
                 {
-                    var reqParam = new FormUrlEncodedContent(param);
-                    var response = await httpClient.PostAsync(url, reqParam);
+                    FormUrlEncodedContent reqParam = new FormUrlEncodedContent(param);
+                    HttpResponseMessage response = await httpClient.PostAsync(url, reqParam);
                     asyncResponse = new AsyncResponse(response);
                 }
             }
@@ -75,20 +75,24 @@ namespace PixivWallpaperHelper.Pixiv.Util
 
                 if (param != null)
                 {
-                    var query_string = "";
+                    string queryString = "";
                     foreach (KeyValuePair<string, string> kvp in param)
                     {
-                        if (query_string == "")
-                            query_string += "?";
+                        if (queryString == "")
+                        {
+                            queryString += "?";
+                        }
                         else
-                            query_string += "&";
+                        {
+                            queryString += "&";
+                        }
 
-                        query_string += kvp.Key + "=" + WebUtility.UrlEncode(kvp.Value);
+                        queryString += kvp.Key + "=" + WebUtility.UrlEncode(kvp.Value);
                     }
-                    uri += query_string;
+                    uri += queryString;
                 }
 
-                var response = await httpClient.GetAsync(uri);
+                HttpResponseMessage response = await httpClient.GetAsync(uri);
                 asyncResponse = new AsyncResponse(response);
             }
 

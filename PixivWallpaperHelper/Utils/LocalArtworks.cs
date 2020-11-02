@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Drawing;
 using System.Collections.Generic;
@@ -19,8 +19,8 @@ namespace PixivWallpaperHelper.Utils
 
     public class LocalArtworksHelper
     {
-        private Dictionary<string, LocalArtwork> localArtworks;
-        private static readonly string path = $"{Environment.GetFolderPath(Environment.SpecialFolder.MyPictures)}\\PixivWallpaperInfo.json";
+        private Dictionary<string, LocalArtwork> LocalArtworks;
+        private static readonly string Path = $"{Environment.GetFolderPath(Environment.SpecialFolder.MyPictures)}\\PixivWallpaperInfo.json";
 
         public LocalArtworksHelper()
         {
@@ -29,7 +29,7 @@ namespace PixivWallpaperHelper.Utils
 
         public bool AddAndSaveArtwork(Bitmap image, string path, string title, string author, string Id, string imageUrl)
         {
-            if (localArtworks.ContainsKey(Id)) { return false; }
+            if (LocalArtworks.ContainsKey(Id)) { return false; }
             image.Save(path);
             LocalArtwork newItem = new LocalArtwork
             {
@@ -41,7 +41,10 @@ namespace PixivWallpaperHelper.Utils
                 IsCurrent = false,
                 IsChanged = false
             };
-            localArtworks.Add(Id, newItem);
+            LocalArtworks.Add(Id, newItem);
+            return true;
+        }
+
         public bool SetCurrentWallpaper(string Id)
         {
             if (!LocalArtworks.ContainsKey(Id)) { return false; }
@@ -86,23 +89,24 @@ namespace PixivWallpaperHelper.Utils
         public bool GetArtworkInfo(string Id, out LocalArtwork value) {
             return LocalArtworks.TryGetValue(Id, out value);
         }
+
         private void FetchFromFile()
         {
-            if (File.Exists(path))
+            if (File.Exists(Path))
             {
-                string jsonString = File.ReadAllText(path);
-                localArtworks = JsonConvert.DeserializeObject<Dictionary<string, LocalArtwork>>(jsonString);
+                string jsonString = File.ReadAllText(Path);
+                LocalArtworks = JsonConvert.DeserializeObject<Dictionary<string, LocalArtwork>>(jsonString);
             }
             else
             {
-                localArtworks = new Dictionary<string, LocalArtwork>();
+                LocalArtworks = new Dictionary<string, LocalArtwork>();
             }
         }
 
         public void Save()
         {
-            string jsonString = JsonConvert.SerializeObject(localArtworks, Formatting.Indented);
-            File.WriteAllText(path, jsonString);
+            string jsonString = JsonConvert.SerializeObject(LocalArtworks, Formatting.Indented);
+            File.WriteAllText(Path, jsonString);
         }
     }
 }

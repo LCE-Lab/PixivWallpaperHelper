@@ -1,15 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.IO;
-using System.Linq;
 using System.Security.Authentication;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using PixivWallpaperHelper.Pixiv.Mode;
 using PixivWallpaperHelper.Pixiv.OAuth;
 using PixivWallpaperHelper.Utils;
 
@@ -22,27 +14,28 @@ namespace PixivWallpaperHelper
             InitializeComponent();
         }
 
-        private void modeCombo_SelectedIndexChanged(object sender, EventArgs e)
+        private void ModeCombo_SelectedIndexChanged(object sender, EventArgs e)
         {
-            switch (this.modeCombo.SelectedItem) {
+            switch (modeCombo.SelectedItem)
+            {
                 case "排行榜":
-                    this.grabModeControl.SelectedIndex = 0;
+                    grabModeControl.SelectedIndex = 0;
                     break;
                 case "推薦":
-                    this.grabModeControl.SelectedIndex = 2;
+                    grabModeControl.SelectedIndex = 2;
                     break;
                 case "收藏":
-                    this.grabModeControl.SelectedIndex = 1;
+                    grabModeControl.SelectedIndex = 1;
                     break;
                 default:
-                    this.grabModeControl.SelectedIndex = 2;
+                    grabModeControl.SelectedIndex = 2;
                     break;
             }
         }
 
-        private void ValueChangedEvent(Object sender, EventArgs e)
+        private void ValueChangedEvent(object sender, EventArgs e)
         {
-            var settings = new Dictionary<string, dynamic>
+            Dictionary<string, dynamic> settings = new Dictionary<string, dynamic>
             {
                 { "countNum", countNum.Value } ,
                 { "originPictureCheck", originalPictureCheck.Checked } ,
@@ -67,23 +60,23 @@ namespace PixivWallpaperHelper
             CheckLogin();
         }
 
-        private async void loginButton_Click(object sender, EventArgs e)
+        private async void LoginButton_Click(object sender, EventArgs e)
         {
             if (UsernameBox.Text != "" && PasswordBox.Text != "")
             {
                 try
                 {
-                    await Auth.login(UsernameBox.Text, PasswordBox.Text);
+                    _ = await Auth.Login(UsernameBox.Text, PasswordBox.Text);
                     CheckLogin();
                 }
                 catch (AuthenticationException)
                 {
-                    MessageBox.Show("使用者名稱或密碼錯誤", "登入失敗", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _ = MessageBox.Show("使用者名稱或密碼錯誤", "登入失敗", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
-                MessageBox.Show("請輸入 Pixiv Id/Email", "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show("請輸入 Pixiv Id/Email", "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -91,9 +84,9 @@ namespace PixivWallpaperHelper
         {
             if (e.KeyChar == (char)13)
             {
-                loginButton.Focus();
-                loginButton_Click(sender, e);
-                PasswordBox.Focus();
+                _ = loginButton.Focus();
+                LoginButton_Click(sender, e);
+                _ = PasswordBox.Focus();
             }
         }
 
@@ -116,7 +109,7 @@ namespace PixivWallpaperHelper
             }
         }
 
-        private void logoutButton_Click(object sender, EventArgs e)
+        private void LogoutButton_Click(object sender, EventArgs e)
         {
             Data.ClearAuthData();
             CheckLogin();

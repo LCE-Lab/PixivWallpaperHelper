@@ -1,4 +1,4 @@
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -8,137 +8,139 @@ using PixivWallpaperHelper.Pixiv.OAuth;
 using System.IO;
 using PixivWallpaperHelper.Utils;
 using System.Diagnostics;
+using System.ComponentModel;
 
 namespace PixivWallpaperHelper
 {
     public partial class MainForm : Form
     {
-        private string currentImagePath = "";
-        private string _url = "";
-        private SettingForm settingForm;
-        private WallpaperFetcher wallpaper;
+        private string CurrentImagePath = "";
+        private string Url = "";
+        private readonly SettingForm SettingForm;
+        private readonly WallpaperFetcher Wallpaper;
         public MainForm()
         {
             InitializeComponent();
-            this.settingForm = new SettingForm();
-            this.wallpaper = new WallpaperFetcher();
+            SettingForm = new SettingForm();
+            Wallpaper = new WallpaperFetcher();
         }
 
-        private static string appGuid = "7bcbe405-0325-4f8d-8527-afd151d13ff4";
+        private static readonly string AppGuid = "7bcbe405-0325-4f8d-8527-afd151d13ff4";
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            Mutex mutex = new Mutex(false, appGuid);
+            Mutex mutex = new Mutex(false, AppGuid);
             if (!mutex.WaitOne(0, false))
             {
                 MessageBox.Show("Instance already running");
-                this.Close();
+                Close();
             }
-            this.changeThumbnail();
-            this.RegisterEvent();
-            this.wallpaper.fetchWallpaper();
+            ChangeThumbnail();
+            RegisterEvent();
+
             backgroundWorker1.DoWork += new DoWorkEventHandler(FetchEvent);
             if (!backgroundWorker1.IsBusy) backgroundWorker1.RunWorkerAsync();
         }
 
         private void Form1_Click(object sender, EventArgs e) {
-            this.menuStrip1.Visible = !this.menuStrip1.Visible;
-            this.titlePanel.Visible = !this.titlePanel.Visible;
+            menuStrip1.Visible = !menuStrip1.Visible;
+            titlePanel.Visible = !titlePanel.Visible;
         }
         private void Form1_ResizeEnd(object sender, EventArgs e)
         {
-            if (this.Width < 768) this.Width = 768;
-            if (this.Height < 432) this.Height = 432;
+            if (Width < 768) { Width = 768; }
+            if (Height < 432) { Height = 432; }
         }
 
-        private void wallpaperRefreshTimer_Tick(object sender, EventArgs e)
+        private void WallpaperRefreshTimer_Tick(object sender, EventArgs e)
         {
-            this.changeThumbnail();
+            ChangeThumbnail();
         }
 
-        private void 設定ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void SettingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            settingForm.ShowDialog(this);
+            _ = SettingForm.ShowDialog(this);
         }
 
-        private void 重新整理ToolStripMenuItem_Click(object sender, EventArgs e)
+        private void RefreshToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            this.changeThumbnail();
+            ChangeThumbnail();
         }
 
-        private void menuStrip1_Paint(object sender, PaintEventArgs e)
+        private void MenuStrip1_Paint(object sender, PaintEventArgs e)
         {
             LinearGradientBrush brush = new LinearGradientBrush(
-                this.menuStrip1.ClientRectangle,
+                menuStrip1.ClientRectangle,
                 Color.FromArgb(204, 0, 0, 0),
                 Color.FromArgb(0, 0, 0, 0),
                 90F
             );
-            e.Graphics.FillRectangle(brush, this.menuStrip1.ClientRectangle);
+            e.Graphics.FillRectangle(brush, menuStrip1.ClientRectangle);
         }
-        private void titlePanel_Paint(object sender, PaintEventArgs e)
+        private void TitlePanel_Paint(object sender, PaintEventArgs e)
         {
             LinearGradientBrush brush = new LinearGradientBrush(
-                this.titlePanel.ClientRectangle,
+                titlePanel.ClientRectangle,
                 Color.FromArgb(0, 0, 0, 0),
                 Color.FromArgb(204, 0, 0, 0),
                 90F
             );
-            e.Graphics.FillRectangle(brush, this.titlePanel.ClientRectangle);
+            e.Graphics.FillRectangle(brush, titlePanel.ClientRectangle);
         }
 
-        private void changeThumbnail() {
-            if (this.isWallpaperColorOnly()) {
-                if (this.BackgroundImage != null) {
-                    this.BackgroundImage.Dispose();
-                    this.BackgroundImage = null;
-                    this.currentImagePath = "";
+        private void ChangeThumbnail()
+        {
+            if (IsWallpaperColorOnly())
+            {
+                if (BackgroundImage != null)
+                {
+                    BackgroundImage.Dispose();
+                    BackgroundImage = null;
+                    CurrentImagePath = "";
                 };
-                this.BackColor = this.getWallpaperColor();
-                _url = "";
+                BackColor = GetWallpaperColor();
+                Url = "";
                 titleLabel.Text = "純色桌布";
                 authorLabel.Text = "這似乎不是由本程式自動下載的相片輪播圖庫，請檢查桌布設定";
             }else
             {
-                string newPath = this.getCurrentWallpaperPath();
-                if (!newPath.Equals(this.currentImagePath))
+                string newPath = GetCurrentWallpaperPath();
+                if (!newPath.Equals(CurrentImagePath))
                 {
-                    this.BackColor = Color.Black;
-                    this.currentImagePath = newPath;
+                    BackColor = Color.Black;
+                    CurrentImagePath = newPath;
                     if (!File.Exists(newPath))
                     {
                         titleLabel.Text = "無法載入預覽";
                         authorLabel.Text = "桌布原始圖片似乎被刪除了";
-                        _url = "";
+                        Url = "";
                         return;
                     }
-                    System.Drawing.Image image = System.Drawing.Image.FromFile(newPath);
-                    if (this.BackgroundImage != null) this.BackgroundImage.Dispose();
-                    this.BackgroundImage = image;
-                    LocalArtwork localArtwork;
-                    switch (wallpaper.getWallpaperInfo(newPath, out localArtwork))
+                    if (BackgroundImage != null) { BackgroundImage.Dispose(); }
+                    BackgroundImage = System.Drawing.Image.FromFile(newPath);
+                    switch (Wallpaper.GetWallpaperInfo(newPath, out LocalArtwork localArtwork))
                     {
-                        case WallPaperInfoStatus.SUCCESS:
+                        case WallPaperInfoStatus.Success:
                             titleLabel.Text = localArtwork.Title;
                             authorLabel.Text = localArtwork.Author;
-                            _url = localArtwork.WebUrl;
+                            Url = localArtwork.WebUrl;
                             break;
-                        case WallPaperInfoStatus.NOTFOUND:
+                        case WallPaperInfoStatus.NotFound:
                             titleLabel.Text = "未命名的桌布";
                             authorLabel.Text = "找不到此桌布的資訊";
-                            _url = "";
+                            Url = "";
                             break;
-                        case WallPaperInfoStatus.PATHINVALID:
+                        case WallPaperInfoStatus.PathInvalid:
                             titleLabel.Text = "未命名的桌布";
                             authorLabel.Text = "這似乎不是由本程式自動下載的相片輪播圖庫，請檢查桌布設定";
-                            _url = "";
+                            Url = "";
                             break;
                     }
                 }
             }
         }
 
-        private Boolean isWallpaperColorOnly()
+        private bool IsWallpaperColorOnly()
         {
             RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Desktop");
             if (key != null)
@@ -151,7 +153,8 @@ namespace PixivWallpaperHelper
             }
         }
 
-        private Color getWallpaperColor() {
+        private Color GetWallpaperColor()
+        {
             RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Colors");
             if (key != null)
             {
@@ -165,21 +168,22 @@ namespace PixivWallpaperHelper
             }
             else
             {
-                return Color.FromArgb(0,0,0);
+                return Color.FromArgb(0, 0, 0);
             }
         }
 
-        private string getCurrentWallpaperPath()
+        private string GetCurrentWallpaperPath()
         {
             RegistryKey key = Registry.CurrentUser.OpenSubKey(@"Control Panel\Desktop");
             if (key != null)
             {
                 byte[] encodedPath = (byte[])key.GetValue("TranscodedImageCache");
                 char[] chars = new char[(encodedPath.Length - 24) / sizeof(char)];
-                System.Buffer.BlockCopy(encodedPath, 24, chars, 0, encodedPath.Length - 24);
+                Buffer.BlockCopy(encodedPath, 24, chars, 0, encodedPath.Length - 24);
                 string str = new string(chars);
                 return str.Split('\0')[0];
-            } else
+            }
+            else
             {
                 return "";
             }
@@ -187,17 +191,20 @@ namespace PixivWallpaperHelper
 
         private void RegisterEvent()
         {
-            this.menuStrip1.Paint += new PaintEventHandler(this.menuStrip1_Paint);
-            this.titlePanel.Paint += new PaintEventHandler(this.titlePanel_Paint);
-            this.Click += new EventHandler(this.Form1_Click);
-            this.ResizeEnd += new EventHandler(this.Form1_ResizeEnd);
+            menuStrip1.Paint += new PaintEventHandler(MenuStrip1_Paint);
+            titlePanel.Paint += new PaintEventHandler(TitlePanel_Paint);
+            Click += new EventHandler(Form1_Click);
+            ResizeEnd += new EventHandler(Form1_ResizeEnd);
         }
 
-        private void titleLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void TitleLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            if (_url != "") {
-                Process.Start(_url);
+            if (Url != "")
+            {
+                _ = Process.Start(Url);
             }
+        }
+
         private void FetchEvent(object sender, DoWorkEventArgs e)
         {
             Wallpaper.FetchWallpaper();

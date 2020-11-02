@@ -1,10 +1,7 @@
-using System;
+﻿using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PixivWallpaperHelper.Pixiv.OAuth;
 using PixivWallpaperHelper.Utils;
 using PixivWallpaperHelper.Pixiv.Objects;
 using PixivWallpaperHelper.Pixiv.Mode;
@@ -12,30 +9,34 @@ using static PixivWallpaperHelper.Pixiv.Objects.IllustTypes;
 
 namespace PixivWallpaperHelper.Pixiv.OAuth
 {
-    public enum WallPaperInfoStatus { SUCCESS, NOTFOUND, PATHINVALID }
+    public enum WallPaperInfoStatus { Success, NotFound, PathInvalid }
 
-    class WallpaperFetcher
+    internal class WallpaperFetcher
     {
-        private static string path = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures) + "\\PixivWallpapers";
-        private static LocalArtworksHelper localArtworksHelper;
+        private static readonly string Path = $"{Environment.GetFolderPath(Environment.SpecialFolder.MyPictures)}\\PixivWallpapers";
+        private static LocalArtworksHelper LocalArtworksHelper;
         public WallpaperFetcher()
         {
-            if (!Directory.Exists(path)) Directory.CreateDirectory(path);
-            localArtworksHelper = new LocalArtworksHelper();
+            if (!Directory.Exists(Path))
+            {
+                _ = Directory.CreateDirectory(Path);
+            }
+
+            LocalArtworksHelper = new LocalArtworksHelper();
         }
 
-        public WallPaperInfoStatus getWallpaperInfo(string wallpaperPath, out LocalArtwork value)
+        public WallPaperInfoStatus GetWallpaperInfo(string wallpaperPath, out LocalArtwork value)
         {
-            if (Path.GetDirectoryName(wallpaperPath).Equals(path))
+            if (System.IO.Path.GetDirectoryName(wallpaperPath).Equals(Path))
             {
-                return localArtworksHelper.getArtworkInfo(Path.GetFileNameWithoutExtension(wallpaperPath), out value)
-                    ? WallPaperInfoStatus.SUCCESS
-                    : WallPaperInfoStatus.NOTFOUND;
+                return LocalArtworksHelper.GetArtworkInfo(System.IO.Path.GetFileNameWithoutExtension(wallpaperPath), out value)
+                    ? WallPaperInfoStatus.Success
+                    : WallPaperInfoStatus.NotFound;
             }
             else
             {
                 value = new LocalArtwork();
-                return WallPaperInfoStatus.PATHINVALID;
+                return WallPaperInfoStatus.PathInvalid;
             }
         }
 

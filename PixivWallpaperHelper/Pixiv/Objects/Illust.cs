@@ -1,11 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using static PixivWallpaperHelper.Pixiv.Objects.IllustTypes;
 
 namespace PixivWallpaperHelper.Pixiv.Objects
@@ -126,8 +122,8 @@ namespace PixivWallpaperHelper.Pixiv.Objects
 
         public override object ReadJson(JsonReader reader, Type t, object existingValue, JsonSerializer serializer)
         {
-            if (reader.TokenType == JsonToken.Null) return null;
-            var value = serializer.Deserialize<string>(reader);
+            if (reader.TokenType == JsonToken.Null) { return null; }
+            string value = serializer.Deserialize<string>(reader);
             switch (value)
             {
                 case "illust":
@@ -145,7 +141,7 @@ namespace PixivWallpaperHelper.Pixiv.Objects
                 serializer.Serialize(writer, null);
                 return;
             }
-            var value = (TypeEnum)untypedValue;
+            TypeEnum value = (TypeEnum)untypedValue;
             switch (value)
             {
                 case TypeEnum.Illust:

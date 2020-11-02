@@ -14,8 +14,8 @@ namespace PixivWallpaperHelper.Pixiv.Mode
         private static readonly string API = "https://app-api.pixiv.net/v1/walkthrough/illusts";
         public static async Task<IllustList> GetFallback()
         {
-            var json = await (await Request.CreateRequest(MethodType.GET, API)).GetResponseStringAsync();
-            var fallback = JsonConvert.DeserializeObject<IllustList>(json, Converter.Settings);
+            string json = await (await Request.CreateRequest(MethodType.GET, API)).GetResponseStringAsync();
+            IllustList fallback = JsonConvert.DeserializeObject<IllustList>(json, Converter.Settings);
 
             return fallback;
         }

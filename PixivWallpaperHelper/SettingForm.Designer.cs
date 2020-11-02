@@ -125,7 +125,7 @@
             this.loginButton.TabIndex = 4;
             this.loginButton.Text = "登入";
             this.loginButton.UseVisualStyleBackColor = true;
-            this.loginButton.Click += new System.EventHandler(this.loginButton_Click);
+            this.loginButton.Click += new System.EventHandler(this.LoginButton_Click);
             // 
             // accountGroup
             // 
@@ -196,7 +196,7 @@
             this.logoutButton.TabIndex = 2;
             this.logoutButton.Text = "登出";
             this.logoutButton.UseVisualStyleBackColor = true;
-            this.logoutButton.Click += new System.EventHandler(this.logoutButton_Click);
+            this.logoutButton.Click += new System.EventHandler(this.LogoutButton_Click);
             // 
             // accoutLabel
             // 
@@ -371,7 +371,7 @@
             this.modeCombo.Name = "modeCombo";
             this.modeCombo.Size = new System.Drawing.Size(121, 23);
             this.modeCombo.TabIndex = 5;
-            this.modeCombo.SelectedIndexChanged += new System.EventHandler(this.modeCombo_SelectedIndexChanged);
+            this.modeCombo.SelectedIndexChanged += new System.EventHandler(this.ModeCombo_SelectedIndexChanged);
             // 
             // modeLabel
             // 
