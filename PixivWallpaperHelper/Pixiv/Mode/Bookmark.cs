@@ -12,7 +12,7 @@ namespace PixivWallpaperHelper.Pixiv.Mode
     public class Bookmark
     {
         private static string API = "https://app-api.pixiv.net/v1/user/bookmarks/illust";
-        public static async Task<List<Illust>> GetBookmark(string accessToken, long user, bool privateMode)
+        public static async Task<List<Illust>> GetBookmark(string accessToken, long userID, bool privateMode)
         {
             var list = new List<Illust>();
             var type = privateMode ? "private" : "public";
@@ -21,7 +21,7 @@ namespace PixivWallpaperHelper.Pixiv.Mode
             var param = new Dictionary<string, string>
             {
                 { "restrict", type },
-                { "user_id", user.ToString() } ,
+                { "user_id", userID.ToString() } ,
             };
 
             var headers = new Dictionary<string, string>
