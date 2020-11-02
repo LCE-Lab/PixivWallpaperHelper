@@ -24,7 +24,9 @@ namespace PixivWallpaperHelper.Pixiv.Mode
         {
             var list = new List<Illust>();
             string type;
-            switch (category) {
+
+            switch (category)
+            {
                 case Category.Daily:
                     type = "day";
                     break;
