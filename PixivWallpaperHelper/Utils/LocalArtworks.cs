@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Drawing;
 using System.Collections.Generic;
@@ -42,13 +42,50 @@ namespace PixivWallpaperHelper.Utils
                 IsChanged = false
             };
             localArtworks.Add(Id, newItem);
+        public bool SetCurrentWallpaper(string Id)
+        {
+            if (!LocalArtworks.ContainsKey(Id)) { return false; }
+            LocalArtworks[Id].IsCurrent = true;
+            foreach (string key in LocalArtworks.Keys)
+            {
+                if (!LocalArtworks.ContainsKey(key)) { continue; }
+                if (LocalArtworks[key].IsCurrent && !key.Equals(Id))
+                {
+                    LocalArtworks[Id].IsCurrent = false;
+                    LocalArtworks[Id].IsChanged = true;
+                }
+            }
             return true;
         }
 
-        public bool getArtworkInfo(string Id, out LocalArtwork value) {
-            return localArtworks.TryGetValue(Id, out value);
+        public int GetUnchangedWallpaperCount()
+        {
+            int count = 0;
+            foreach (string key in LocalArtworks.Keys)
+            {
+                if (!LocalArtworks.ContainsKey(key)) { continue; }
+                if (!LocalArtworks[key].IsChanged) { count++; }
+            }
+            return count;
         }
 
+        public void ClearChangedWallpaper()
+        {
+            foreach (string key in LocalArtworks.Keys)
+            {
+                if (!LocalArtworks.ContainsKey(key)) { continue; }
+                if (LocalArtworks[key].IsChanged)
+                {
+                    LocalArtwork artworkToBeDelete = LocalArtworks[key];
+                    if (File.Exists(artworkToBeDelete.Path)) { File.Delete(artworkToBeDelete.Path); }
+                    _ = LocalArtworks.Remove(key);
+                }
+            }
+        }
+
+        public bool GetArtworkInfo(string Id, out LocalArtwork value) {
+            return LocalArtworks.TryGetValue(Id, out value);
+        }
         private void FetchFromFile()
         {
             if (File.Exists(path))
