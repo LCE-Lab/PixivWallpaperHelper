@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,65 +39,105 @@ namespace PixivWallpaperHelper.Pixiv.OAuth
             }
         }
 
-        public async void fetchWallpaper() {
-            IllustList illustList;
-            if (!Properties.Auth.Default.KEY_PIXIV_USER_LOGIN) {
-                illustList = await Fallback.GetFallback();
+        public async void FetchWallpaper()
+        {
+            List<Illust> illustList;
 
-                // TODO Move out of if
-                decimal count = Properties.Settings.Default.countNum;
-                var fetchNsfw = Properties.Settings.Default.R18Check;
-                var filterPanting = Properties.Settings.Default.paintingCheck;
-                var filterResolution = Properties.Settings.Default.resolutionNum;
-                var originalImage = (filterResolution > 1200) ? true : Properties.Settings.Default.originPictureCheck;
-                var minView = Properties.Settings.Default.viewCountNum;
-                var minCollection = Properties.Settings.Default.collectionNum;
-                int step = 0;
+            decimal count = Properties.Settings.Default.countNum;
+            bool fetchNsfw = Properties.Settings.Default.R18Check;
+            bool filterPanting = Properties.Settings.Default.paintingCheck;
+            decimal filterResolution = Properties.Settings.Default.resolutionNum;
+            bool originalImage = (filterResolution > 1200) || Properties.Settings.Default.originPictureCheck;
+            decimal minView = Properties.Settings.Default.viewCountNum;
+            decimal minCollection = Properties.Settings.Default.collectionNum;
+            string fetchMode = Properties.Settings.Default.modeCombo;
+            string rankFetchCategory = Properties.Settings.Default.rankModeCombo;
+            bool privateMode = Properties.Settings.Default.privateColletcion;
 
-                foreach (var result in illustList.Illusts)
+            if (!Properties.Auth.Default.KEY_PIXIV_USER_LOGIN)
+            {
+                IllustList list = await Fallback.GetFallback();
+                illustList = list.Illusts.ToList();
+            } 
+            else
+            {
+                string accessToken = Properties.Auth.Default.KEY_PIXIV_ACCESS_TOKEN;
+                long userID = Properties.Auth.Default.KEY_PIXIV_USER_ID;
+                Category rankMode;
+
+                switch (rankFetchCategory)
                 {
-                    if (step == count) break;
-                    if (!fetchNsfw && result.SanityLevel >= 4) continue;
-                    if (filterPanting && result.Type != TypeEnum.Illust) continue;
-                    if (minView > result.TotalView || minCollection > result.TotalBookmarks) continue;
+                    case "每日":
+                        rankMode = Category.Daily;
+                        break;
+                    case "每週":
+                        rankMode = Category.Weekly;
+                        break;
+                    case "每月":
+                        rankMode = Category.Monthly;
+                        break;
+                    default:
+                        rankMode = Category.Daily;
+                        break;
+                }
 
-                    if (result.PageCount > 1)
+                switch (fetchMode)
+                {
+                    case "排行榜":
+                        illustList = await Ranking.GetRanking(rankMode, accessToken);
+                        break;
+                    case "推薦":
+                        illustList = await Recommend.GetRecommend(accessToken);
+                        break;
+                    case "收藏":
+                        illustList = await Bookmark.GetBookmark(accessToken, userID, privateMode);
+                        break;
+                    default:
+                        illustList = await Ranking.GetRanking(rankMode, accessToken);
+                        break;
+                }
+            }
+
+            foreach (Illust result in illustList)
+            {
+                if (LocalArtworksHelper.GetUnchangedWallpaperCount() >= count) { break; }
+                if (!fetchNsfw && result.SanityLevel >= 4) { continue; }
+                if (filterPanting && result.Type != TypeEnum.Illust) { continue; }
+                if (minView > result.TotalView || minCollection > result.TotalBookmarks) { continue; }
+
+                if (result.PageCount > 1)
+                {
+                    for (int i = 0; i < result.MetaPages.Length; i++)
                     {
-                        for (int i = 0; i < result.MetaPages.Length; i++)
-                        {
-                            IllustPage page = result.MetaPages[i];
-                            var url = (originalImage) ? page.ImageUrls.Original : page.ImageUrls.Large;
-                            var finalPath = $"{path}\\{result.Id}_{i}{Path.GetExtension(url)}";
-                            var success = localArtworksHelper.AddAndSaveArtwork(
-                                    Image.SaveImage(url),
-                                    finalPath,
-                                    result.Title,
-                                    result.User.Name,
-                                    $"{result.Id}_{i}",
-                                    url
-                                );
-                            if (success) { step++; }
-                        }
-                    }
-                    else
-                    {
-                        var url = (originalImage) ? result.MetaSinglePage.OriginalImageUrl : result.ImageUrls.Large;
-                        var finalPath = $"{path}\\{result.Id}{Path.GetExtension(url)}";
-                        var success = localArtworksHelper.AddAndSaveArtwork(
+                        if (LocalArtworksHelper.GetUnchangedWallpaperCount() >= count) { break; }
+                        string url = originalImage ? result.MetaPages[i].ImageUrls.Original : result.MetaPages[i].ImageUrls.Large;
+                        string finalPath = $"{Path}\\{result.Id}_{i}{System.IO.Path.GetExtension(url)}";
+                        _ = LocalArtworksHelper.AddAndSaveArtwork(
                                 Image.SaveImage(url),
                                 finalPath,
                                 result.Title,
                                 result.User.Name,
-                                result.Id.ToString(),
+                                $"{result.Id}_{i}",
                                 url
                             );
-                        if (success) { step++; }
                     }
-                    
                 }
-                // End TODO
+                else
+                {
+                    string url = originalImage ? result.MetaSinglePage.OriginalImageUrl : result.ImageUrls.Large;
+                    string finalPath = $"{Path}\\{result.Id}{System.IO.Path.GetExtension(url)}";
+                    _ = LocalArtworksHelper.AddAndSaveArtwork(
+                            Image.SaveImage(url),
+                            finalPath,
+                            result.Title,
+                            result.User.Name,
+                            result.Id.ToString(),
+                            url
+                        );
+                }
             }
-            localArtworksHelper.Save();
+
+            LocalArtworksHelper.Save();
         }
     }
 }
