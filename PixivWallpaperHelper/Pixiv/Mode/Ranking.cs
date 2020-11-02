@@ -20,7 +20,7 @@ namespace PixivWallpaperHelper.Pixiv.Mode
     public class Ranking
     {
         private static string API = "https://app-api.pixiv.net/v1/illust/ranking";
-        public static async Task<List<Illust>> GetRanking(Category category, string accessToken, decimal count = 0)
+        public static async Task<List<Illust>> GetRanking(Category category, string accessToken)
         {
             var list = new List<Illust>();
             string type;
@@ -49,15 +49,15 @@ namespace PixivWallpaperHelper.Pixiv.Mode
                 { "Authorization", "Bearer " + accessToken } ,
             };
 
-            var json = await (await Request.CreateRequest(MethodType.GET, API, param, headers)).GetResponseStringAsync();
-            var ranking = JsonConvert.DeserializeObject<IllustList>(json);
-
             do
             {
+                var json = await (await Request.CreateRequest(MethodType.GET, API, param, headers)).GetResponseStringAsync();
+                var ranking = JsonConvert.DeserializeObject<IllustList>(json);
+
                 if (ranking.NextUrl != null) API = ranking.NextUrl; else break;
 
                 list.AddRange(ranking.Illusts);
-            } while (list.Count < count);
+            } while (list.Count < Properties.Settings.Default.countNum);
 
             return list;
         }
