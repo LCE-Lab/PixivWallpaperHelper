@@ -9,6 +9,7 @@ using System.Security.Authentication;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using PixivWallpaperHelper.Pixiv.Mode;
 using PixivWallpaperHelper.Pixiv.OAuth;
 using PixivWallpaperHelper.Utils;
 
@@ -72,7 +73,7 @@ namespace PixivWallpaperHelper
             {
                 try
                 {
-                    var tokens = await Auth.login(UsernameBox.Text, PasswordBox.Text);
+                    await Auth.login(UsernameBox.Text, PasswordBox.Text);
                     CheckLogin();
                 }
                 catch (AuthenticationException)
