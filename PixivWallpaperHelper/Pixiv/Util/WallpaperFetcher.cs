@@ -8,6 +8,7 @@ using PixivWallpaperHelper.Pixiv.OAuth;
 using PixivWallpaperHelper.Utils;
 using PixivWallpaperHelper.Pixiv.Objects;
 using PixivWallpaperHelper.Pixiv.Mode;
+using static PixivWallpaperHelper.Pixiv.Objects.IllustTypes;
 
 namespace PixivWallpaperHelper.Pixiv.OAuth
 {
@@ -64,7 +65,7 @@ namespace PixivWallpaperHelper.Pixiv.OAuth
                     {
                         for (int i = 0; i < result.MetaPages.Length; i++)
                         {
-                            Page page = result.MetaPages[i];
+                            IllustPage page = result.MetaPages[i];
                             var url = (originalImage) ? page.ImageUrls.Original : page.ImageUrls.Large;
                             var finalPath = $"{path}\\{result.Id}_{i}{Path.GetExtension(url)}";
                             var success = localArtworksHelper.AddAndSaveArtwork(

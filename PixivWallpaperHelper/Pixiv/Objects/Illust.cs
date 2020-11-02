@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static PixivWallpaperHelper.Pixiv.Objects.IllustTypes;
 
 namespace PixivWallpaperHelper.Pixiv.Objects
 {
@@ -60,10 +61,10 @@ namespace PixivWallpaperHelper.Pixiv.Objects
         //public Series Series { get; set; }
 
         [JsonProperty("meta_single_page")]
-        public SinglePage MetaSinglePage { get; set; }
+        public IllustSinglePage MetaSinglePage { get; set; }
 
         [JsonProperty("meta_pages")]
-        public Page[] MetaPages { get; set; }
+        public IllustPage[] MetaPages { get; set; }
 
         [JsonProperty("total_view")]
         public long TotalView { get; set; }
@@ -79,23 +80,6 @@ namespace PixivWallpaperHelper.Pixiv.Objects
 
         [JsonProperty("is_muted")]
         public bool IsMuted { get; set; }
-    }
-
-    public partial class Tag
-    {
-        [JsonProperty("name")]
-        public string Name { get; set; }
-
-        [JsonProperty("translated_name")]
-        public string TranslatedName { get; set; }
-    }
-
-    public enum TypeEnum { Illust, Manga };
-
-    public partial class SinglePage
-    {
-        [JsonProperty("original_image_url")]
-        public string OriginalImageUrl { get; set; }
     }
 
     public partial class ListUser
