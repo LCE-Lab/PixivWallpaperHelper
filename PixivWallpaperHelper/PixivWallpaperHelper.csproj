@@ -49,8 +49,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Pixiv\Mode\Bookmark.cs" />
     <Compile Include="Pixiv\Mode\Fallback.cs" />
     <Compile Include="Pixiv\Mode\Ranking.cs" />
+    <Compile Include="Pixiv\Mode\Recommend.cs" />
     <Compile Include="Pixiv\OAuth\Auth.cs" />
     <Compile Include="Pixiv\Objects\IllustPage.cs" />
     <Compile Include="Pixiv\Objects\IllustSinglePage.cs" />
