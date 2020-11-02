@@ -1,4 +1,4 @@
-﻿namespace PixivWallpaperHelper
+namespace PixivWallpaperHelper
 {
     partial class MainForm
     {
@@ -36,6 +36,7 @@
             this.設定ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.重新整理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.titlePanel = new System.Windows.Forms.Panel();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.menuStrip1.SuspendLayout();
             this.titlePanel.SuspendLayout();
             this.SuspendLayout();
@@ -119,6 +120,11 @@
             this.titlePanel.Size = new System.Drawing.Size(752, 72);
             this.titlePanel.TabIndex = 7;
             // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.WorkerReportsProgress = true;
+            this.backgroundWorker1.WorkerSupportsCancellation = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -153,6 +159,7 @@
         private System.Windows.Forms.ToolStripMenuItem 設定ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 重新整理ToolStripMenuItem;
         private System.Windows.Forms.Panel titlePanel;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
     }
 }
 

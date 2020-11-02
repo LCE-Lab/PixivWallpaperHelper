@@ -1,4 +1,4 @@
-﻿using Microsoft.Win32;
+using Microsoft.Win32;
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -37,6 +37,8 @@ namespace PixivWallpaperHelper
             this.changeThumbnail();
             this.RegisterEvent();
             this.wallpaper.fetchWallpaper();
+            backgroundWorker1.DoWork += new DoWorkEventHandler(FetchEvent);
+            if (!backgroundWorker1.IsBusy) backgroundWorker1.RunWorkerAsync();
         }
 
         private void Form1_Click(object sender, EventArgs e) {
@@ -196,6 +198,9 @@ namespace PixivWallpaperHelper
             if (_url != "") {
                 Process.Start(_url);
             }
+        private void FetchEvent(object sender, DoWorkEventArgs e)
+        {
+            Wallpaper.FetchWallpaper();
         }
     }
 }
