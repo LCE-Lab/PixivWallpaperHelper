@@ -1,4 +1,4 @@
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -17,12 +17,12 @@ namespace PixivWallpaperHelper
         private string CurrentImagePath = "";
         private string Url = "";
         private readonly SettingForm SettingForm;
-        private readonly WallpaperFetcher Wallpaper;
+        private readonly WallpaperFetcher WallpaperFetcher;
         public MainForm()
         {
             InitializeComponent();
             SettingForm = new SettingForm();
-            Wallpaper = new WallpaperFetcher();
+            WallpaperFetcher = new WallpaperFetcher();
         }
 
         private static readonly string AppGuid = "7bcbe405-0325-4f8d-8527-afd151d13ff4";
@@ -114,11 +114,13 @@ namespace PixivWallpaperHelper
                         titleLabel.Text = "無法載入預覽";
                         authorLabel.Text = "桌布原始圖片似乎被刪除了";
                         Url = "";
+                        WallpaperFetcher.ClearCurrentWallpaperMark();
+                        if (WallpaperFetcher.IsLocalUnchangedWallpaperEmpty()) { backgroundWorker1.RunWorkerAsync(); };
                         return;
                     }
                     if (BackgroundImage != null) { BackgroundImage.Dispose(); }
                     BackgroundImage = System.Drawing.Image.FromFile(newPath);
-                    switch (Wallpaper.GetWallpaperInfo(newPath, out LocalArtwork localArtwork))
+                    switch (WallpaperFetcher.GetWallpaperInfoFromWallpaper(newPath, out LocalArtwork localArtwork))
                     {
                         case WallPaperInfoStatus.Success:
                             titleLabel.Text = localArtwork.Title;
@@ -136,6 +138,7 @@ namespace PixivWallpaperHelper
                             Url = "";
                             break;
                     }
+                    if (WallpaperFetcher.IsLocalUnchangedWallpaperEmpty()) { backgroundWorker1.RunWorkerAsync(); };
                 }
             }
         }
@@ -211,7 +214,9 @@ namespace PixivWallpaperHelper
 
         private void FetchEvent(object sender, DoWorkEventArgs e)
         {
-            Wallpaper.FetchWallpaper();
+            WallpaperFetcher.FetchWallpaper();
+        }
+
         private void NotifyIcon1_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)

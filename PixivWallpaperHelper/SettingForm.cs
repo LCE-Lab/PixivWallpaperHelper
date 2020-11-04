@@ -137,9 +137,9 @@ namespace PixivWallpaperHelper
 
         private void SetSetting()
         {
-            var settingsData = Data.GetSettingsData();
+            Dictionary<string, dynamic> settingsData = Data.GetSettingsData();
 
-            foreach (var results in settingsData)
+            foreach (KeyValuePair<string, dynamic> results in settingsData)
             {
                 switch (results.Key)
                 {

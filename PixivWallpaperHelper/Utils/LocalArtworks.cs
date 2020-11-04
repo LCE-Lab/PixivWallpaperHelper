@@ -49,6 +49,12 @@ namespace PixivWallpaperHelper.Utils
         {
             if (!LocalArtworks.ContainsKey(Id)) { return false; }
             LocalArtworks[Id].IsCurrent = true;
+            UnsetLastCurrent(Id);
+            return true;
+        }
+
+        public void UnsetLastCurrent(string Id = "")
+        {
             foreach (string key in LocalArtworks.Keys)
             {
                 if (!LocalArtworks.ContainsKey(key)) { continue; }
@@ -58,7 +64,6 @@ namespace PixivWallpaperHelper.Utils
                     LocalArtworks[Id].IsChanged = true;
                 }
             }
-            return true;
         }
 
         public int GetUnchangedWallpaperCount()
@@ -67,7 +72,7 @@ namespace PixivWallpaperHelper.Utils
             foreach (string key in LocalArtworks.Keys)
             {
                 if (!LocalArtworks.ContainsKey(key)) { continue; }
-                if (!LocalArtworks[key].IsChanged) { count++; }
+                if (!LocalArtworks[key].IsChanged && !!LocalArtworks[key].IsCurrent) { count++; }
             }
             return count;
         }
@@ -86,7 +91,8 @@ namespace PixivWallpaperHelper.Utils
             }
         }
 
-        public bool GetArtworkInfo(string Id, out LocalArtwork value) {
+        public bool GetArtworkInfo(string Id, out LocalArtwork value)
+        {
             return LocalArtworks.TryGetValue(Id, out value);
         }
 

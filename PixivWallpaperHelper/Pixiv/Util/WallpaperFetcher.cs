@@ -25,19 +25,34 @@ namespace PixivWallpaperHelper.Pixiv.OAuth
             LocalArtworksHelper = new LocalArtworksHelper();
         }
 
-        public WallPaperInfoStatus GetWallpaperInfo(string wallpaperPath, out LocalArtwork value)
+        public WallPaperInfoStatus GetWallpaperInfoFromWallpaper(string wallpaperPath, out LocalArtwork value)
         {
             if (System.IO.Path.GetDirectoryName(wallpaperPath).Equals(Path))
             {
-                return LocalArtworksHelper.GetArtworkInfo(System.IO.Path.GetFileNameWithoutExtension(wallpaperPath), out value)
-                    ? WallPaperInfoStatus.Success
-                    : WallPaperInfoStatus.NotFound;
+                if (LocalArtworksHelper.GetArtworkInfo(System.IO.Path.GetFileNameWithoutExtension(wallpaperPath), out value)) 
+                {
+                    _ = LocalArtworksHelper.SetCurrentWallpaper(System.IO.Path.GetFileNameWithoutExtension(wallpaperPath));
+                    return WallPaperInfoStatus.Success;
+                }
+                LocalArtworksHelper.UnsetLastCurrent();
+                return WallPaperInfoStatus.NotFound;
             }
             else
             {
                 value = new LocalArtwork();
+                LocalArtworksHelper.UnsetLastCurrent();
                 return WallPaperInfoStatus.PathInvalid;
             }
+        }
+
+        public void ClearCurrentWallpaperMark()
+        {
+            LocalArtworksHelper.UnsetLastCurrent();
+        }
+
+        public bool IsLocalUnchangedWallpaperEmpty()
+        {
+            return LocalArtworksHelper.GetUnchangedWallpaperCount() <= 0;
         }
 
         public async void FetchWallpaper()
@@ -138,6 +153,7 @@ namespace PixivWallpaperHelper.Pixiv.OAuth
                 }
             }
 
+            if (Properties.Settings.Default.deleteCheck) { LocalArtworksHelper.ClearChangedWallpaper(); }
             LocalArtworksHelper.Save();
         }
     }
