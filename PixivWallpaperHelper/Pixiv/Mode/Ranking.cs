@@ -14,32 +14,26 @@ namespace PixivWallpaperHelper.Pixiv.Mode
     }
     public class Ranking
     {
-        private static string API = "https://app-api.pixiv.net/v1/illust/ranking";
         public static async Task<List<Illust>> GetRanking(Category category, string accessToken)
         {
+            string API = "https://app-api.pixiv.net/v1/illust/ranking?mode=";
             List<Illust> list = new List<Illust>();
-            string type;
 
             switch (category)
             {
                 case Category.Daily:
-                    type = "day";
+                    API += "day";
                     break;
                 case Category.Weekly:
-                    type = "week";
+                    API += "week";
                     break;
                 case Category.Monthly:
-                    type = "month";
+                    API += "month";
                     break;
                 default:
-                    type = "day";
+                    API += "day";
                     break;
             }
-
-            Dictionary<string, string> param = new Dictionary<string, string>
-            {
-                { "mode", type },
-            };
 
             Dictionary<string, string> headers = new Dictionary<string, string>
             {
@@ -48,7 +42,7 @@ namespace PixivWallpaperHelper.Pixiv.Mode
 
             do
             {
-                string json = await (await Request.CreateRequest(MethodType.GET, API, param, headers)).GetResponseStringAsync();
+                string json = await (await Request.CreateRequest(MethodType.GET, API, null, headers)).GetResponseStringAsync();
                 IllustList ranking = JsonConvert.DeserializeObject<IllustList>(json);
 
                 if (ranking.NextUrl != null) { API = ranking.NextUrl; } else { break; }

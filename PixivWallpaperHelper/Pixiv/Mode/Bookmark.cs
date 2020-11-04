@@ -11,18 +11,13 @@ namespace PixivWallpaperHelper.Pixiv.Mode
 {
     public class Bookmark
     {
-        private static string API = "https://app-api.pixiv.net/v1/user/bookmarks/illust";
         public static async Task<List<Illust>> GetBookmark(string accessToken, long userID, bool privateMode)
         {
+            string PublicAPI = "https://app-api.pixiv.net/v1/user/bookmarks/illust?restrict=public&user_id=";
+            string PrivateAPI = "https://app-api.pixiv.net/v1/user/bookmarks/illust?restrict=private&user_id=";
             List<Illust> list = new List<Illust>();
-            string type = privateMode ? "private" : "public";
             int i = 0;
-
-            Dictionary<string, string> param = new Dictionary<string, string>
-            {
-                { "restrict", type },
-                { "user_id", userID.ToString() } ,
-            };
+            string API = privateMode ? PrivateAPI + $"{userID}" : PublicAPI + $"{userID}";
 
             Dictionary<string, string> headers = new Dictionary<string, string>
             {
@@ -31,7 +26,7 @@ namespace PixivWallpaperHelper.Pixiv.Mode
 
             do
             {
-                string json = await (await Request.CreateRequest(MethodType.GET, API, param, headers)).GetResponseStringAsync();
+                string json = await (await Request.CreateRequest(MethodType.GET, API, null, headers)).GetResponseStringAsync();
                 IllustList ranking = JsonConvert.DeserializeObject<IllustList>(json);
 
                 if (ranking.NextUrl != null)

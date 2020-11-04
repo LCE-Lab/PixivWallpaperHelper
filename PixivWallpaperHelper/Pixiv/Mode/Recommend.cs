@@ -8,9 +8,9 @@ namespace PixivWallpaperHelper.Pixiv.Mode
 {
     public class Recommend
     {
-        private static string API = "https://app-api.pixiv.net/v1/illust/recommended";
         public static async Task<List<Illust>> GetRecommend(string accessToken)
         {
+            string API = "https://app-api.pixiv.net/v1/illust/recommended";
             List<Illust> list = new List<Illust>();
 
             Dictionary<string, string> headers = new Dictionary<string, string>
