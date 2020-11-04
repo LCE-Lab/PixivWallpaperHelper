@@ -78,6 +78,8 @@ namespace PixivWallpaperHelper.Pixiv.OAuth
             } 
             else
             {
+                _ = await Auth.Refresh(Properties.Auth.Default.KEY_PIXIV_DEVICE_TOKEN, Properties.Auth.Default.KEY_PIXIV_REFRESH_TOKEN);
+
                 string accessToken = Properties.Auth.Default.KEY_PIXIV_ACCESS_TOKEN;
                 long userID = Properties.Auth.Default.KEY_PIXIV_USER_ID;
                 Category rankMode;
