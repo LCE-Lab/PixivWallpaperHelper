@@ -21,6 +21,7 @@ namespace PixivWallpaperHelper
         public MainForm()
         {
             InitializeComponent();
+            RegisterEvent();
             SettingForm = new SettingForm();
             WallpaperFetcher = new WallpaperFetcher();
         }
@@ -35,7 +36,6 @@ namespace PixivWallpaperHelper
                 MessageBox.Show("Instance already running");
                 Close();
             }
-            RegisterEvent();
             Show();
             ChangeThumbnail();
         }
