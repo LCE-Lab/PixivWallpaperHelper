@@ -3,6 +3,7 @@ using System.IO;
 using System.Drawing;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using System.Collections.ObjectModel;
 
 namespace PixivWallpaperHelper.Utils
 {
@@ -49,6 +50,7 @@ namespace PixivWallpaperHelper.Utils
         {
             if (!LocalArtworks.ContainsKey(Id)) { return false; }
             LocalArtworks[Id].IsCurrent = true;
+            if (LocalArtworks[Id].IsChanged) { LocalArtworks[Id].IsChanged = false; }
             UnsetLastCurrent(Id);
             return true;
         }
@@ -60,8 +62,8 @@ namespace PixivWallpaperHelper.Utils
                 if (!LocalArtworks.ContainsKey(key)) { continue; }
                 if (LocalArtworks[key].IsCurrent && !key.Equals(Id))
                 {
-                    LocalArtworks[Id].IsCurrent = false;
-                    LocalArtworks[Id].IsChanged = true;
+                    LocalArtworks[key].IsCurrent = false;
+                    LocalArtworks[key].IsChanged = true;
                 }
             }
         }
@@ -79,7 +81,9 @@ namespace PixivWallpaperHelper.Utils
 
         public void ClearChangedWallpaper()
         {
-            foreach (string key in LocalArtworks.Keys)
+            string[] keys = new string[LocalArtworks.Keys.Count];
+            LocalArtworks.Keys.CopyTo(keys, 0);
+            foreach (string key in keys)
             {
                 if (!LocalArtworks.ContainsKey(key)) { continue; }
                 if (LocalArtworks[key].IsChanged)

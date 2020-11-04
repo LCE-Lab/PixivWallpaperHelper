@@ -35,10 +35,9 @@ namespace PixivWallpaperHelper
                 MessageBox.Show("Instance already running");
                 Close();
             }
-            ChangeThumbnail();
             RegisterEvent();
-
-            backgroundWorker1.DoWork += new DoWorkEventHandler(FetchEvent);
+            Show();
+            ChangeThumbnail();
         }
 
         private void Form1_Click(object sender, EventArgs e) {
@@ -101,6 +100,7 @@ namespace PixivWallpaperHelper
                 Url = "";
                 titleLabel.Text = "純色桌布";
                 authorLabel.Text = "這似乎不是由本程式自動下載的相片輪播圖庫，請檢查桌布設定";
+                if (WallpaperFetcher.IsLocalUnchangedWallpaperEmpty() && !backgroundWorker1.IsBusy) { backgroundWorker1.RunWorkerAsync(); };
             }
             else
             {
@@ -115,7 +115,7 @@ namespace PixivWallpaperHelper
                         authorLabel.Text = "桌布原始圖片似乎被刪除了";
                         Url = "";
                         WallpaperFetcher.ClearCurrentWallpaperMark();
-                        if (WallpaperFetcher.IsLocalUnchangedWallpaperEmpty()) { backgroundWorker1.RunWorkerAsync(); };
+                        if (WallpaperFetcher.IsLocalUnchangedWallpaperEmpty() && !backgroundWorker1.IsBusy) { backgroundWorker1.RunWorkerAsync(); };
                         return;
                     }
                     if (BackgroundImage != null) { BackgroundImage.Dispose(); }
@@ -138,8 +138,8 @@ namespace PixivWallpaperHelper
                             Url = "";
                             break;
                     }
-                    if (WallpaperFetcher.IsLocalUnchangedWallpaperEmpty()) { backgroundWorker1.RunWorkerAsync(); };
                 }
+                if (WallpaperFetcher.IsLocalUnchangedWallpaperEmpty() && !backgroundWorker1.IsBusy) { backgroundWorker1.RunWorkerAsync(); };
             }
         }
 
@@ -201,6 +201,7 @@ namespace PixivWallpaperHelper
             ResizeEnd += new EventHandler(Form1_ResizeEnd);
             notifyIcon1.MouseClick += new MouseEventHandler(NotifyIcon1_MouseClick);
             FormClosing += new FormClosingEventHandler(MainForm_FormClosing);
+            backgroundWorker1.DoWork += new DoWorkEventHandler(FetchEvent);
 
             SetupNotifyIcon();
         }
@@ -246,6 +247,7 @@ namespace PixivWallpaperHelper
             {
                 Show();
                 WindowState = FormWindowState.Normal;
+                ShowInTaskbar = true;
                 Activate();
                 Focus();
             }
