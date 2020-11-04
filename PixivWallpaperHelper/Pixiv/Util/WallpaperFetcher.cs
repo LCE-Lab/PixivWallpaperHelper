@@ -32,6 +32,7 @@ namespace PixivWallpaperHelper.Pixiv.OAuth
                 if (LocalArtworksHelper.GetArtworkInfo(System.IO.Path.GetFileNameWithoutExtension(wallpaperPath), out value)) 
                 {
                     _ = LocalArtworksHelper.SetCurrentWallpaper(System.IO.Path.GetFileNameWithoutExtension(wallpaperPath));
+                    LocalArtworksHelper.Save();
                     return WallPaperInfoStatus.Success;
                 }
                 LocalArtworksHelper.UnsetLastCurrent();
@@ -116,7 +117,7 @@ namespace PixivWallpaperHelper.Pixiv.OAuth
 
             foreach (Illust result in illustList)
             {
-                if (LocalArtworksHelper.GetUnchangedWallpaperCount() >= count) { break; }
+                if (LocalArtworksHelper.GetUnchangedWallpaperCount() == count) { break; }
                 if (!fetchNsfw && result.SanityLevel >= 4) { continue; }
                 if (filterPanting && result.Type != TypeEnum.Illust) { continue; }
                 if (minView > result.TotalView || minCollection > result.TotalBookmarks) { continue; }
@@ -125,7 +126,7 @@ namespace PixivWallpaperHelper.Pixiv.OAuth
                 {
                     for (int i = 0; i < result.MetaPages.Length; i++)
                     {
-                        if (LocalArtworksHelper.GetUnchangedWallpaperCount() >= count) { break; }
+                        if (LocalArtworksHelper.GetUnchangedWallpaperCount() == count) { break; }
                         string url = originalImage ? result.MetaPages[i].ImageUrls.Original : result.MetaPages[i].ImageUrls.Large;
                         string finalPath = $"{Path}\\{result.Id}_{i}{System.IO.Path.GetExtension(url)}";
                         _ = LocalArtworksHelper.AddAndSaveArtwork(

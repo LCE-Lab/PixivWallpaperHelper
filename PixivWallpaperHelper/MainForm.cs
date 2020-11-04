@@ -39,7 +39,6 @@ namespace PixivWallpaperHelper
             RegisterEvent();
 
             backgroundWorker1.DoWork += new DoWorkEventHandler(FetchEvent);
-            if (!backgroundWorker1.IsBusy) backgroundWorker1.RunWorkerAsync();
         }
 
         private void Form1_Click(object sender, EventArgs e) {
@@ -102,7 +101,8 @@ namespace PixivWallpaperHelper
                 Url = "";
                 titleLabel.Text = "純色桌布";
                 authorLabel.Text = "這似乎不是由本程式自動下載的相片輪播圖庫，請檢查桌布設定";
-            }else
+            }
+            else
             {
                 string newPath = GetCurrentWallpaperPath();
                 if (!newPath.Equals(CurrentImagePath))
@@ -151,7 +151,8 @@ namespace PixivWallpaperHelper
                 string path = (string)key.GetValue("WallPaper");
                 return path.Equals("");
             }
-            else {
+            else
+            {
                 return false;
             }
         }
@@ -214,7 +215,7 @@ namespace PixivWallpaperHelper
 
         private void FetchEvent(object sender, DoWorkEventArgs e)
         {
-            WallpaperFetcher.FetchWallpaper();
+             WallpaperFetcher.FetchWallpaper();
         }
 
         private void NotifyIcon1_MouseClick(object sender, MouseEventArgs e)
@@ -245,9 +246,9 @@ namespace PixivWallpaperHelper
             {
                 Show();
                 WindowState = FormWindowState.Normal;
+                Activate();
+                Focus();
             }
-            Activate();
-            Focus();
         }
 
         private void SetupNotifyIcon()

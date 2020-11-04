@@ -72,7 +72,7 @@ namespace PixivWallpaperHelper.Utils
             foreach (string key in LocalArtworks.Keys)
             {
                 if (!LocalArtworks.ContainsKey(key)) { continue; }
-                if (!LocalArtworks[key].IsChanged && !!LocalArtworks[key].IsCurrent) { count++; }
+                if (!LocalArtworks[key].IsChanged && !LocalArtworks[key].IsCurrent) { count++; }
             }
             return count;
         }
