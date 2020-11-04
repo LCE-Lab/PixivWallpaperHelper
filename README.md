@@ -14,7 +14,8 @@
 ```
 
 ## 功能
-最小化至 System Tray
+* 最小化至 System Tray
+* 登入登出
 #### 模式
 * 排行榜（每日、每週、每月）
 * 推薦
@@ -27,6 +28,8 @@
 * 最少收藏次數
 
 ## 截圖
+<img width="768" height="432" src="https://user-images.githubusercontent.com/23373365/98081220-acad1100-1eb1-11eb-9294-28e47f754330.png">
+<img width="621" height="382" src="https://user-images.githubusercontent.com/23373365/98081385-f138ac80-1eb1-11eb-8e95-58d371fb8cbd.png">
 
 ## 開發人員
 [jimchen5209](jimchen5209.me) - 介面設計、主要功能開發  
