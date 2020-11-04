@@ -20,13 +20,43 @@ namespace PixivWallpaperHelper.Pixiv.OAuth
         {
             Dictionary<string, string> param = new Dictionary<string, string>
             {
-                { "username", username },
-                { "password", password },
-                { "grant_type", "password" },
-                { "device_token", "pixiv" },
-                { "get_secure_url", "true" },
-                { "client_id", ClientID },
-                { "client_secret", ClientSecret },
+                { "username", username } ,
+                { "password", password } ,
+                { "grant_type", "password" } ,
+                { "device_token", "pixiv" } ,
+                { "get_secure_url", "true" } ,
+                { "client_id", ClientID } ,
+                { "client_secret", ClientSecret } ,
+            };
+
+            string localTime = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Local).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'sszzz");
+            string hash = MD5.MD5Code(localTime + HashSecret);
+
+            Dictionary<string, string> headers = new Dictionary<string, string>
+            {
+                { "Accept-Language", "en_US" } ,
+                { "X-Client-Time",  localTime} ,
+                { "X-Client-Hash", hash } ,
+            };
+
+            string json = await (await Request.CreateRequest(MethodType.POST, API, param, headers)).GetResponseStringAsync();
+            Authorize authorize = JsonConvert.DeserializeObject<Authorize>(json);
+
+            Data.SaveAuthData(authorize);
+
+            return authorize;
+        }
+
+        public static async Task<Authorize> Refresh(string deviceToken, string refreshToken)
+        {
+            Dictionary<string, string> param = new Dictionary<string, string>
+            {
+                { "client_id", ClientID } ,
+                { "client_secret", ClientSecret } ,
+                { "get_secure_url", "true" } ,
+                { "grant_type", "refresh_token" } ,
+                { "device_token", deviceToken } ,
+                { "refresh_token", refreshToken } ,
             };
 
             string localTime = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Local).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'sszzz");
