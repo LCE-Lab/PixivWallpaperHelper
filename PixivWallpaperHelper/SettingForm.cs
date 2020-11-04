@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Security.Authentication;
 using System.Windows.Forms;
@@ -53,6 +53,11 @@ namespace PixivWallpaperHelper
             Data.SaveSettingsData(settings);
         }
 
+        private void LoginEvent(object sender, EventArgs e)
+        {
+            loginButton.Enabled = !string.IsNullOrEmpty(UsernameBox.Text) && !string.IsNullOrEmpty(PasswordBox.Text);
+        }
+
         private void SettingForm_Load(object sender, EventArgs e)
         {
             SetSetting();
@@ -82,7 +87,7 @@ namespace PixivWallpaperHelper
 
         private void CheckEnter(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == (char)13)
+            if (e.KeyChar == (char)13 && loginButton.Enabled)
             {
                 _ = loginButton.Focus();
                 LoginButton_Click(sender, e);
@@ -100,12 +105,22 @@ namespace PixivWallpaperHelper
                 PasswordBox.Text = "";
                 profileImg.Image = Utils.Image.SaveImage(Properties.Auth.Default.KEY_PIXIV_USER_IMG);
                 accountControl.SelectedIndex = 1;
+                modeCombo.Enabled = true;
+                modeLabel.Enabled = true;
+                rankModeCombo.Enabled = true;
+                rankModeLabel.Enabled = true;
             }
             else
             {
                 accoutLabel.Text = "名稱";
                 usernameLabel.Text = "ID";
                 accountControl.SelectedIndex = 0;
+                modeCombo.SelectedItem = "排行榜";
+                modeCombo.Enabled = false;
+                modeLabel.Enabled = false;
+                rankModeCombo.SelectedItem = "每週";
+                rankModeCombo.Enabled = false;
+                rankModeLabel.Enabled = false;
             }
         }
 
@@ -120,6 +135,8 @@ namespace PixivWallpaperHelper
             // 登入 Enter Event
             UsernameBox.KeyPress += new KeyPressEventHandler(CheckEnter);
             PasswordBox.KeyPress += new KeyPressEventHandler(CheckEnter);
+            UsernameBox.TextChanged += new EventHandler(LoginEvent);
+            PasswordBox.TextChanged += new EventHandler(LoginEvent);
 
             // 選項 Event
             countNum.ValueChanged += new EventHandler(ValueChangedEvent);
