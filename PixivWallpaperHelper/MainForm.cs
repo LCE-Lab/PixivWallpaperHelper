@@ -1,4 +1,4 @@
-﻿using Microsoft.Win32;
+using Microsoft.Win32;
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -195,6 +195,10 @@ namespace PixivWallpaperHelper
             titlePanel.Paint += new PaintEventHandler(TitlePanel_Paint);
             Click += new EventHandler(Form1_Click);
             ResizeEnd += new EventHandler(Form1_ResizeEnd);
+            notifyIcon1.MouseClick += new MouseEventHandler(NotifyIcon1_MouseClick);
+            FormClosing += new FormClosingEventHandler(MainForm_FormClosing);
+
+            SetupNotifyIcon();
         }
 
         private void TitleLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -208,6 +212,57 @@ namespace PixivWallpaperHelper
         private void FetchEvent(object sender, DoWorkEventArgs e)
         {
             Wallpaper.FetchWallpaper();
+        private void NotifyIcon1_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                ShowForm();
+            }
+            else if (e.Button == MouseButtons.Right)
+            {
+                
+            }
+        }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (WindowState != FormWindowState.Minimized)
+            {
+                e.Cancel = true;
+                WindowState = FormWindowState.Minimized;
+                ShowInTaskbar = false;
+            }
+        }
+
+        private void ShowForm(object sender = null, EventArgs e = null)
+        {
+            if (WindowState == FormWindowState.Minimized)
+            {
+                Show();
+                WindowState = FormWindowState.Normal;
+            }
+            Activate();
+            Focus();
+        }
+
+        private void SetupNotifyIcon()
+        {
+            ContextMenu menu = new ContextMenu();
+            MenuItem menuOpen = new MenuItem("Open Pixiv Wallpaper Helper");
+            MenuItem menuExit = new MenuItem("Quit Pixiv Wallpaper Helper");
+
+            menuOpen.Click += new EventHandler(ShowForm);
+            menuExit.Click += new EventHandler(Exit);
+
+            menu.MenuItems.Add(menuOpen);
+            menu.MenuItems.Add(menuExit);
+
+            notifyIcon1.ContextMenu = menu;
+        }
+
+        private void Exit(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

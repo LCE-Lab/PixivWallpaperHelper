@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.wallpaperRefreshTimer = new System.Windows.Forms.Timer(this.components);
             this.titleLabel = new System.Windows.Forms.LinkLabel();
             this.authorLabel = new System.Windows.Forms.Label();
@@ -37,6 +38,7 @@
             this.重新整理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.titlePanel = new System.Windows.Forms.Panel();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.menuStrip1.SuspendLayout();
             this.titlePanel.SuspendLayout();
             this.SuspendLayout();
@@ -125,6 +127,12 @@
             this.backgroundWorker1.WorkerReportsProgress = true;
             this.backgroundWorker1.WorkerSupportsCancellation = true;
             // 
+            // notifyIcon1
+            // 
+            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
+            this.notifyIcon1.Text = "Pixiv Wallpaper Helper";
+            this.notifyIcon1.Visible = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -136,6 +144,7 @@
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MaximizeBox = false;
@@ -160,6 +169,7 @@
         private System.Windows.Forms.ToolStripMenuItem 重新整理ToolStripMenuItem;
         private System.Windows.Forms.Panel titlePanel;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.NotifyIcon notifyIcon1;
     }
 }
 
