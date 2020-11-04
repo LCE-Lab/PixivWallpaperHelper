@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApp1
+﻿namespace PixivWallpaperHelper
 {
     partial class MainForm
     {
@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.wallpaperRefreshTimer = new System.Windows.Forms.Timer(this.components);
             this.titleLabel = new System.Windows.Forms.LinkLabel();
             this.authorLabel = new System.Windows.Forms.Label();
@@ -36,6 +37,8 @@
             this.設定ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.重新整理ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.titlePanel = new System.Windows.Forms.Panel();
+            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.menuStrip1.SuspendLayout();
             this.titlePanel.SuspendLayout();
             this.SuspendLayout();
@@ -44,7 +47,7 @@
             // 
             this.wallpaperRefreshTimer.Enabled = true;
             this.wallpaperRefreshTimer.Interval = 1000;
-            this.wallpaperRefreshTimer.Tick += new System.EventHandler(this.wallpaperRefreshTimer_Tick);
+            this.wallpaperRefreshTimer.Tick += new System.EventHandler(this.WallpaperRefreshTimer_Tick);
             // 
             // titleLabel
             // 
@@ -62,6 +65,7 @@
             this.titleLabel.TabStop = true;
             this.titleLabel.Text = "Sample Title 1";
             this.titleLabel.VisitedLinkColor = System.Drawing.Color.White;
+            this.titleLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.TitleLabel_LinkClicked);
             // 
             // authorLabel
             // 
@@ -96,7 +100,7 @@
             this.設定ToolStripMenuItem.Name = "設定ToolStripMenuItem";
             this.設定ToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
             this.設定ToolStripMenuItem.Text = "設定";
-            this.設定ToolStripMenuItem.Click += new System.EventHandler(this.設定ToolStripMenuItem_Click);
+            this.設定ToolStripMenuItem.Click += new System.EventHandler(this.SettingToolStripMenuItem_Click);
             // 
             // 重新整理ToolStripMenuItem
             // 
@@ -105,7 +109,7 @@
             this.重新整理ToolStripMenuItem.Name = "重新整理ToolStripMenuItem";
             this.重新整理ToolStripMenuItem.Size = new System.Drawing.Size(83, 20);
             this.重新整理ToolStripMenuItem.Text = "重新整理";
-            this.重新整理ToolStripMenuItem.Click += new System.EventHandler(this.重新整理ToolStripMenuItem_Click);
+            this.重新整理ToolStripMenuItem.Click += new System.EventHandler(this.RefreshToolStripMenuItem_Click);
             // 
             // titlePanel
             // 
@@ -118,6 +122,17 @@
             this.titlePanel.Size = new System.Drawing.Size(752, 72);
             this.titlePanel.TabIndex = 7;
             // 
+            // backgroundWorker1
+            // 
+            this.backgroundWorker1.WorkerReportsProgress = true;
+            this.backgroundWorker1.WorkerSupportsCancellation = true;
+            // 
+            // notifyIcon1
+            // 
+            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
+            this.notifyIcon1.Text = "Pixiv Wallpaper Helper";
+            this.notifyIcon1.Visible = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -129,6 +144,7 @@
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.MaximizeBox = false;
@@ -152,6 +168,8 @@
         private System.Windows.Forms.ToolStripMenuItem 設定ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 重新整理ToolStripMenuItem;
         private System.Windows.Forms.Panel titlePanel;
+        private System.ComponentModel.BackgroundWorker backgroundWorker1;
+        private System.Windows.Forms.NotifyIcon notifyIcon1;
     }
 }
 

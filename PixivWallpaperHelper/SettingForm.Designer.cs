@@ -1,4 +1,4 @@
-﻿namespace WindowsFormsApp1
+﻿namespace PixivWallpaperHelper
 {
     partial class SettingForm
     {
@@ -56,12 +56,12 @@
             this.modeLabel = new System.Windows.Forms.Label();
             this.deleteCheck = new System.Windows.Forms.CheckBox();
             this.filterOption = new System.Windows.Forms.GroupBox();
-            this.numericUpDown3 = new System.Windows.Forms.NumericUpDown();
+            this.collectionNum = new System.Windows.Forms.NumericUpDown();
             this.collectionLabel = new System.Windows.Forms.Label();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
+            this.viewCountNum = new System.Windows.Forms.NumericUpDown();
             this.viewCountLabel = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.resolution = new System.Windows.Forms.Label();
+            this.resolutionNum = new System.Windows.Forms.NumericUpDown();
+            this.resolutionLabel = new System.Windows.Forms.Label();
             this.paintingCheck = new System.Windows.Forms.CheckBox();
             this.R18Check = new System.Windows.Forms.CheckBox();
             this.accountGroup.SuspendLayout();
@@ -75,9 +75,9 @@
             this.collectionPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.countNum)).BeginInit();
             this.filterOption.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.collectionNum)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.viewCountNum)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.resolutionNum)).BeginInit();
             this.SuspendLayout();
             // 
             // accountLabel
@@ -119,12 +119,14 @@
             // 
             // loginButton
             // 
+            this.loginButton.Enabled = false;
             this.loginButton.Location = new System.Drawing.Point(59, 200);
             this.loginButton.Name = "loginButton";
             this.loginButton.Size = new System.Drawing.Size(168, 28);
             this.loginButton.TabIndex = 4;
             this.loginButton.Text = "登入";
             this.loginButton.UseVisualStyleBackColor = true;
+            this.loginButton.Click += new System.EventHandler(this.LoginButton_Click);
             // 
             // accountGroup
             // 
@@ -195,6 +197,7 @@
             this.logoutButton.TabIndex = 2;
             this.logoutButton.Text = "登出";
             this.logoutButton.UseVisualStyleBackColor = true;
+            this.logoutButton.Click += new System.EventHandler(this.LogoutButton_Click);
             // 
             // accoutLabel
             // 
@@ -369,7 +372,7 @@
             this.modeCombo.Name = "modeCombo";
             this.modeCombo.Size = new System.Drawing.Size(121, 23);
             this.modeCombo.TabIndex = 5;
-            this.modeCombo.SelectedIndexChanged += new System.EventHandler(this.modeCombo_SelectedIndexChanged);
+            this.modeCombo.SelectedIndexChanged += new System.EventHandler(this.ModeCombo_SelectedIndexChanged);
             // 
             // modeLabel
             // 
@@ -394,12 +397,12 @@
             // 
             // filterOption
             // 
-            this.filterOption.Controls.Add(this.numericUpDown3);
+            this.filterOption.Controls.Add(this.collectionNum);
             this.filterOption.Controls.Add(this.collectionLabel);
-            this.filterOption.Controls.Add(this.numericUpDown2);
+            this.filterOption.Controls.Add(this.viewCountNum);
             this.filterOption.Controls.Add(this.viewCountLabel);
-            this.filterOption.Controls.Add(this.numericUpDown1);
-            this.filterOption.Controls.Add(this.resolution);
+            this.filterOption.Controls.Add(this.resolutionNum);
+            this.filterOption.Controls.Add(this.resolutionLabel);
             this.filterOption.Controls.Add(this.paintingCheck);
             this.filterOption.Controls.Add(this.R18Check);
             this.filterOption.Location = new System.Drawing.Point(322, 193);
@@ -409,19 +412,19 @@
             this.filterOption.TabStop = false;
             this.filterOption.Text = "過濾選項";
             // 
-            // numericUpDown3
+            // collectionNum
             // 
-            this.numericUpDown3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDown3.Location = new System.Drawing.Point(133, 103);
-            this.numericUpDown3.Maximum = new decimal(new int[] {
+            this.collectionNum.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.collectionNum.Location = new System.Drawing.Point(133, 103);
+            this.collectionNum.Maximum = new decimal(new int[] {
             100000,
             0,
             0,
             0});
-            this.numericUpDown3.Name = "numericUpDown3";
-            this.numericUpDown3.Size = new System.Drawing.Size(119, 23);
-            this.numericUpDown3.TabIndex = 7;
-            this.numericUpDown3.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.collectionNum.Name = "collectionNum";
+            this.collectionNum.Size = new System.Drawing.Size(119, 23);
+            this.collectionNum.TabIndex = 7;
+            this.collectionNum.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // collectionLabel
             // 
@@ -432,19 +435,19 @@
             this.collectionLabel.TabIndex = 6;
             this.collectionLabel.Text = "收藏數";
             // 
-            // numericUpDown2
+            // viewCountNum
             // 
-            this.numericUpDown2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDown2.Location = new System.Drawing.Point(133, 76);
-            this.numericUpDown2.Maximum = new decimal(new int[] {
+            this.viewCountNum.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.viewCountNum.Location = new System.Drawing.Point(133, 76);
+            this.viewCountNum.Maximum = new decimal(new int[] {
             100000,
             0,
             0,
             0});
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(119, 23);
-            this.numericUpDown2.TabIndex = 5;
-            this.numericUpDown2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.viewCountNum.Name = "viewCountNum";
+            this.viewCountNum.Size = new System.Drawing.Size(119, 23);
+            this.viewCountNum.TabIndex = 5;
+            this.viewCountNum.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // viewCountLabel
             // 
@@ -455,33 +458,33 @@
             this.viewCountLabel.TabIndex = 4;
             this.viewCountLabel.Text = "瀏覽數";
             // 
-            // numericUpDown1
+            // resolutionNum
             // 
-            this.numericUpDown1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.numericUpDown1.Location = new System.Drawing.Point(133, 48);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.resolutionNum.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.resolutionNum.Location = new System.Drawing.Point(133, 48);
+            this.resolutionNum.Maximum = new decimal(new int[] {
             2147483647,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(119, 23);
-            this.numericUpDown1.TabIndex = 3;
-            this.numericUpDown1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.numericUpDown1.Value = new decimal(new int[] {
+            this.resolutionNum.Name = "resolutionNum";
+            this.resolutionNum.Size = new System.Drawing.Size(119, 23);
+            this.resolutionNum.TabIndex = 3;
+            this.resolutionNum.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.resolutionNum.Value = new decimal(new int[] {
             1000,
             0,
             0,
             0});
             // 
-            // resolution
+            // resolutionLabel
             // 
-            this.resolution.AutoSize = true;
-            this.resolution.Location = new System.Drawing.Point(17, 50);
-            this.resolution.Name = "resolution";
-            this.resolution.Size = new System.Drawing.Size(72, 15);
-            this.resolution.TabIndex = 2;
-            this.resolution.Text = "最小解析度";
+            this.resolutionLabel.AutoSize = true;
+            this.resolutionLabel.Location = new System.Drawing.Point(17, 50);
+            this.resolutionLabel.Name = "resolutionLabel";
+            this.resolutionLabel.Size = new System.Drawing.Size(72, 15);
+            this.resolutionLabel.TabIndex = 2;
+            this.resolutionLabel.Text = "最小解析度";
             // 
             // paintingCheck
             // 
@@ -535,9 +538,9 @@
             ((System.ComponentModel.ISupportInitialize)(this.countNum)).EndInit();
             this.filterOption.ResumeLayout(false);
             this.filterOption.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.collectionNum)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.viewCountNum)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.resolutionNum)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -572,12 +575,12 @@
         private System.Windows.Forms.CheckBox privateCollection;
         private System.Windows.Forms.TabPage emptyPage;
         private System.Windows.Forms.GroupBox filterOption;
-        private System.Windows.Forms.NumericUpDown numericUpDown3;
+        private System.Windows.Forms.NumericUpDown collectionNum;
         private System.Windows.Forms.Label collectionLabel;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
+        private System.Windows.Forms.NumericUpDown viewCountNum;
         private System.Windows.Forms.Label viewCountLabel;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.Label resolution;
+        private System.Windows.Forms.NumericUpDown resolutionNum;
+        private System.Windows.Forms.Label resolutionLabel;
         private System.Windows.Forms.CheckBox paintingCheck;
         private System.Windows.Forms.CheckBox R18Check;
     }
