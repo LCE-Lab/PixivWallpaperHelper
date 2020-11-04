@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Security.Authentication;
 using System.Windows.Forms;
@@ -81,7 +81,7 @@ namespace PixivWallpaperHelper
             }
             else
             {
-                _ = MessageBox.Show("請輸入 Pixiv Id/Email", "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show("請輸入 Pixiv ID/Email 或密碼", "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -103,7 +103,7 @@ namespace PixivWallpaperHelper
                 usernameLabel.Text = Properties.Auth.Default.KEY_PIXIV_USER_USERNAME;
                 UsernameBox.Text = "";
                 PasswordBox.Text = "";
-                profileImg.Image = Utils.Image.SaveImage(Properties.Auth.Default.KEY_PIXIV_USER_IMG);
+                profileImg.Image = Image.SaveImage(Properties.Auth.Default.KEY_PIXIV_USER_IMG);
                 accountControl.SelectedIndex = 1;
                 modeCombo.Enabled = true;
                 modeLabel.Enabled = true;
