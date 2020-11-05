@@ -1,0 +1,48 @@
+name: .NET Core Desktop
+
+on: [push, pull_request]
+
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        configuration: [Debug, Release86, Release64]
+
+    runs-on: windows-latest
+
+    env:
+      Solution_Name: ./PixivWallpaperHelper.sln
+      Test_Project_Path: ./PixivWallpaperHelper/PixivWallpaperHelper.csproj
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+
+    - name: Setup NuGet
+      uses: nuget/setup-nuget@v1
+      with:
+        nuget-api-key: ${{ secrets.NuGetAPIKey }}
+        nuget-version: '5.x'
+
+    - name: Setup MSBuild.exe
+      uses: microsoft/setup-msbuild@2008f912f56e61277eefaac6d1888b750582aa16
+
+    - name: Cache nuget packages
+      id: cache-nuget
+      uses: actions/cache@v2
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/PixivWallpaperHelper.csproj') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+
+    - name: Restore the application
+      run: nuget restore $env:Solution_Name
+
+    - name: Build the application
+      run: msbuild $env:Project_Path /t:build /p:Configuration=$env:Configuration /m
+      env:
+        Configuration: ${{ matrix.configuration }}
