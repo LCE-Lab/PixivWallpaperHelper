@@ -32,5 +32,5 @@
 <img width="621" height="382" src="https://user-images.githubusercontent.com/23373365/98081385-f138ac80-1eb1-11eb-8e95-58d371fb8cbd.png">
 
 ## 開發人員
-[jimchen5209](jimchen5209.me) - 介面設計、主要功能開發  
-[WoodMan](woodman.tw) - 構想提供、Pixiv 功能開發
+* [jimchen5209](jimchen5209.me) - 介面設計、主要功能開發  
+* [WoodMan](woodman.tw) - 構想提供、Pixiv 功能開發
