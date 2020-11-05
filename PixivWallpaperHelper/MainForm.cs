@@ -2,7 +2,6 @@ using Microsoft.Win32;
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Threading;
 using System.Windows.Forms;
 using PixivWallpaperHelper.Pixiv.OAuth;
 using System.IO;
@@ -26,17 +25,8 @@ namespace PixivWallpaperHelper
             WallpaperFetcher = new WallpaperFetcher();
         }
 
-        private static readonly string AppGuid = "7bcbe405-0325-4f8d-8527-afd151d13ff4";
-
         private void MainForm_Load(object sender, EventArgs e)
         {
-            Mutex mutex = new Mutex(false, AppGuid);
-            if (!mutex.WaitOne(0, false))
-            {
-                MessageBox.Show("Instance already running");
-                Close();
-                Application.ExitThread();
-            }
             Show();
             ChangeThumbnail();
         }
