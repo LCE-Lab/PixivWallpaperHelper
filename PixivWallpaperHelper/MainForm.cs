@@ -17,9 +17,22 @@ namespace PixivWallpaperHelper
         private string Url = "";
         private readonly SettingForm SettingForm;
         private readonly WallpaperFetcher WallpaperFetcher;
+
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == (int)Program.BringToFrontMessage)
+            {
+                WinAPI.ShowWindow(Handle, WinAPI.SW_RESTORE);
+                WinAPI.SetForegroundWindow(Handle);
+            }
+
+            base.WndProc(ref m);
+        }
+
         public MainForm()
         {
             InitializeComponent();
+            CreateHandle();
             RegisterEvent();
             SettingForm = new SettingForm();
             WallpaperFetcher = new WallpaperFetcher();
