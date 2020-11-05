@@ -35,6 +35,7 @@ namespace PixivWallpaperHelper
             {
                 MessageBox.Show("Instance already running");
                 Close();
+                Application.ExitThread();
             }
             Show();
             ChangeThumbnail();
