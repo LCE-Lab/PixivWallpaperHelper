@@ -226,10 +226,6 @@ namespace PixivWallpaperHelper
             {
                 ShowForm();
             }
-            else if (e.Button == MouseButtons.Right)
-            {
-                
-            }
         }
 
         private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
