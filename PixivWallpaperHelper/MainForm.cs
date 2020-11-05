@@ -1,4 +1,4 @@
-﻿using Microsoft.Win32;
+using Microsoft.Win32;
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -270,7 +270,7 @@ namespace PixivWallpaperHelper
 
         private void Exit(object sender, EventArgs e)
         {
-            Application.Exit();
+            Application.ExitThread();
         }
     }
 }
