@@ -219,7 +219,15 @@ namespace PixivWallpaperHelper
 
         private void FetchEvent(object sender, DoWorkEventArgs e)
         {
-             WallpaperFetcher.FetchWallpaper();
+            try
+            {
+                WallpaperFetcher.FetchWallpaper().Wait();
+            }
+            catch (AggregateException)
+            {
+                notifyIcon1.ShowBalloonTip(3000, Text, "網路發生錯誤", ToolTipIcon.Error);
+                backgroundWorker1.CancelAsync();
+            }
         }
 
         private void NotifyIcon1_MouseClick(object sender, MouseEventArgs e)

@@ -6,6 +6,7 @@ using PixivWallpaperHelper.Utils;
 using PixivWallpaperHelper.Pixiv.Objects;
 using PixivWallpaperHelper.Pixiv.Mode;
 using static PixivWallpaperHelper.Pixiv.Objects.IllustTypes;
+using System.Threading.Tasks;
 
 namespace PixivWallpaperHelper.Pixiv.OAuth
 {
@@ -56,7 +57,7 @@ namespace PixivWallpaperHelper.Pixiv.OAuth
             return LocalArtworksHelper.GetUnchangedWallpaperCount() <= 0;
         }
 
-        public async void FetchWallpaper()
+        public async Task FetchWallpaper()
         {
             List<Illust> illustList;
 
