@@ -75,7 +75,7 @@ namespace PixivWallpaperHelper.Pixiv.OAuth
             {
                 IllustList list = await Fallback.GetFallback();
                 illustList = list.Illusts.ToList();
-            } 
+            }
             else
             {
                 _ = await Auth.Refresh(Properties.Auth.Default.KEY_PIXIV_DEVICE_TOKEN, Properties.Auth.Default.KEY_PIXIV_REFRESH_TOKEN);
