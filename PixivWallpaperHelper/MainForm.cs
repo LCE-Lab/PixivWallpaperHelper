@@ -8,6 +8,7 @@ using System.IO;
 using PixivWallpaperHelper.Utils;
 using System.Diagnostics;
 using System.ComponentModel;
+using System.Net;
 
 namespace PixivWallpaperHelper
 {
@@ -17,6 +18,7 @@ namespace PixivWallpaperHelper
         private string Url = "";
         private readonly SettingForm SettingForm;
         private readonly WallpaperFetcher WallpaperFetcher;
+        private bool Error = false;
 
         protected override void WndProc(ref Message m)
         {
@@ -222,10 +224,14 @@ namespace PixivWallpaperHelper
             try
             {
                 WallpaperFetcher.FetchWallpaper().Wait();
+                Error = false;
             }
-            catch (AggregateException)
+            catch (AggregateException e1)
             {
-                notifyIcon1.ShowBalloonTip(3000, Text, "網路發生錯誤", ToolTipIcon.Error);
+                if (!Error) { 
+                    notifyIcon1.ShowBalloonTip(3000, Text, $"抓取圖片時發生網路錯誤: {e1.InnerException.Message}", ToolTipIcon.Error);
+                    Error = true;
+                }
                 backgroundWorker1.CancelAsync();
             }
         }
@@ -278,6 +284,11 @@ namespace PixivWallpaperHelper
         private void Exit(object sender, EventArgs e)
         {
             Application.ExitThread();
+        }
+
+        private void ErrorNotifyCooldown_Tick(object sender, EventArgs e)
+        {
+            Error = false;
         }
     }
 }
