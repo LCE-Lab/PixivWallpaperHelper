@@ -205,7 +205,6 @@ namespace PixivWallpaperHelper
             ResizeEnd += new EventHandler(Form1_ResizeEnd);
             notifyIcon1.MouseClick += new MouseEventHandler(NotifyIcon1_MouseClick);
             FormClosing += new FormClosingEventHandler(MainForm_FormClosing);
-            backgroundWorker1.DoWork += new DoWorkEventHandler(FetchEvent);
 
             SetupNotifyIcon();
         }
