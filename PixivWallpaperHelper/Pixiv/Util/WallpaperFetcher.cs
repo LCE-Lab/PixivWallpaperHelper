@@ -7,6 +7,7 @@ using PixivWallpaperHelper.Pixiv.Objects;
 using PixivWallpaperHelper.Pixiv.Mode;
 using static PixivWallpaperHelper.Pixiv.Objects.IllustTypes;
 using System.Threading.Tasks;
+using System.Net;
 
 namespace PixivWallpaperHelper.Pixiv.OAuth
 {
@@ -132,28 +133,44 @@ namespace PixivWallpaperHelper.Pixiv.OAuth
                         if (LocalArtworksHelper.GetUnchangedWallpaperCount() >= count) { break; }
                         string url = originalImage ? result.MetaPages[i].ImageUrls.Original : result.MetaPages[i].ImageUrls.Large;
                         string finalPath = $"{Path}\\{result.Id}_{i}{System.IO.Path.GetExtension(url)}";
-                        _ = LocalArtworksHelper.AddAndSaveArtwork(
-                                Image.SaveImage(url),
-                                finalPath,
-                                result.Title,
-                                result.User.Name,
-                                $"{result.Id}_{i}",
-                                url
-                            );
+                        try
+                        {
+                            _ = LocalArtworksHelper.AddAndSaveArtwork(
+                                    Image.SaveImage(url),
+                                    finalPath,
+                                    result.Title,
+                                    result.User.Name,
+                                    $"{result.Id}_{i}",
+                                    url
+                                );
+                        } 
+                        catch (WebException)
+                        {
+                            LocalArtworksHelper.Save();
+                            throw;
+                        }
                     }
                 }
                 else
                 {
                     string url = originalImage ? result.MetaSinglePage.OriginalImageUrl : result.ImageUrls.Large;
                     string finalPath = $"{Path}\\{result.Id}{System.IO.Path.GetExtension(url)}";
-                    _ = LocalArtworksHelper.AddAndSaveArtwork(
-                            Image.SaveImage(url),
-                            finalPath,
-                            result.Title,
-                            result.User.Name,
-                            result.Id.ToString(),
-                            url
-                        );
+                    try
+                    {
+                        _ = LocalArtworksHelper.AddAndSaveArtwork(
+                                Image.SaveImage(url),
+                                finalPath,
+                                result.Title,
+                                result.User.Name,
+                                result.Id.ToString(),
+                                url
+                            );
+                    }
+                    catch (WebException)
+                    {
+                        LocalArtworksHelper.Save();
+                        throw;
+                    }
                 }
             }
 

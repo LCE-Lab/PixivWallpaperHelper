@@ -39,6 +39,7 @@
             this.titlePanel = new System.Windows.Forms.Panel();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.errorNotifyCooldown = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1.SuspendLayout();
             this.titlePanel.SuspendLayout();
             this.SuspendLayout();
@@ -134,6 +135,12 @@
             this.notifyIcon1.Text = "Pixiv Wallpaper Helper";
             this.notifyIcon1.Visible = true;
             // 
+            // errorNotifyCooldown
+            // 
+            this.errorNotifyCooldown.Enabled = true;
+            this.errorNotifyCooldown.Interval = 12000;
+            this.errorNotifyCooldown.Tick += new System.EventHandler(this.ErrorNotifyCooldown_Tick);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -171,6 +178,7 @@
         private System.Windows.Forms.Panel titlePanel;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
+        private System.Windows.Forms.Timer errorNotifyCooldown;
     }
 }
 
