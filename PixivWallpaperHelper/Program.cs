@@ -33,22 +33,28 @@ namespace PixivWallpaperHelper
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-            Mutex mutex = new Mutex(false, AppGuid, out bool flag);
-            //mutex.WaitOne();
-            if (flag)
+            Mutex mutex = new Mutex(false, AppGuid);
+            try
             {
-                Application.Run(new MainForm());
+
+                if (mutex.WaitOne(0, false))
+                {
+                    Application.Run(new MainForm());
+                }
+                else
+                {
+                    WinAPI.PostMessage(
+                      (IntPtr)WinAPI.HWND_BROADCAST,
+                      BringToFrontMessage,
+                      IntPtr.Zero,
+                      IntPtr.Zero);
+                    Environment.Exit(1);
+                }
             }
-            else
+            finally
             {
-                WinAPI.PostMessage(
-                  (IntPtr)WinAPI.HWND_BROADCAST,
-                  BringToFrontMessage,
-                  IntPtr.Zero,
-                  IntPtr.Zero);
-                Environment.Exit(1);
+                mutex.ReleaseMutex();
             }
-            mutex.ReleaseMutex();
         }
     }
 }
