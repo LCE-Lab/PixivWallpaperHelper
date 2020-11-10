@@ -34,6 +34,7 @@ namespace PixivWallpaperHelper
             InitializeComponent();
             CreateHandle();
             RegisterEvent();
+            SetupNotifyIcon();
             SettingForm = new SettingForm();
             WallpaperFetcher = new WallpaperFetcher();
         }
@@ -205,8 +206,6 @@ namespace PixivWallpaperHelper
             ResizeEnd += new EventHandler(Form1_ResizeEnd);
             notifyIcon1.MouseClick += new MouseEventHandler(NotifyIcon1_MouseClick);
             FormClosing += new FormClosingEventHandler(MainForm_FormClosing);
-
-            SetupNotifyIcon();
         }
 
         private void TitleLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
