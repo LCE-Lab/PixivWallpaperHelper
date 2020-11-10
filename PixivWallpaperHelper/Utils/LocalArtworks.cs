@@ -3,7 +3,6 @@ using System.IO;
 using System.Drawing;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using System.Collections.ObjectModel;
 
 namespace PixivWallpaperHelper.Utils
 {
