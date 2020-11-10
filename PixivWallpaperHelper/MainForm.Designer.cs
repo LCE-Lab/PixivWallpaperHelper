@@ -138,7 +138,7 @@
             // errorNotifyCooldown
             // 
             this.errorNotifyCooldown.Enabled = true;
-            this.errorNotifyCooldown.Interval = 12000;
+            this.errorNotifyCooldown.Interval = 120000;
             this.errorNotifyCooldown.Tick += new System.EventHandler(this.ErrorNotifyCooldown_Tick);
             // 
             // MainForm
