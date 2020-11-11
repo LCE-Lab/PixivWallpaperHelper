@@ -1,14 +1,14 @@
-﻿using Microsoft.Win32;
+using Microsoft.Win32;
 using System;
 using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Threading;
 using System.Windows.Forms;
 using PixivWallpaperHelper.Pixiv.OAuth;
 using System.IO;
 using PixivWallpaperHelper.Utils;
 using System.Diagnostics;
 using System.ComponentModel;
+using System.Net;
 
 namespace PixivWallpaperHelper
 {
@@ -18,24 +18,31 @@ namespace PixivWallpaperHelper
         private string Url = "";
         private readonly SettingForm SettingForm;
         private readonly WallpaperFetcher WallpaperFetcher;
+        private bool Error = false;
+
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == (int)Program.BringToFrontMessage)
+            {
+                WinAPI.ShowWindow(Handle, WinAPI.SW_RESTORE);
+                WinAPI.SetForegroundWindow(Handle);
+            }
+
+            base.WndProc(ref m);
+        }
+
         public MainForm()
         {
             InitializeComponent();
+            CreateHandle();
             RegisterEvent();
+            SetupNotifyIcon();
             SettingForm = new SettingForm();
             WallpaperFetcher = new WallpaperFetcher();
         }
 
-        private static readonly string AppGuid = "7bcbe405-0325-4f8d-8527-afd151d13ff4";
-
         private void MainForm_Load(object sender, EventArgs e)
         {
-            Mutex mutex = new Mutex(false, AppGuid);
-            if (!mutex.WaitOne(0, false))
-            {
-                MessageBox.Show("Instance already running");
-                Close();
-            }
             Show();
             ChangeThumbnail();
         }
@@ -201,9 +208,6 @@ namespace PixivWallpaperHelper
             ResizeEnd += new EventHandler(Form1_ResizeEnd);
             notifyIcon1.MouseClick += new MouseEventHandler(NotifyIcon1_MouseClick);
             FormClosing += new FormClosingEventHandler(MainForm_FormClosing);
-            backgroundWorker1.DoWork += new DoWorkEventHandler(FetchEvent);
-
-            SetupNotifyIcon();
         }
 
         private void TitleLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -216,7 +220,19 @@ namespace PixivWallpaperHelper
 
         private void FetchEvent(object sender, DoWorkEventArgs e)
         {
-             WallpaperFetcher.FetchWallpaper();
+            try
+            {
+                WallpaperFetcher.FetchWallpaper().Wait();
+                Error = false;
+            }
+            catch (AggregateException e1)
+            {
+                if (!Error) { 
+                    notifyIcon1.ShowBalloonTip(3000, Text, $"抓取圖片時發生網路錯誤: {e1.InnerException.Message}", ToolTipIcon.Error);
+                    Error = true;
+                }
+                backgroundWorker1.CancelAsync();
+            }
         }
 
         private void NotifyIcon1_MouseClick(object sender, MouseEventArgs e)
@@ -224,10 +240,6 @@ namespace PixivWallpaperHelper
             if (e.Button == MouseButtons.Left)
             {
                 ShowForm();
-            }
-            else if (e.Button == MouseButtons.Right)
-            {
-                
             }
         }
 
@@ -270,7 +282,12 @@ namespace PixivWallpaperHelper
 
         private void Exit(object sender, EventArgs e)
         {
-            Application.Exit();
+            Application.ExitThread();
+        }
+
+        private void ErrorNotifyCooldown_Tick(object sender, EventArgs e)
+        {
+            Error = false;
         }
     }
 }

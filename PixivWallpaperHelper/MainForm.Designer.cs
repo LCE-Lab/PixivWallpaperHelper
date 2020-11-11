@@ -39,6 +39,7 @@
             this.titlePanel = new System.Windows.Forms.Panel();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.errorNotifyCooldown = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1.SuspendLayout();
             this.titlePanel.SuspendLayout();
             this.SuspendLayout();
@@ -126,12 +127,19 @@
             // 
             this.backgroundWorker1.WorkerReportsProgress = true;
             this.backgroundWorker1.WorkerSupportsCancellation = true;
+            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.FetchEvent);
             // 
             // notifyIcon1
             // 
             this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
             this.notifyIcon1.Text = "Pixiv Wallpaper Helper";
             this.notifyIcon1.Visible = true;
+            // 
+            // errorNotifyCooldown
+            // 
+            this.errorNotifyCooldown.Enabled = true;
+            this.errorNotifyCooldown.Interval = 120000;
+            this.errorNotifyCooldown.Tick += new System.EventHandler(this.ErrorNotifyCooldown_Tick);
             // 
             // MainForm
             // 
@@ -170,6 +178,7 @@
         private System.Windows.Forms.Panel titlePanel;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.NotifyIcon notifyIcon1;
+        private System.Windows.Forms.Timer errorNotifyCooldown;
     }
 }
 
