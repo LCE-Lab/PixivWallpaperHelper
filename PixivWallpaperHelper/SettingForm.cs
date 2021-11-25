@@ -1,6 +1,9 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Security.Authentication;
+using System.Security.Cryptography;
+using System.Text;
+using System.Web;
 using System.Windows.Forms;
 using PixivWallpaperHelper.Pixiv.OAuth;
 using PixivWallpaperHelper.Utils;
@@ -53,11 +56,6 @@ namespace PixivWallpaperHelper
             Data.SaveSettingsData(settings);
         }
 
-        private void LoginEvent(object sender, EventArgs e)
-        {
-            loginButton.Enabled = !string.IsNullOrEmpty(UsernameBox.Text) && !string.IsNullOrEmpty(PasswordBox.Text);
-        }
-
         private void SettingForm_Load(object sender, EventArgs e)
         {
             SetSetting();
@@ -67,31 +65,39 @@ namespace PixivWallpaperHelper
 
         private async void LoginButton_Click(object sender, EventArgs e)
         {
-            if (UsernameBox.Text != "" && PasswordBox.Text != "")
+            LoginForm loginForm = new LoginForm();
+
+            RNGCryptoServiceProvider random = new RNGCryptoServiceProvider();
+            byte[] randomBytes = new byte[32];
+            random.GetNonZeroBytes(randomBytes);
+
+            string code_verifier = Base64Encode(randomBytes);
+            string code_challenge = Base64Encode(ComputeHashSha256(Encoding.UTF8.GetBytes(code_verifier)));
+            string url = $"https://app-api.pixiv.net/web/v1/login?code_challenge={code_challenge}&code_challenge_method=S256&client=pixiv-android";
+            loginForm.SetUrl(url);
+
+            if (loginForm.ShowDialog(this) == DialogResult.OK)
             {
-                try
-                {
-                    _ = await Auth.Login(UsernameBox.Text, PasswordBox.Text);
-                    CheckLogin();
-                }
-                catch (AuthenticationException)
-                {
-                    _ = MessageBox.Show("使用者名稱或密碼錯誤", "登入失敗", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-            else
-            {
-                _ = MessageBox.Show("請輸入 Pixiv ID/Email 或密碼", "錯誤", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = await Auth.Login(code_verifier, loginForm.Code);
+                CheckLogin();
             }
         }
 
-        private void CheckEnter(object sender, KeyPressEventArgs e)
+        public static string Base64Encode(byte[] bytes)
         {
-            if (e.KeyChar == (char)13 && loginButton.Enabled)
+            // It is recommended to use a URL-safe string as code_verifier.
+            // See section 4 of RFC 7636 for more details.
+            return Convert.ToBase64String(bytes)
+                        .TrimEnd('=')
+                        .Replace('+', '-')
+                        .Replace('/', '_');
+        }
+
+        public static byte[] ComputeHashSha256(byte[] toBeHashed)
+        {
+            using (var sha256 = SHA256.Create())
             {
-                _ = loginButton.Focus();
-                LoginButton_Click(sender, e);
-                _ = PasswordBox.Focus();
+                return sha256.ComputeHash(toBeHashed);
             }
         }
 
@@ -101,8 +107,6 @@ namespace PixivWallpaperHelper
             {
                 accoutLabel.Text = Properties.Auth.Default.KEY_PIXIV_USER_NAME;
                 usernameLabel.Text = Properties.Auth.Default.KEY_PIXIV_USER_USERNAME;
-                UsernameBox.Text = "";
-                PasswordBox.Text = "";
                 profileImg.Image = Image.SaveImage(Properties.Auth.Default.KEY_PIXIV_USER_IMG);
                 accountControl.SelectedIndex = 1;
                 modeCombo.Enabled = true;
@@ -132,12 +136,6 @@ namespace PixivWallpaperHelper
 
         private void RegisterEvent()
         {
-            // 登入 Enter Event
-            UsernameBox.KeyPress += new KeyPressEventHandler(CheckEnter);
-            PasswordBox.KeyPress += new KeyPressEventHandler(CheckEnter);
-            UsernameBox.TextChanged += new EventHandler(LoginEvent);
-            PasswordBox.TextChanged += new EventHandler(LoginEvent);
-
             // 選項 Event
             countNum.ValueChanged += new EventHandler(ValueChangedEvent);
             originalPictureCheck.CheckedChanged += new EventHandler(ValueChangedEvent);

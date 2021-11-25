@@ -28,10 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.accountLabel = new System.Windows.Forms.Label();
-            this.passwordLabel = new System.Windows.Forms.Label();
-            this.UsernameBox = new System.Windows.Forms.TextBox();
-            this.PasswordBox = new System.Windows.Forms.TextBox();
             this.loginButton = new System.Windows.Forms.Button();
             this.accountGroup = new System.Windows.Forms.GroupBox();
             this.accountControl = new System.Windows.Forms.TabControl();
@@ -80,49 +76,12 @@
             ((System.ComponentModel.ISupportInitialize)(this.resolutionNum)).BeginInit();
             this.SuspendLayout();
             // 
-            // accountLabel
-            // 
-            this.accountLabel.AutoSize = true;
-            this.accountLabel.Location = new System.Drawing.Point(99, 17);
-            this.accountLabel.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.accountLabel.Name = "accountLabel";
-            this.accountLabel.Size = new System.Drawing.Size(80, 15);
-            this.accountLabel.TabIndex = 0;
-            this.accountLabel.Text = "Pixiv ID/Email";
-            // 
-            // passwordLabel
-            // 
-            this.passwordLabel.AutoSize = true;
-            this.passwordLabel.Location = new System.Drawing.Point(119, 84);
-            this.passwordLabel.Margin = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.passwordLabel.Name = "passwordLabel";
-            this.passwordLabel.Size = new System.Drawing.Size(33, 15);
-            this.passwordLabel.TabIndex = 1;
-            this.passwordLabel.Text = "密碼";
-            // 
-            // UsernameBox
-            // 
-            this.UsernameBox.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.UsernameBox.Location = new System.Drawing.Point(10, 40);
-            this.UsernameBox.Name = "UsernameBox";
-            this.UsernameBox.Size = new System.Drawing.Size(262, 23);
-            this.UsernameBox.TabIndex = 2;
-            // 
-            // PasswordBox
-            // 
-            this.PasswordBox.ImeMode = System.Windows.Forms.ImeMode.Off;
-            this.PasswordBox.Location = new System.Drawing.Point(10, 107);
-            this.PasswordBox.Name = "PasswordBox";
-            this.PasswordBox.PasswordChar = '•';
-            this.PasswordBox.Size = new System.Drawing.Size(262, 23);
-            this.PasswordBox.TabIndex = 3;
-            // 
             // loginButton
             // 
-            this.loginButton.Enabled = false;
-            this.loginButton.Location = new System.Drawing.Point(59, 200);
+            this.loginButton.Font = new System.Drawing.Font("Segoe UI", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.loginButton.Location = new System.Drawing.Point(61, 83);
             this.loginButton.Name = "loginButton";
-            this.loginButton.Size = new System.Drawing.Size(168, 28);
+            this.loginButton.Size = new System.Drawing.Size(168, 71);
             this.loginButton.TabIndex = 4;
             this.loginButton.Text = "登入";
             this.loginButton.UseVisualStyleBackColor = true;
@@ -153,11 +112,7 @@
             // 
             // noLoginPage
             // 
-            this.noLoginPage.Controls.Add(this.accountLabel);
-            this.noLoginPage.Controls.Add(this.UsernameBox);
             this.noLoginPage.Controls.Add(this.loginButton);
-            this.noLoginPage.Controls.Add(this.passwordLabel);
-            this.noLoginPage.Controls.Add(this.PasswordBox);
             this.noLoginPage.Location = new System.Drawing.Point(4, 5);
             this.noLoginPage.Name = "noLoginPage";
             this.noLoginPage.Padding = new System.Windows.Forms.Padding(3);
@@ -525,7 +480,6 @@
             this.accountGroup.ResumeLayout(false);
             this.accountControl.ResumeLayout(false);
             this.noLoginPage.ResumeLayout(false);
-            this.noLoginPage.PerformLayout();
             this.loginPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.profileImg)).EndInit();
             this.grabOptionGroup.ResumeLayout(false);
@@ -546,11 +500,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Label accountLabel;
-        private System.Windows.Forms.Label passwordLabel;
-        private System.Windows.Forms.TextBox UsernameBox;
-        private System.Windows.Forms.TextBox PasswordBox;
         private System.Windows.Forms.Button loginButton;
         private System.Windows.Forms.GroupBox accountGroup;
         private System.Windows.Forms.GroupBox grabOptionGroup;

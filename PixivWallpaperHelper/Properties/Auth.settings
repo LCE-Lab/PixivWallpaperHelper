@@ -8,9 +8,6 @@
     <Setting Name="KEY_PIXIV_REFRESH_TOKEN" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="KEY_PIXIV_DEVICE_TOKEN" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
     <Setting Name="KEY_PIXIV_USER_ID" Type="System.Int64" Scope="User">
       <Value Profile="(Default)">0</Value>
     </Setting>

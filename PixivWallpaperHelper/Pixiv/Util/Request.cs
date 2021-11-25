@@ -48,7 +48,7 @@ namespace PixivWallpaperHelper.Pixiv.Util
         {
             HttpClient httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Add("Referer", "https://www.pixiv.net");
-            httpClient.DefaultRequestHeaders.Add("User-Agent", "PixivAndroidApp/5.0.64 (Android 6.0)");
+            httpClient.DefaultRequestHeaders.Add("User-Agent", "PixivAndroidApp/5.0.234 (Android 11; Pixel 5)");
 
             if (headers != null)
             {

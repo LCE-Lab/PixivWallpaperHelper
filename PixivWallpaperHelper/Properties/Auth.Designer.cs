@@ -12,7 +12,7 @@ namespace PixivWallpaperHelper.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.7.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.10.0.0")]
     internal sealed partial class Auth : global::System.Configuration.ApplicationSettingsBase {
         
         private static Auth defaultInstance = ((Auth)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Auth())));
@@ -44,18 +44,6 @@ namespace PixivWallpaperHelper.Properties {
             }
             set {
                 this["KEY_PIXIV_REFRESH_TOKEN"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string KEY_PIXIV_DEVICE_TOKEN {
-            get {
-                return ((string)(this["KEY_PIXIV_DEVICE_TOKEN"]));
-            }
-            set {
-                this["KEY_PIXIV_DEVICE_TOKEN"] = value;
             }
         }
         
