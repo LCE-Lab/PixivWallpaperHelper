@@ -12,21 +12,22 @@ namespace PixivWallpaperHelper.Pixiv.OAuth
     public class Auth
     {
         private static readonly string API = "https://oauth.secure.pixiv.net/auth/token";
+        private static readonly string RedirectUrl = "https://app-api.pixiv.net/web/v1/users/auth/pixiv/callback"; // From https://app-api.pixiv.net/idp-urls
         private static readonly string ClientID = "MOBrBDS8blbauoSck0ZfDbtuzpyT";
         private static readonly string ClientSecret = "lsACyCD94FhDUtGTXi3QzcFE2uU1hqtDaKeqrdwj";
         private static readonly string HashSecret = "28c1fdd170a5204386cb1313c7077b34f83e4aaf4aa829ce78c231e05b0bae2c";
 
-        public static async Task<Authorize> Login(string username, string password)
+        public static async Task<Authorize> Login(string verifierCode, string authorizationCode)
         {
             Dictionary<string, string> param = new Dictionary<string, string>
             {
-                { "username", username } ,
-                { "password", password } ,
-                { "grant_type", "password" } ,
-                { "device_token", "pixiv" } ,
-                { "get_secure_url", "true" } ,
                 { "client_id", ClientID } ,
                 { "client_secret", ClientSecret } ,
+                { "grant_type", "authorization_code" } ,
+                { "code_verifier", verifierCode } ,
+                { "code", authorizationCode } ,
+                { "redirect_uri", RedirectUrl } ,
+                { "include_policy", "true" } ,
             };
 
             string localTime = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Local).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'sszzz");
@@ -47,16 +48,15 @@ namespace PixivWallpaperHelper.Pixiv.OAuth
             return authorize;
         }
 
-        public static async Task<Authorize> Refresh(string deviceToken, string refreshToken)
+        public static async Task<Authorize> Refresh(string refreshToken)
         {
             Dictionary<string, string> param = new Dictionary<string, string>
             {
                 { "client_id", ClientID } ,
                 { "client_secret", ClientSecret } ,
-                { "get_secure_url", "true" } ,
                 { "grant_type", "refresh_token" } ,
-                { "device_token", deviceToken } ,
                 { "refresh_token", refreshToken } ,
+                { "include_policy", "true" } ,
             };
 
             string localTime = DateTime.SpecifyKind(DateTime.UtcNow, DateTimeKind.Local).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'sszzz");

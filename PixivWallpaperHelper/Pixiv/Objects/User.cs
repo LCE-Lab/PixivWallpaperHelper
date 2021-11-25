@@ -124,6 +124,9 @@ namespace PixivWallpaperHelper.Pixiv.Objects
         [JsonProperty("name")]
         public string Name { get; set; }
 
+        [JsonProperty("xRestrict")]
+        public int xRestrict { get; set; }
+
         [JsonProperty("is_following")]
         public bool? IsFollowing { get; set; }
 
