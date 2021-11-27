@@ -45,6 +45,7 @@ namespace PixivWallpaperHelper
         {
             Show();
             ChangeThumbnail();
+            CheckWebView2();
         }
 
         private void Form1_Click(object sender, EventArgs e) {
@@ -197,6 +198,29 @@ namespace PixivWallpaperHelper
             else
             {
                 return "";
+            }
+        }
+
+        private void CheckWebView2()
+        {
+            RegistryKey key;
+            if (Environment.Is64BitOperatingSystem)
+            {
+                key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\WOW6432Node\Microsoft\EdgeUpdate\Clients\{F3017226-FE2A-4295-8BDF-00C3A9A7E4C5}");
+            }
+            else
+            {
+                key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\EdgeUpdate\Clients\{F3017226-FE2A-4295-8BDF-00C3A9A7E4C5}");
+            }
+            
+            if (key == null)
+            {
+                DialogResult result = MessageBox.Show("登入功能需要使用 WebView 2 Runtime，是否關閉此程式並下載安裝 WebView 2 Runtime?", "缺少 WebView2", MessageBoxButtons.YesNo, MessageBoxIcon.Exclamation);
+                if (result == DialogResult.Yes)
+                {
+                    Process.Start("https://developer.microsoft.com/zh-tw/microsoft-edge/webview2/consumer/");
+                    Application.ExitThread();
+                }
             }
         }
 
