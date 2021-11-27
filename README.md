@@ -4,8 +4,11 @@
 抓取 Pixiv 圖片的程式，提供圖片給 Windows 幻燈片秀更換桌布
 > WoodMan：聽到 OKTW 內有人用 Pixiv 圖片當桌布，於是就有了開發這東西的想法
 
+## 注意事項
+**此應用程式僅支援 Windows 10 （含）以上的作業系統，且沒有計畫支援舊版的作業系統**
+
 ## 使用
-圖片抓取下來的路徑為 `C:\Users\<User>\Pictures\PixivWallpapers`
+圖片抓取下來的路徑為 `%USERPROFILE%\Pictures\PixivWallpapers`
 ```
 1. Windows 設定
 2. 進入個人化頁面
@@ -28,8 +31,8 @@
 * 最少收藏次數
 
 ## 截圖
-<img width="768" height="432" src="https://user-images.githubusercontent.com/23373365/98081220-acad1100-1eb1-11eb-9294-28e47f754330.png">
-<img width="621" height="382" src="https://user-images.githubusercontent.com/23373365/98081385-f138ac80-1eb1-11eb-8e95-58d371fb8cbd.png">
+<img width="768" height="432" src="https://user-images.githubusercontent.com/10269287/143676323-549e32fa-f371-4598-b416-88effd8d5666.png">
+<img width="621" height="382" src="https://user-images.githubusercontent.com/10269287/143676336-9b9efe02-ca64-4b96-bf0e-6195f495b6ea.png">
 
 ## 開發人員
 * [jimchen5209](https://jimchen5209.me) - 介面設計、主要功能開發  
