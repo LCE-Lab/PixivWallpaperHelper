@@ -45,7 +45,7 @@ namespace PixivWallpaperHelper
         {
             Show();
             ChangeThumbnail();
-            CheckWebView2();
+            if (CheckOS()) CheckWebView2();
         }
 
         private void Form1_Click(object sender, EventArgs e) {
@@ -113,6 +113,15 @@ namespace PixivWallpaperHelper
             else
             {
                 string newPath = GetCurrentWallpaperPath();
+                if (string.IsNullOrWhiteSpace(newPath))
+                {
+                    titleLabel.Text = "無法載入預覽";
+                    authorLabel.Text = "無法取得目前桌布路徑";
+                    Url = "";
+                    WallpaperFetcher.ClearCurrentWallpaperMark();
+                    if (WallpaperFetcher.IsLocalUnchangedWallpaperEmpty() && !backgroundWorker1.IsBusy) { backgroundWorker1.RunWorkerAsync(); };
+                    return;
+                }
                 if (!newPath.Equals(CurrentImagePath))
                 {
                     BackColor = Color.Black;
@@ -190,6 +199,7 @@ namespace PixivWallpaperHelper
             if (key != null)
             {
                 byte[] encodedPath = (byte[])key.GetValue("TranscodedImageCache");
+                if (encodedPath == null) return "";
                 char[] chars = new char[(encodedPath.Length - 24) / sizeof(char)];
                 Buffer.BlockCopy(encodedPath, 24, chars, 0, encodedPath.Length - 24);
                 string str = new string(chars);
@@ -222,6 +232,20 @@ namespace PixivWallpaperHelper
                     Application.ExitThread();
                 }
             }
+        }
+
+        private bool CheckOS()
+        {
+            if (Environment.OSVersion.Version.Major < 10)
+            {
+                DialogResult result = MessageBox.Show("偵測到不支援的作業系統，部分功能(如：桌布偵測）無法正常運作！\n此程式只支援 Windows 10 以上的作業系統\n\n請按確定結束應用程式", "不支援的作業系統", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (result == DialogResult.OK)
+                {
+                    Application.ExitThread();
+                    return false;
+                }
+            }
+            return true;
         }
 
         private void RegisterEvent()
